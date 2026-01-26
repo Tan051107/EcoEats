@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "ecoeats-4f19c"
-  }
+    "default": "ecoeats-4f19c",
+    "development": "ecoeats-4f19c"
+  },
+  "targets": {},
+  "etags": {}
 }

@@ -1,11 +1,11 @@
 import visionClient from './VisionClient.js'
 
 
-export async function visionAnalyze(image){ //in URI
+export async function visionAnalyze(image){ // in URI
     const request = {
         image:{
             source:{
-                //imageUri:image
+                // imageUri:image
                 content:image
             }
         },

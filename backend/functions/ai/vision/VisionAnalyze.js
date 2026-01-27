@@ -4,10 +4,7 @@ import visionClient from './VisionClient.js'
 export async function visionAnalyze(image){ // in URI
     const request = {
         image:{
-            source:{
-                // imageUri:image
-                content:image
-            }
+            content:image
         },
         features:
             [
@@ -17,13 +14,25 @@ export async function visionAnalyze(image){ // in URI
             ]        
     }
 
-    const [result] = await visionClient.annotateImage(request);
+    const [result] = await visionClient.annotateImage(
+        {
+        image:{
+            content:image
+        },
+        features:
+            [
+                {type:"LABEL_DETECTION" , maxResults:10},
+                {type:"OBJECT_LOCALIZATION" , maxResults:10},
+                {type:"LOGO_DETECTION" , maxResults:5}
+            ]        
+    }      
+    );
 
     const labels = result.labelAnnotations?.filter(label=>label.score > 0.7)
                                            .map(label=>(
                                             {
                                                 label:label.description,
-                                                confidence:label.confidence
+                                                confidence:label.score
                                             }
                                            ))
     
@@ -54,6 +63,8 @@ export async function visionAnalyze(image){ // in URI
                                                 confidence:logo.confidence
                                             }
                                          ));
+                                        
+    
     
     return{
         labels,

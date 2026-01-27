@@ -1,8 +1,7 @@
 const admin = require('firebase-admin')
 
 
-
-const serviceAccount = require('../ai/vision/json/serviceAccountKey.json');
+const serviceAccount = require('./serviceAccountKey.json');
 
 admin.initializeApp(
     {

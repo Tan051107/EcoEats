@@ -4,7 +4,7 @@ import path from "path";
 
 const FUNCTION_URL = "http://127.0.0.1:5001/ecoeats-4f19c/us-central1/analyzeImage";
 
-const IMAGE_PATH = path.resolve("../test-image/apple.jpg");
+const IMAGE_PATH = path.resolve("../test-image/food-label.png");
 const base64Image = fs.readFileSync(IMAGE_PATH).toString("base64");
 
 async function testFunction() {
@@ -12,7 +12,10 @@ async function testFunction() {
     const res = await fetch(FUNCTION_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image: base64Image })
+      body: JSON.stringify(
+        { image: base64Image,
+          barcodeValue:"9557062331142"
+        })
     });
 
     const data = await res.json(); // safe now

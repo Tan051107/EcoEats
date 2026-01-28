@@ -9,10 +9,10 @@ export const analyzeImage = onRequest(async (req, res) => {
       return res.status(400).json({ error: "image field is missing in request body" });
     }
 
-    const { image } = req.body;
+    const { image ,barcodeValue } = req.body;
 
     // 2. Call your logic
-    const result = await analyzeGroceryImage(image);
+    const result = await analyzeGroceryImage(image , barcodeValue);
     
     // 3. Return successful JSON
     return res.status(200).json({ result }); 

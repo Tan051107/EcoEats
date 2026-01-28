@@ -5,27 +5,44 @@ const database = admin.firestore()
 export async function packageTypeMapping(materialList){
     try{
         const packageTypeSnapshot = await database.collection('grocery_keys').doc('packaged').get()
-        const packageTypeData = packageTypeSnapshot.data();
-        const materialsFound  =[]
+        const packagedData = packageTypeSnapshot.data();
+        const packageTypeData = packagedData.packaging_types
+        const lookUp = {}
 
-        for (const material of materialList){
-            material = material.toLowerCase();
-            for (const [typeName ,typeData] of Object.entries(packageTypeData)){
-                if(typeData.similarKeys.some(key=>key.toLowerCase() === material)){
-                    materialsFound.push({
-                        found:true,
-                        packaging:typeName,
-                        recommendedDisposalWay:typeData.recommendedDisposalWay
-                    })
+        for (const[_,typeData] of Object.entries(packageTypeData)){
+            for (const key of typeData.similarKeys){
+                lookUp[key.toLowerCase()] ={
+                    packaging:key,
+                    recommendedDisposalWay:typeData.recommendedDisposalWay
                 }
             }
-            materialsFound.push({
+        }
+
+        const materialsFound = materialList.map(material=>{
+            material = material.toLowerCase();
+            if(lookUp[material]){
+                return {
+                    found:true,
+                    ...lookUp[material]
+                }
+            }
+            return{
                 found:false,
                 packaging:material
-            })
+            }
+        })
+
+        return {
+            success:true,
+            message:"Retrived mappings for item packaging",
+            data:{materialsFound}
         }
     }
     catch(err){
-        console.error("Failed to map packaging type with packaging type in database" ,err.message)
+        return{
+            success:false,
+            message:"Failed to map packaging type with packaging type in database" + err.message,
+            data:{}
+        }
     }
 }

@@ -1,6 +1,6 @@
 
 function getPackagingMaterial(packagings){
-    if(Array.isArray(packagings) || !packagings){
+    if(!Array.isArray(packagings) || !packagings){
         return []
     }
     const materials =  packagings.map(packaging=>packaging.material?.split(":")[1] || packaging.material) 
@@ -9,7 +9,8 @@ function getPackagingMaterial(packagings){
 }
 
 export async function getPackagedNutritionLabel(barcode){
-    const url = `https://world.openfoodfacts.org/api/v2/product/${barcode}.json`;
+    //use https://world.openfoodfacts.org when deploy
+    const url = `https://world.openfoodfacts.net/api/v2/product/${barcode}.json`;
 
     try{
         const result = await fetch(url)
@@ -17,49 +18,63 @@ export async function getPackagedNutritionLabel(barcode){
         if (!result.ok){
             return{
                 success:false,
-                errorType:"HTTP error",
-                status: res.status, 
-                message: res.statusText
+                message: res.statusText,
+                data:{}
             }
         }
 
-        const data = result.json()
-
-        if(data.status !==1){
-            return{
-                success:false,
-                errorType:"Result not found"
-            }
-        }
-
-
-        if(product.no_nutrition_data){
-            return{
-                success:false,
-                errorType:"No nutrition label"
-            }
-        }
+        const data = await result.json()
 
         const product = data.product;
+
+        if(product?.no_nutrition_data){
+            return{
+                success:false,
+                message:"No nutrition label",
+                data:{}
+            }
+        }
+
         const productNutriments = product.nutriments;
-        const calories = productNutriments?.["energy_kcal_100g"] || (productNutriments?.["energy-kj_100g"] / 4.184) || ""
+        const calories = productNutriments?.["energy-kcal_100g"] || (productNutriments?.["energy-kj_100g"] / 4.184) || ""
         const materials = getPackagingMaterial(product.packagings)
+
+        const output = {
+            success: true,
+            name: product.product_name,
+            per: "100g",
+            calories: calories ? `${Math.round(calories)}kcal` : "Not found",
+            fat: productNutriments?.["fat_100g"] || "Not found",
+            carbs: productNutriments?.["carbohydrates_100g"] || "Not found",
+            protein: productNutriments?.["proteins_100g"] || "Not found",
+            packagingType: materials,
+            productType:product.product_type,
+            isPackaged:true
+        };
+
+        console.log(JSON.stringify(output, null, 2));
+
         return{
             success:true,
-            name:product.name,
-            per:"100g",
-            calories:calories? `${Math.round(calories)}kcal` : "",
-            fat:productNutriments?.["fat_100g"] || "",
-            carbs:productNutriments?.["carbohydarates_100g"] || "",
-            protein:productNutriments?.["proteins_100g"],
-            packagingType:materials
+            message:"Successfully retireved nutritional label",
+            data:{
+                    name:product.name,
+                    per:"100g",
+                    calories:calories? `${Math.round(calories)}kcal` : "",
+                    fat:productNutriments?.["fat_100g"] || "",
+                    carbs:productNutriments?.["carbohydrates_100g"] || "",
+                    protein:productNutriments?.["proteins_100g"] || "",
+                    packagingType:materials,
+                    productType:product.product_type,
+                    isPackaged:true
+                }
         }
     }
     catch(err){
         return{
             success:false,
-            errorType:"Error occurred",
-            message:err.message
+            message:err.message,
+            data:{}
         }
     }
 }

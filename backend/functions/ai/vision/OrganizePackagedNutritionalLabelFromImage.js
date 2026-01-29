@@ -47,7 +47,7 @@ export async function organizePackagedNutritionalLabelFromImage(nutritionLabel){
                         },
                         recommendedDisposalWay: { 
                             type: SchemaType.STRING,
-                            description:'The recommended way to dispose the packaging that has such material. Return in a sentence. Set to "" if product packaging could not be identified.'
+                            description:'Describe in a sentence the recommended way to dispose the packaging that has such material. Set to "" if product packaging could not be identified.'
                         }
                         },
                         required:['material' , 'recommendedDisposalWay']

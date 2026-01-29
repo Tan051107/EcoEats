@@ -5,31 +5,34 @@ import { getPackagedNutritionLabel } from "./getPackagedNutritionLabel.js";
 import { getExpiryDateFromAI } from "./GetExpiryDataFromAI.js";
 import { getPackagedNutritionalLabelFromImageResult } from "./GetPackagedNutritionalLabelFromImageResult.js";
 import { analyzeGroceryImageWithAI } from "./AnalyzeGroceryImageWithAI.js";
-
+import { analyzePackagingMaterialWithAI } from "./AnalyzePackagingMaterialWithAI.js";
+import {packageTypeMapping} from "./PackageTypeMapping.js";
 const database = admin.firestore();
 
 
 export async function analyzeGroceryImage(image , barcodeValue) {
   try{
-      const result ={};
+      let result ={};
       let returnNutritionLabelAndPackaging = {};
       if(barcodeValue){
-        const [nutritionValue , expiryDate] = await Promise.all([
-          getPackagedNutritionLabel(barcodeValue), //Get nutritional value from open food facts API
-          getExpiryDateFromAI(image) //Get expiry date through vertex AI Gemini
-        ])
-
+        const nutritionValue = await getPackagedNutritionLabel(barcodeValue)
         if(nutritionValue.success){
-          if(nutritionValue.data.packaging.length < 1){
-            console.log("Packaging not found. Calling vertex ai to detect packaging")
-          }
-          returnNutritionLabelAndPackaging = nutritionValue.data
           console.log(JSON.stringify(nutritionValue.data, null, 2));
+          result = nutritionValue.data
+          if(nutritionValue.data.packaging.length < 1){
+            const packagingMaterials = await analyzePackagingMaterialWithAI(image)
+            returnNutritionLabelAndPackaging.packaging = packagingMaterials
+          }
+          const expiryDate = await getExpiryDateFromAI(image);
+          const packageMaterial =await packageTypeMapping(nutritionValue.data.packaging); //need to write function if recommended way is not found for a mterial, need to call gemini
         }
+
+
         else{
           console.log("Barcode value found but not able to find nutrition value. Calling vertex ai")
           console.log(nutritionValue.message)
-          const packagedNutritionalLabelFromImageResult = await getPackagedNutritionalLabelFromImageResult(image);
+          returnNutritionLabelAndPackaging
+          //const packagedNutritionalLabelFromImageResult = await getPackagedNutritionalLabelFromImageResult(image); //get Nutritiona Label From VertexAI
           returnNutritionLabelAndPackaging = packagedNutritionalLabelFromImageResult.data
       }
         if(expiryDate.success){
@@ -53,7 +56,7 @@ export async function analyzeGroceryImage(image , barcodeValue) {
         }
       }
       else{
-        const analyzedGroceryImageResult = await analyzeGroceryImageWithAI(image)
+        //const analyzedGroceryImageResult = await analyzeGroceryImageWithAI(image) //Get nutritional value from vertex AI
         if(!analyzedGroceryImageResult){
             return{
               success:false,
@@ -62,20 +65,24 @@ export async function analyzeGroceryImage(image , barcodeValue) {
             }
         }
 
+        const analyzedGroceryImageResultData = analyzedGroceryImageResult.data
+
         result ={
-          name:analyzedGroceryImageResult?.name || "",
-          per:analyzedGroceryImageResult?.per ||"",
-          calories:analyzedGroceryImageResult?.calories || "",
-          fat_g:analyzedGroceryImageResult?.fat_g || "",
-          carbohydrates_g:analyzedGroceryImageResult?.carbohydrates_g || "",
-          protein_g:analyzedGroceryImageResult?.protein_g || "",
-          packaging:analyzedGroceryImageResult?.packaging || [],
-          category:analyzedGroceryImageResult?.category || "",
-          expiry_date:analyzedGroceryImageResult?.expiry_date || "",
-          estimated_shelf_life:analyzedGroceryImageResult?.estimated_shelf_life || "",
-          is_packaged:true
+          name:analyzedGroceryImageResultData?.name || "",
+          per:analyzedGroceryImageResultData?.per ||"",
+          calories:analyzedGroceryImageResultData?.calories || "",
+          fat_g:analyzedGroceryImageResultData?.fat_g || "",
+          carbohydrates_g:analyzedGroceryImageResultData?.carbohydrates_g || "",
+          protein_g:analyzedGroceryImageResultData?.protein_g || "",
+          packaging:analyzedGroceryImageResultData?.packaging || [],
+          category:analyzedGroceryImageResultData?.category || "",
+          expiry_date:analyzedGroceryImageResultData?.expiry_date || "",
+          estimated_shelf_life:analyzedGroceryImageResultData?.estimated_shelf_life || "",
+          is_packaged:analyzedGroceryImageResultData?.is_packaged || "false"
         }
       }
+
+      console.log("Gemini Result:", JSON.stringify(analyzedGroceryImageResultData, null, 2))
 
       return{
         success:true,
@@ -98,7 +105,7 @@ export async function analyzeGroceryImage(image , barcodeValue) {
   //   database.collection("grocery_keys").doc("packaged").get(),
   // ]);
 
-  // const freshKeys = freshSnapshot.data();
+  // const freshKeys = freshSnapshot.data;
   // const packagedKeys = packagedSnapshot.data();
 
   // const visionAnalyzeResult = await visionAnalyze(image);

@@ -15,7 +15,7 @@ export const analyzeImage = onRequest(async (req, res) => {
     const result = await analyzeGroceryImage(image , barcodeValue);
     
     // 3. Return successful JSON
-    return res.status(200).json({ result }); 
+    return res.status(200).json(result); 
 
   } catch (err) {
     // This will now show up in your emulator console properly

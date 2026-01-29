@@ -1,4 +1,4 @@
-import { packageTypeMapping } from "./PackageTypeMapping";
+import { packageTypeMapping } from "./PackageTypeMapping.js";
 function getPackagingMaterial(packagings){
     if(!Array.isArray(packagings) || !packagings){
         return []
@@ -44,14 +44,14 @@ export async function getPackagedNutritionLabel(barcode){
             success:true,
             message:"Successfully retireved nutritional label",
             data:{
-                    name:product.name,
+                    name:product?.name || "",
                     per:"100g",
                     calories:calories? `${Math.round(calories)}kcal` : "",
                     fat_g:productNutriments?.["fat_100g"] || "",
                     carbohydrates_g:productNutriments?.["carbohydrates_100g"] || "",
                     protein_g:productNutriments?.["proteins_100g"] || "",
                     packaging:materials.data,
-                    category:product.product_type
+                    category:`packaged ${product?.product_type || ""}`
                 }
         }
     }

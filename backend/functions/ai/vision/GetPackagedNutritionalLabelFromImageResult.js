@@ -1,5 +1,5 @@
-import { getPackagedNutritionLabelFromImage } from "./GetPackagedNutritionalLabelFromImage"
-import { organizePackagedNutritionalLabelFromImage } from "./OrganizePackagedNutritionalLabelFromImage"
+import { getPackagedNutritionLabelFromImage } from "./GetPackagedNutritionalLabelFromImage.js"
+import { organizePackagedNutritionalLabelFromImage } from "./OrganizePackagedNutritionalLabelFromImage.js"
 
 export async function getPackagedNutritionalLabelFromImageResult(image){
     try{

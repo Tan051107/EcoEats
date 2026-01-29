@@ -1,4 +1,4 @@
-const admin = require('../../utils/firebase-admin.cjs')
+const admin = require('../firebase-admin.cjs')
 
 
 const packagingData = require('../json/packagingTypes.json')

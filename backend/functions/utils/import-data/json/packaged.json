@@ -1,0 +1,27 @@
+{
+  "packaging_types": {
+    "plastic": ["plastic", "plastic bottle", "plastic pack", "plastik"],
+    "aluminium": ["aluminium", "aluminum can", "tin can", "tin"],
+    "glass": ["glass", "glass bottle", "botol kaca"],
+    "carton": ["carton", "tetra pack", "carton box"],
+    "paper": ["paper", "paper bag", "karton"],
+    "metal": ["metal", "metal can", "metal packaging"],
+    "foil": ["foil", "aluminium foil", "aluminium wrap"]
+  },
+  "logos": [
+    "mamee","maggi","indomie","mi sedaap","cintan","mi goreng","mi halal",
+    "ayamas","milo","nestle milo","dutch lady","boh","nescafe","horlicks",
+    "fernleaf","marigold","vico","julies","tiger","munchys","chipsmore",
+    "hup seng","jacobs","ayam brand","yeos","kimball","king cup","jalen",
+    "tamin","planta","kicap cap kipas udang","kicap cap sauh","cap ros",
+    "blue key","cap lili","cap rambutan","saji","alif","knife","daisy",
+    "seri murni","buruh","vesawit","carotino","kawan","brahims","mister potato",
+    "goodday","ribena","100plus","pepsi","coca cola","sprite","7up",
+    "mountain dew","aw root beer","vitagen","tealive","starbucks bottled",
+    "oreo","pringles","lays","kitkat","cadbury","hersheys","barilla","ahmad tea",
+    "colavita","samyang","nongshim","nissin","uncle bobs","dolato","royal tea",
+    "aptonia","nutrilon","pampers","colgate","dettol","panadol","strepsils",
+    "vodafone","tesco","giant","aeon","econsave","lotuss","99 speedmart",
+    "jaya grocer","doremart","mydin","hero market","village grocer"
+  ]
+}

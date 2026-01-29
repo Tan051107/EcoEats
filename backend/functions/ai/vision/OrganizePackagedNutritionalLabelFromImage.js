@@ -7,29 +7,51 @@ export async function organizePackagedNutritionalLabelFromImage(nutritionLabel){
         const schema = {
             type: SchemaType.OBJECT,
             properties: {
-                name:{type:SchemaType.STRING},
-                calories: { type: SchemaType.NUMBER },
-                fat_g: { type: SchemaType.NUMBER },
-                carbohydrates_g: { type: SchemaType.NUMBER },
-                protein_g: { type: SchemaType.NUMBER },
+                name:{
+                    type:SchemaType.STRING,
+                    description:'The product name. Set to "" if not visible.'
+                },
+                calories: { 
+                    type: SchemaType.NUMBER,
+                    description:'The calories labelled. Set to 0 if not visible.'
+                },
+                fat_g: { 
+                    type: SchemaType.NUMBER,
+                    description:'The fats labelled. Unit in gram. Set to 0 if not visible.'
+                },
+                carbohydrates_g: { 
+                    type: SchemaType.NUMBER,
+                    description:'The fats labelled. Unit in gram. Set to 0 if not visible.'
+                },
+                protein_g: { 
+                    type: SchemaType.NUMBER,
+                    description:'The protein labelled. Unit in gram. Set to 0 if not visible.'
+                },
                 per: { 
-                type: SchemaType.STRING, 
-                enum: ["serving", "100g", ""] 
+                    type: SchemaType.STRING, 
+                    description: 'The unit of measurement for the nutritional values. Set to "" if not visible'
                 },
                 category: { 
-                type: SchemaType.STRING, 
-                enum: ["food", "beverage", ""] 
+                    type: SchemaType.STRING, 
+                    enum: ["packaged_food", "packaged_beverage", ""],
+                    description: 'The category of the product. Set to "" if product could not be identified.'
                 },
                 packaging: {
-                type: SchemaType.ARRAY,
-                items: {
-                    type: SchemaType.OBJECT,
-                    properties: {
-                    material: { type: SchemaType.STRING },
-                    recommendedDisposalWay: { type: SchemaType.STRING }
-                    },
-                    required:['material' , 'recommendedDisposalWay']
-                }
+                    type: SchemaType.ARRAY,
+                    items: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                        material: { 
+                            type: SchemaType.STRING,
+                            description:'The material of the packaging used to package the product. Set to "" if product could not be identified.'
+                        },
+                        recommendedDisposalWay: { 
+                            type: SchemaType.STRING,
+                            description:'The recommended way to dispose the packaging that has such material. Return in a sentence. Set to "" if product packaging could not be identified.'
+                        }
+                        },
+                        required:['material' , 'recommendedDisposalWay']
+                    }
                 },
                 confidence: { type: SchemaType.NUMBER }
             },
@@ -53,8 +75,6 @@ export async function organizePackagedNutritionalLabelFromImage(nutritionLabel){
                                 - material (plastic, glass, metal, carton, paper, etc.)
                                 - recommendedDisposalWay (how the user should dispose it)
                         4. Include confidence (0-100) for the result given.
-                        5. If a value is missing, set it to "".
-                        6. Only return JSON. Do not include any explanations, markdown, or extra text.
 
                         OCR TEXT: ${nutritionLabel}
                         `

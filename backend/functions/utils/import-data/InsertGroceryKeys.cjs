@@ -9,8 +9,8 @@ admin.initializeApp({
 
 const database = admin.firestore();
 
-const freshKeys = require('./json/fresh.json');
-const packagedKeys = require('./json/packaged.json');
+const freshKeys = require('../../ai/vision/json/fresh.json');
+const packagedKeys = require('../../ai/vision/json/packaged.json');
 
 async function insertGroceryKeys() {
     try{

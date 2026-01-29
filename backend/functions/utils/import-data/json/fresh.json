@@ -1,0 +1,35 @@
+{
+  "fruits": {
+    "apple": ["apple", "red apple", "green apple", "fuji apple"],
+    "banana": ["banana", "pisang", "cavendish banana"],
+    "orange": ["orange", "mandarin", "tangerine"],
+    "mango": ["mango", "harumanis", "alphonso mango"],
+    "papaya": ["papaya", "betik"],
+    "pineapple": ["pineapple", "nanas"],
+    "watermelon": ["watermelon", "tembikai"],
+    "dragon fruit": ["dragon fruit", "pitaya", "buah naga"],
+    "grape": ["grape", "anggur"],
+    "guava": ["guava", "jambu batu"],
+    "starfruit": ["starfruit", "carambola", "belimbing"],
+    "coconut": ["coconut", "kelapa"],
+    "lychee": ["lychee", "laici"],
+    "durian": ["durian", "d24", "musang king"]
+  },
+  "veges": {
+    "carrot": ["carrot", "lobak merah"],
+    "tomato": ["tomato", "buah tomato"],
+    "cucumber": ["cucumber", "timun"],
+    "long bean": ["long bean", "kacang panjang"],
+    "cabbage": ["cabbage", "kobis"],
+    "spinach": ["spinach", "bayam"],
+    "kale": ["kale", "kubis bunga"],
+    "cauliflower": ["cauliflower", "kobis bunga"],
+    "broccoli": ["broccoli", "brokoli"],
+    "chili": ["chili", "cili", "chili merah", "chili hijau"],
+    "eggplant": ["eggplant", "terung"],
+    "pumpkin": ["pumpkin", "labu"],
+    "lettuce": ["lettuce", "salad greens"],
+    "onion": ["onion", "bawang"], 
+    "garlic": ["garlic", "bawang putih"]
+  }
+}

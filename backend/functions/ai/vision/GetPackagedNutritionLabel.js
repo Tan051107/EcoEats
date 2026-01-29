@@ -1,4 +1,4 @@
-
+import { packageTypeMapping } from "./PackageTypeMapping";
 function getPackagingMaterial(packagings){
     if(!Array.isArray(packagings) || !packagings){
         return []
@@ -37,22 +37,8 @@ export async function getPackagedNutritionLabel(barcode){
 
         const productNutriments = product.nutriments;
         const calories = productNutriments?.["energy-kcal_100g"] || (productNutriments?.["energy-kj_100g"] / 4.184) || ""
-        const materials = getPackagingMaterial(product.packagings)
-
-        const output = {
-            success: true,
-            name: product.product_name,
-            per: "100g",
-            calories: calories ? `${Math.round(calories)}kcal` : "Not found",
-            fat: productNutriments?.["fat_100g"] || "Not found",
-            carbs: productNutriments?.["carbohydrates_100g"] || "Not found",
-            protein: productNutriments?.["proteins_100g"] || "Not found",
-            packagingType: materials,
-            productType:product.product_type,
-            isPackaged:true
-        };
-
-        console.log(JSON.stringify(output, null, 2));
+        const packagings = getPackagingMaterial(product.packagings)
+        const materials = await packageTypeMapping(packagings)
 
         return{
             success:true,
@@ -61,12 +47,11 @@ export async function getPackagedNutritionLabel(barcode){
                     name:product.name,
                     per:"100g",
                     calories:calories? `${Math.round(calories)}kcal` : "",
-                    fat:productNutriments?.["fat_100g"] || "",
-                    carbs:productNutriments?.["carbohydrates_100g"] || "",
-                    protein:productNutriments?.["proteins_100g"] || "",
-                    packagingType:materials,
-                    productType:product.product_type,
-                    isPackaged:true
+                    fat_g:productNutriments?.["fat_100g"] || "",
+                    carbohydrates_g:productNutriments?.["carbohydrates_100g"] || "",
+                    protein_g:productNutriments?.["proteins_100g"] || "",
+                    packaging:materials.data,
+                    category:product.product_type
                 }
         }
     }

@@ -34,8 +34,8 @@ export async function packageTypeMapping(materialList){
 
         return {
             success:true,
-            message:"Retrived mappings for item packaging",
-            data:{materialsFound}
+            message:"Retrieved mappings for item packaging",
+            data:materialsFound
         }
     }
     catch(err){

@@ -3,7 +3,7 @@ import { GoogleGenAI } from '@google/genai';
 import path from 'path';
 
 // Tell the environment where your key is
-process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(process.cwd(), 'ai/vision/visionClientServiceAccountKey.json');
+process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(process.cwd(), 'ai/visionClientServiceAccountKey.json');
 
 const ai = new GoogleGenAI({
     vertexai: true,

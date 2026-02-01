@@ -1,5 +1,6 @@
 import { onRequest } from "firebase-functions/v2/https";
-import { analyzeGroceryImage } from "./ai/vision/AnalyzeGrocery.js";
+import { analyzeGroceryImage } from "./ai/AnalyzeGrocery.js";
+import { getEstimatedMealNutrition } from "./ai/getEstimatedMealNutrition.js";
 
 // Note: Use 'export' with the v2 onRequest trigger
 export const analyzeImage = onRequest(async (req, res) => {
@@ -9,10 +10,10 @@ export const analyzeImage = onRequest(async (req, res) => {
       return res.status(400).json({ error: "image field is missing in request body" });
     }
 
-    const { image ,barcodeValue } = req.body;
+    const {image} = req.body;
 
     // 2. Call your logic
-    const result = await analyzeGroceryImage(image , barcodeValue);
+    const result = await getEstimatedMealNutrition(image);
     
     // 3. Return successful JSON
     return res.status(200).json(result); 

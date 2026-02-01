@@ -1,4 +1,4 @@
-import admin from '../../utils/firebase-admin.cjs'
+import admin from '../utils/firebase-admin.cjs'
 
 export async function storeNewPackageMaterials(result){
     const database = admin.firestore()

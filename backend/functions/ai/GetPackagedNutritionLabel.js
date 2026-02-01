@@ -1,4 +1,5 @@
 import { packageTypeMapping } from "./PackageTypeMapping.js";
+
 function getPackagingMaterial(packagings){
     if(!Array.isArray(packagings) || !packagings){
         return []
@@ -46,12 +47,13 @@ export async function getPackagedNutritionLabel(barcode){
             data:{
                     name:product?.name || "",
                     per:"100g",
-                    calories:calories? `${Math.round(calories)}kcal` : "",
+                    calories_kcal:calories? `${Math.round(calories)}kcal` : "",
                     fat_g:productNutriments?.["fat_100g"] || "",
                     carbohydrates_g:productNutriments?.["carbohydrates_100g"] || "",
                     protein_g:productNutriments?.["proteins_100g"] || "",
-                    packaging:materials.data,
-                    category:`packaged ${product?.product_type || ""}`
+                    packaging_materials:materials.data,
+                    category:`packaged ${product?.product_type || ""}`,
+                    is_packaged:true
                 }
         }
     }

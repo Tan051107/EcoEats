@@ -1,0 +1,1103 @@
+[
+  {
+    "name": "Spicy Tomato Basil Pasta",
+    "ingredients": [
+      { "name": "pasta", "quantity": "120g" },
+      { "name": "tomato", "quantity": "2 pieces" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "basil", "quantity": "6 leaves" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Boil pasta until al dente.",
+      "Sauté garlic in olive oil.",
+      "Add tomatoes and cook into sauce.",
+      "Mix pasta with sauce and basil.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 520, "protein_g": 16, "carbs_g": 78, "fat_g": 14 },
+    "diet_type": "Vegetarian",
+    "allergens": ["gluten"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Chickpea Curry Rice",
+    "ingredients": [
+      { "name": "chickpeas", "quantity": "1 cup" },
+      { "name": "coconut milk", "quantity": "200ml" },
+      { "name": "curry powder", "quantity": "1 tbsp" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "cooked rice", "quantity": "1 bowl" }
+    ],
+    "steps": [
+      "Sauté onion until soft.",
+      "Add chickpeas and curry powder.",
+      "Pour coconut milk and simmer 10 minutes.",
+      "Serve with cooked rice."
+    ],
+    "nutrition": { "calories_kcal": 610, "protein_g": 18, "carbs_g": 92, "fat_g": 18 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Garlic Butter Chicken Rice Bowl",
+    "ingredients": [
+      { "name": "chicken breast", "quantity": "200g" },
+      { "name": "cooked rice", "quantity": "1 bowl" },
+      { "name": "garlic", "quantity": "4 cloves" },
+      { "name": "butter", "quantity": "1 tbsp" },
+      { "name": "soy sauce", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Slice chicken into bite-size pieces.",
+      "Sauté garlic with butter.",
+      "Cook chicken until done.",
+      "Add soy sauce and stir well.",
+      "Serve over rice."
+    ],
+    "nutrition": { "calories_kcal": 640, "protein_g": 44, "carbs_g": 60, "fat_g": 22 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["dairy", "soy"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegetarian Egg Fried Rice",
+    "ingredients": [
+      { "name": "cooked rice", "quantity": "2 bowls" },
+      { "name": "egg", "quantity": "2 pieces" },
+      { "name": "carrot", "quantity": "1 piece" },
+      { "name": "peas", "quantity": "1/2 cup" },
+      { "name": "soy sauce", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Scramble eggs in a pan.",
+      "Add vegetables and stir-fry.",
+      "Add rice and soy sauce.",
+      "Mix evenly and serve."
+    ],
+    "nutrition": { "calories_kcal": 560, "protein_g": 20, "carbs_g": 82, "fat_g": 18 },
+    "diet_type": "Vegetarian",
+    "allergens": ["egg", "soy"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Tofu Veggie Stir Fry",
+    "ingredients": [
+      { "name": "tofu", "quantity": "220g" },
+      { "name": "broccoli", "quantity": "1 cup" },
+      { "name": "carrot", "quantity": "1 piece" },
+      { "name": "soy sauce", "quantity": "1 tbsp" },
+      { "name": "sesame oil", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Pan-fry tofu until golden.",
+      "Stir-fry vegetables until tender.",
+      "Add tofu, soy sauce and sesame oil.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 420, "protein_g": 24, "carbs_g": 32, "fat_g": 19 },
+    "diet_type": "Vegan",
+    "allergens": ["soy", "sesame"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Cheesy Mushroom Omelette",
+    "ingredients": [
+      { "name": "egg", "quantity": "2 pieces" },
+      { "name": "mushroom", "quantity": "100g" },
+      { "name": "cheddar cheese", "quantity": "40g" },
+      { "name": "milk", "quantity": "20ml" },
+      { "name": "butter", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Whisk eggs with milk.",
+      "Sauté mushrooms in butter.",
+      "Pour eggs and cook until set.",
+      "Add cheese, fold and serve."
+    ],
+    "nutrition": { "calories_kcal": 430, "protein_g": 22, "carbs_g": 10, "fat_g": 32 },
+    "diet_type": "Vegetarian",
+    "allergens": ["egg", "dairy"],
+    "meal_type": "breakfast",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Avocado Toast",
+    "ingredients": [
+      { "name": "bread", "quantity": "2 slices" },
+      { "name": "avocado", "quantity": "1 piece" },
+      { "name": "lemon juice", "quantity": "1 tsp" },
+      { "name": "salt", "quantity": "1 pinch" },
+      { "name": "chili flakes", "quantity": "1 pinch" }
+    ],
+    "steps": [
+      "Toast bread.",
+      "Mash avocado with lemon and salt.",
+      "Spread on toast and add chili flakes.",
+      "Serve."
+    ],
+    "nutrition": { "calories_kcal": 410, "protein_g": 9, "carbs_g": 44, "fat_g": 22 },
+    "diet_type": "Vegan",
+    "allergens": ["gluten"],
+    "meal_type": "breakfast",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Chicken Noodle Soup",
+    "ingredients": [
+      { "name": "chicken", "quantity": "180g" },
+      { "name": "noodles", "quantity": "100g" },
+      { "name": "carrot", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "1 clove" },
+      { "name": "soy sauce", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Boil chicken with garlic.",
+      "Add noodles and carrots.",
+      "Season with soy sauce.",
+      "Simmer and serve."
+    ],
+    "nutrition": { "calories_kcal": 520, "protein_g": 38, "carbs_g": 58, "fat_g": 14 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["gluten", "soy"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegan Black Bean Burrito Bowl",
+    "ingredients": [
+      { "name": "cooked rice", "quantity": "1 bowl" },
+      { "name": "black beans", "quantity": "1 cup" },
+      { "name": "corn", "quantity": "1/2 cup" },
+      { "name": "salsa", "quantity": "2 tbsp" },
+      { "name": "lime", "quantity": "1 piece" }
+    ],
+    "steps": [
+      "Warm beans and corn.",
+      "Assemble rice bowl with toppings.",
+      "Add salsa and squeeze lime.",
+      "Serve."
+    ],
+    "nutrition": { "calories_kcal": 650, "protein_g": 20, "carbs_g": 102, "fat_g": 14 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Beef Pepper Stir Fry",
+    "ingredients": [
+      { "name": "beef slices", "quantity": "200g" },
+      { "name": "bell pepper", "quantity": "1 piece" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "soy sauce", "quantity": "1 tbsp" },
+      { "name": "black pepper", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Stir-fry beef until browned.",
+      "Add vegetables and cook until soft.",
+      "Season with soy sauce and pepper.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 510, "protein_g": 36, "carbs_g": 24, "fat_g": 28 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["soy"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegetarian Paneer Tikka Wrap",
+    "ingredients": [
+      { "name": "paneer", "quantity": "180g" },
+      { "name": "tortilla wrap", "quantity": "2 pieces" },
+      { "name": "yogurt", "quantity": "3 tbsp" },
+      { "name": "onion", "quantity": "1/2 piece" },
+      { "name": "cucumber", "quantity": "1/2 piece" }
+    ],
+    "steps": [
+      "Marinate paneer with yogurt and spices.",
+      "Pan-grill paneer until lightly charred.",
+      "Fill wrap with paneer and vegetables.",
+      "Roll and serve."
+    ],
+    "nutrition": { "calories_kcal": 590, "protein_g": 26, "carbs_g": 62, "fat_g": 26 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy", "gluten"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegan Lentil Soup",
+    "ingredients": [
+      { "name": "lentils", "quantity": "1 cup" },
+      { "name": "carrot", "quantity": "1 piece" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "vegetable stock", "quantity": "500ml" }
+    ],
+    "steps": [
+      "Sauté onion and garlic.",
+      "Add carrots and lentils.",
+      "Pour vegetable stock and simmer 20 minutes.",
+      "Serve warm."
+    ],
+    "nutrition": { "calories_kcal": 480, "protein_g": 24, "carbs_g": 78, "fat_g": 8 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Non-vegetarian Tuna Mayo Sandwich",
+    "ingredients": [
+      { "name": "bread", "quantity": "2 slices" },
+      { "name": "tuna", "quantity": "120g" },
+      { "name": "mayonnaise", "quantity": "2 tbsp" },
+      { "name": "lettuce", "quantity": "2 leaves" },
+      { "name": "black pepper", "quantity": "1 pinch" }
+    ],
+    "steps": [
+      "Mix tuna with mayonnaise and pepper.",
+      "Toast bread lightly.",
+      "Assemble sandwich with lettuce and tuna mix.",
+      "Serve."
+    ],
+    "nutrition": { "calories_kcal": 520, "protein_g": 32, "carbs_g": 48, "fat_g": 22 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["gluten", "egg", "fish"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegetarian Spinach Garlic Pasta",
+    "ingredients": [
+      { "name": "pasta", "quantity": "120g" },
+      { "name": "spinach", "quantity": "2 cups" },
+      { "name": "garlic", "quantity": "3 cloves" },
+      { "name": "olive oil", "quantity": "1 tbsp" },
+      { "name": "parmesan", "quantity": "25g" }
+    ],
+    "steps": [
+      "Boil pasta until al dente.",
+      "Sauté garlic in olive oil.",
+      "Add spinach and cook until wilted.",
+      "Mix pasta with spinach garlic sauce.",
+      "Top with parmesan and serve."
+    ],
+    "nutrition": { "calories_kcal": 560, "protein_g": 20, "carbs_g": 78, "fat_g": 18 },
+    "diet_type": "Vegetarian",
+    "allergens": ["gluten", "dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegan Peanut Noodles",
+    "ingredients": [
+      { "name": "noodles", "quantity": "120g" },
+      { "name": "peanut butter", "quantity": "2 tbsp" },
+      { "name": "soy sauce", "quantity": "1 tbsp" },
+      { "name": "lime juice", "quantity": "1 tbsp" },
+      { "name": "cucumber", "quantity": "1/2 piece" }
+    ],
+    "steps": [
+      "Cook noodles and drain.",
+      "Mix peanut butter, soy sauce and lime juice.",
+      "Toss noodles in sauce.",
+      "Top with cucumber and serve."
+    ],
+    "nutrition": { "calories_kcal": 620, "protein_g": 18, "carbs_g": 82, "fat_g": 24 },
+    "diet_type": "Vegan",
+    "allergens": ["gluten", "soy", "peanut"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Non-vegetarian Salmon Teriyaki Bowl",
+    "ingredients": [
+      { "name": "salmon", "quantity": "180g" },
+      { "name": "cooked rice", "quantity": "1 bowl" },
+      { "name": "teriyaki sauce", "quantity": "2 tbsp" },
+      { "name": "broccoli", "quantity": "1 cup" },
+      { "name": "sesame seeds", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Pan-sear salmon until cooked.",
+      "Add teriyaki sauce and glaze salmon.",
+      "Steam broccoli lightly.",
+      "Serve salmon over rice with broccoli.",
+      "Sprinkle sesame seeds."
+    ],
+    "nutrition": { "calories_kcal": 690, "protein_g": 42, "carbs_g": 70, "fat_g": 26 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["soy", "sesame", "fish"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegetarian Veggie Quesadilla",
+    "ingredients": [
+      { "name": "tortilla", "quantity": "2 pieces" },
+      { "name": "cheddar cheese", "quantity": "80g" },
+      { "name": "bell pepper", "quantity": "1/2 piece" },
+      { "name": "onion", "quantity": "1/2 piece" },
+      { "name": "corn", "quantity": "1/2 cup" }
+    ],
+    "steps": [
+      "Sauté peppers, onions and corn.",
+      "Place tortilla on pan and add cheese + veggies.",
+      "Cover with another tortilla and toast both sides.",
+      "Slice and serve."
+    ],
+    "nutrition": { "calories_kcal": 640, "protein_g": 26, "carbs_g": 62, "fat_g": 32 },
+    "diet_type": "Vegetarian",
+    "allergens": ["gluten", "dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegan Mushroom Rice Bowl",
+    "ingredients": [
+      { "name": "mushroom", "quantity": "200g" },
+      { "name": "cooked rice", "quantity": "1 bowl" },
+      { "name": "soy sauce", "quantity": "1 tbsp" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "spring onion", "quantity": "1 stalk" }
+    ],
+    "steps": [
+      "Sauté garlic and mushrooms.",
+      "Add soy sauce and cook until fragrant.",
+      "Serve over rice.",
+      "Top with spring onion."
+    ],
+    "nutrition": { "calories_kcal": 540, "protein_g": 14, "carbs_g": 92, "fat_g": 12 },
+    "diet_type": "Vegan",
+    "allergens": ["soy"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Non-vegetarian Spicy Shrimp Fried Rice",
+    "ingredients": [
+      { "name": "shrimp", "quantity": "180g" },
+      { "name": "cooked rice", "quantity": "2 bowls" },
+      { "name": "egg", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "chili sauce", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Cook shrimp until pink and set aside.",
+      "Scramble egg in pan.",
+      "Add garlic, rice and chili sauce.",
+      "Add shrimp back and mix well.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 720, "protein_g": 38, "carbs_g": 98, "fat_g": 18 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["egg", "shellfish"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegetarian Creamy Tomato Soup",
+    "ingredients": [
+      { "name": "tomato", "quantity": "4 pieces" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "cream", "quantity": "3 tbsp" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Sauté onion and garlic.",
+      "Add tomatoes and cook until soft.",
+      "Blend until smooth.",
+      "Add cream and simmer 3 minutes.",
+      "Serve warm."
+    ],
+    "nutrition": { "calories_kcal": 390, "protein_g": 8, "carbs_g": 42, "fat_g": 22 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+    {
+    "name": "Vegan Vegetable Biryani",
+    "ingredients": [
+      { "name": "basmati rice", "quantity": "1.5 cups" },
+      { "name": "mixed vegetables", "quantity": "2 cups" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "garam masala", "quantity": "1 tsp" },
+      { "name": "vegetable oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Wash rice and set aside.",
+      "Sauté onion until golden.",
+      "Add vegetables and spices, cook 5 minutes.",
+      "Add rice and water, cook until done.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 690, "protein_g": 16, "carbs_g": 118, "fat_g": 16 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegetarian Greek Salad Bowl",
+    "ingredients": [
+      { "name": "cucumber", "quantity": "1 piece" },
+      { "name": "tomato", "quantity": "2 pieces" },
+      { "name": "feta cheese", "quantity": "70g" },
+      { "name": "olive oil", "quantity": "1 tbsp" },
+      { "name": "olives", "quantity": "10 pieces" }
+    ],
+    "steps": [
+      "Chop cucumber and tomatoes.",
+      "Add feta and olives.",
+      "Drizzle olive oil and toss.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 430, "protein_g": 14, "carbs_g": 22, "fat_g": 32 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Non-vegetarian Chicken Caesar Wrap",
+    "ingredients": [
+      { "name": "tortilla wrap", "quantity": "2 pieces" },
+      { "name": "chicken breast", "quantity": "180g" },
+      { "name": "lettuce", "quantity": "1 cup" },
+      { "name": "caesar dressing", "quantity": "2 tbsp" },
+      { "name": "parmesan", "quantity": "20g" }
+    ],
+    "steps": [
+      "Grill chicken until cooked.",
+      "Slice chicken thinly.",
+      "Fill wrap with lettuce, chicken and dressing.",
+      "Sprinkle parmesan and roll.",
+      "Serve."
+    ],
+    "nutrition": { "calories_kcal": 610, "protein_g": 42, "carbs_g": 48, "fat_g": 26 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["gluten", "dairy", "egg"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Sweet Potato Buddha Bowl",
+    "ingredients": [
+      { "name": "sweet potato", "quantity": "1 large" },
+      { "name": "chickpeas", "quantity": "1/2 cup" },
+      { "name": "spinach", "quantity": "2 cups" },
+      { "name": "olive oil", "quantity": "1 tbsp" },
+      { "name": "lemon juice", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Roast sweet potato cubes until soft.",
+      "Warm chickpeas lightly.",
+      "Assemble bowl with spinach, chickpeas and sweet potato.",
+      "Drizzle olive oil and lemon juice.",
+      "Serve."
+    ],
+    "nutrition": { "calories_kcal": 560, "protein_g": 18, "carbs_g": 86, "fat_g": 16 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegetarian Masala Omelette Toast",
+    "ingredients": [
+      { "name": "egg", "quantity": "2 pieces" },
+      { "name": "bread", "quantity": "2 slices" },
+      { "name": "onion", "quantity": "1/2 piece" },
+      { "name": "tomato", "quantity": "1 piece" },
+      { "name": "butter", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Chop onion and tomato.",
+      "Beat eggs and mix vegetables.",
+      "Cook omelette in butter.",
+      "Toast bread and serve with omelette."
+    ],
+    "nutrition": { "calories_kcal": 510, "protein_g": 22, "carbs_g": 46, "fat_g": 26 },
+    "diet_type": "Vegetarian",
+    "allergens": ["egg", "gluten", "dairy"],
+    "meal_type": "breakfast",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Non-vegetarian Spaghetti Bolognese",
+    "ingredients": [
+      { "name": "spaghetti", "quantity": "140g" },
+      { "name": "minced beef", "quantity": "200g" },
+      { "name": "tomato sauce", "quantity": "1 cup" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Boil spaghetti until al dente.",
+      "Sauté onion in olive oil.",
+      "Add minced beef and cook until browned.",
+      "Add tomato sauce and simmer 10 minutes.",
+      "Serve sauce over spaghetti."
+    ],
+    "nutrition": { "calories_kcal": 760, "protein_g": 42, "carbs_g": 86, "fat_g": 28 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["gluten"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Coconut Rice with Veggies",
+    "ingredients": [
+      { "name": "cooked rice", "quantity": "2 bowls" },
+      { "name": "coconut milk", "quantity": "150ml" },
+      { "name": "carrot", "quantity": "1 piece" },
+      { "name": "peas", "quantity": "1/2 cup" },
+      { "name": "salt", "quantity": "1 pinch" }
+    ],
+    "steps": [
+      "Cook peas and carrots until soft.",
+      "Warm rice and coconut milk together.",
+      "Mix vegetables into coconut rice.",
+      "Season lightly and serve."
+    ],
+    "nutrition": { "calories_kcal": 680, "protein_g": 12, "carbs_g": 112, "fat_g": 20 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegetarian Potato Curry",
+    "ingredients": [
+      { "name": "potato", "quantity": "3 pieces" },
+      { "name": "coconut milk", "quantity": "200ml" },
+      { "name": "curry powder", "quantity": "1 tbsp" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "vegetable oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Sauté onion until fragrant.",
+      "Add potatoes and curry powder.",
+      "Pour coconut milk and simmer until potatoes soft.",
+      "Serve warm."
+    ],
+    "nutrition": { "calories_kcal": 590, "protein_g": 10, "carbs_g": 88, "fat_g": 24 },
+    "diet_type": "Vegetarian",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Non-vegetarian Turkey Veggie Bowl",
+    "ingredients": [
+      { "name": "turkey mince", "quantity": "200g" },
+      { "name": "cooked rice", "quantity": "1 bowl" },
+      { "name": "broccoli", "quantity": "1 cup" },
+      { "name": "soy sauce", "quantity": "1 tbsp" },
+      { "name": "garlic", "quantity": "2 cloves" }
+    ],
+    "steps": [
+      "Cook turkey mince until browned.",
+      "Add garlic and soy sauce.",
+      "Steam broccoli lightly.",
+      "Serve turkey over rice with broccoli."
+    ],
+    "nutrition": { "calories_kcal": 640, "protein_g": 44, "carbs_g": 66, "fat_g": 18 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["soy"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Hummus Veggie Sandwich",
+    "ingredients": [
+      { "name": "bread", "quantity": "2 slices" },
+      { "name": "hummus", "quantity": "4 tbsp" },
+      { "name": "cucumber", "quantity": "1/2 piece" },
+      { "name": "tomato", "quantity": "1 piece" },
+      { "name": "lettuce", "quantity": "2 leaves" }
+    ],
+    "steps": [
+      "Spread hummus on bread.",
+      "Layer cucumber, tomato and lettuce.",
+      "Close sandwich and serve."
+    ],
+    "nutrition": { "calories_kcal": 520, "protein_g": 16, "carbs_g": 66, "fat_g": 20 },
+    "diet_type": "Vegan",
+    "allergens": ["gluten", "sesame"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegetarian Mac and Cheese",
+    "ingredients": [
+      { "name": "macaroni", "quantity": "140g" },
+      { "name": "cheddar cheese", "quantity": "100g" },
+      { "name": "milk", "quantity": "200ml" },
+      { "name": "butter", "quantity": "1 tbsp" },
+      { "name": "black pepper", "quantity": "1 pinch" }
+    ],
+    "steps": [
+      "Boil macaroni until soft.",
+      "Melt butter and add milk.",
+      "Add cheese and stir until creamy.",
+      "Mix macaroni with cheese sauce.",
+      "Serve warm."
+    ],
+    "nutrition": { "calories_kcal": 820, "protein_g": 28, "carbs_g": 92, "fat_g": 38 },
+    "diet_type": "Vegetarian",
+    "allergens": ["gluten", "dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Tomato Lentil Stew",
+    "ingredients": [
+      { "name": "lentils", "quantity": "1 cup" },
+      { "name": "tomato", "quantity": "3 pieces" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Sauté onion and garlic in olive oil.",
+      "Add chopped tomatoes and cook 5 minutes.",
+      "Add lentils and water, simmer until tender.",
+      "Serve warm."
+    ],
+    "nutrition": { "calories_kcal": 540, "protein_g": 26, "carbs_g": 84, "fat_g": 12 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Non-vegetarian BBQ Chicken Wrap",
+    "ingredients": [
+      { "name": "tortilla wrap", "quantity": "2 pieces" },
+      { "name": "chicken breast", "quantity": "200g" },
+      { "name": "bbq sauce", "quantity": "2 tbsp" },
+      { "name": "lettuce", "quantity": "1 cup" },
+      { "name": "onion", "quantity": "1/2 piece" }
+    ],
+    "steps": [
+      "Cook chicken until done.",
+      "Coat chicken with bbq sauce.",
+      "Fill wrap with lettuce, onion and chicken.",
+      "Roll and serve."
+    ],
+    "nutrition": { "calories_kcal": 640, "protein_g": 42, "carbs_g": 62, "fat_g": 20 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["gluten"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Garlic Roasted Broccoli Pasta",
+    "ingredients": [
+      { "name": "pasta", "quantity": "130g" },
+      { "name": "broccoli", "quantity": "2 cups" },
+      { "name": "garlic", "quantity": "3 cloves" },
+      { "name": "olive oil", "quantity": "1 tbsp" },
+      { "name": "lemon zest", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Roast broccoli with garlic and olive oil.",
+      "Boil pasta until al dente.",
+      "Mix pasta with roasted broccoli.",
+      "Add lemon zest and serve."
+    ],
+    "nutrition": { "calories_kcal": 610, "protein_g": 18, "carbs_g": 98, "fat_g": 16 },
+    "diet_type": "Vegan",
+    "allergens": ["gluten"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegetarian Banana Peanut Smoothie",
+    "ingredients": [
+      { "name": "banana", "quantity": "2 pieces" },
+      { "name": "milk", "quantity": "250ml" },
+      { "name": "peanut butter", "quantity": "1 tbsp" },
+      { "name": "honey", "quantity": "1 tsp" },
+      { "name": "ice", "quantity": "4 cubes" }
+    ],
+    "steps": [
+      "Add all ingredients to blender.",
+      "Blend until smooth.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 520, "protein_g": 18, "carbs_g": 62, "fat_g": 22 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy", "peanut"],
+    "meal_type": "breakfast",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Non-vegetarian Egg Mayo Rice Bowl",
+    "ingredients": [
+      { "name": "cooked rice", "quantity": "1 bowl" },
+      { "name": "egg", "quantity": "2 pieces" },
+      { "name": "mayonnaise", "quantity": "2 tbsp" },
+      { "name": "soy sauce", "quantity": "1 tsp" },
+      { "name": "spring onion", "quantity": "1 stalk" }
+    ],
+    "steps": [
+      "Boil eggs and slice.",
+      "Mix mayonnaise with soy sauce.",
+      "Top rice with eggs and sauce.",
+      "Garnish with spring onion and serve."
+    ],
+    "nutrition": { "calories_kcal": 640, "protein_g": 20, "carbs_g": 82, "fat_g": 26 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["egg", "soy"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegan Mango Oat Bowl",
+    "ingredients": [
+      { "name": "oats", "quantity": "1 cup" },
+      { "name": "plant milk", "quantity": "250ml" },
+      { "name": "mango", "quantity": "1 piece" },
+      { "name": "chia seeds", "quantity": "1 tbsp" },
+      { "name": "maple syrup", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Cook oats with plant milk.",
+      "Top with mango slices.",
+      "Sprinkle chia seeds and maple syrup.",
+      "Serve."
+    ],
+    "nutrition": { "calories_kcal": 560, "protein_g": 14, "carbs_g": 98, "fat_g": 14 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "breakfast",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegetarian Mushroom Risotto",
+    "ingredients": [
+      { "name": "arborio rice", "quantity": "1 cup" },
+      { "name": "mushroom", "quantity": "200g" },
+      { "name": "vegetable stock", "quantity": "500ml" },
+      { "name": "parmesan", "quantity": "40g" },
+      { "name": "butter", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Sauté mushrooms in butter.",
+      "Add rice and stir 2 minutes.",
+      "Add stock gradually while stirring.",
+      "Cook until creamy, add parmesan.",
+      "Serve warm."
+    ],
+    "nutrition": { "calories_kcal": 710, "protein_g": 22, "carbs_g": 102, "fat_g": 24 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Non-vegetarian Fish Curry Rice",
+    "ingredients": [
+      { "name": "fish fillet", "quantity": "200g" },
+      { "name": "coconut milk", "quantity": "200ml" },
+      { "name": "curry powder", "quantity": "1 tbsp" },
+      { "name": "cooked rice", "quantity": "1 bowl" },
+      { "name": "onion", "quantity": "1 piece" }
+    ],
+    "steps": [
+      "Sauté onion until soft.",
+      "Add curry powder and coconut milk.",
+      "Add fish and simmer until cooked.",
+      "Serve with rice."
+    ],
+    "nutrition": { "calories_kcal": 720, "protein_g": 38, "carbs_g": 84, "fat_g": 26 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["fish"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+
+  {
+    "name": "Vegetarian Zucchini Noodles with Pesto",
+    "ingredients": [
+      { "name": "zucchini", "quantity": "2 medium" },
+      { "name": "pesto sauce", "quantity": "3 tbsp" },
+      { "name": "cherry tomatoes", "quantity": "8 pieces" },
+      { "name": "olive oil", "quantity": "1 tbsp" },
+      { "name": "parmesan", "quantity": "20g" }
+    ],
+    "steps": [
+      "Spiralize zucchini into noodles.",
+      "Sauté noodles lightly in olive oil.",
+      "Add cherry tomatoes and pesto sauce.",
+      "Mix and serve topped with parmesan."
+    ],
+    "nutrition": { "calories_kcal": 420, "protein_g": 14, "carbs_g": 20, "fat_g": 30 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy", "nuts"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Quinoa Salad with Chickpeas",
+    "ingredients": [
+      { "name": "quinoa", "quantity": "1 cup" },
+      { "name": "chickpeas", "quantity": "1 cup" },
+      { "name": "cucumber", "quantity": "1 piece" },
+      { "name": "tomato", "quantity": "1 piece" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Cook quinoa and let cool.",
+      "Mix quinoa with chickpeas, cucumber and tomato.",
+      "Drizzle olive oil and toss well.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 540, "protein_g": 20, "carbs_g": 78, "fat_g": 16 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Non-vegetarian Garlic Butter Prawns",
+    "ingredients": [
+      { "name": "prawns", "quantity": "200g" },
+      { "name": "garlic", "quantity": "3 cloves" },
+      { "name": "butter", "quantity": "1 tbsp" },
+      { "name": "lemon juice", "quantity": "1 tbsp" },
+      { "name": "parsley", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Melt butter in pan and sauté garlic.",
+      "Add prawns and cook until pink.",
+      "Drizzle lemon juice and sprinkle parsley.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 510, "protein_g": 38, "carbs_g": 4, "fat_g": 34 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["shellfish", "dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegetarian Caprese Salad",
+    "ingredients": [
+      { "name": "tomato", "quantity": "2 pieces" },
+      { "name": "mozzarella", "quantity": "80g" },
+      { "name": "basil leaves", "quantity": "6 pieces" },
+      { "name": "olive oil", "quantity": "1 tbsp" },
+      { "name": "balsamic vinegar", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Slice tomato and mozzarella.",
+      "Layer tomato, mozzarella, and basil leaves.",
+      "Drizzle olive oil and balsamic vinegar.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 360, "protein_g": 16, "carbs_g": 8, "fat_g": 30 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Stir-fried Tempeh with Vegetables",
+    "ingredients": [
+      { "name": "tempeh", "quantity": "200g" },
+      { "name": "broccoli", "quantity": "1 cup" },
+      { "name": "carrot", "quantity": "1 piece" },
+      { "name": "soy sauce", "quantity": "1 tbsp" },
+      { "name": "sesame oil", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Cut tempeh into cubes and pan-fry until golden.",
+      "Stir-fry vegetables with sesame oil.",
+      "Add tempeh and soy sauce, toss well.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 500, "protein_g": 28, "carbs_g": 32, "fat_g": 28 },
+    "diet_type": "Vegan",
+    "allergens": ["soy", "sesame"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Non-vegetarian Teriyaki Chicken Bowl",
+    "ingredients": [
+      { "name": "chicken breast", "quantity": "200g" },
+      { "name": "cooked rice", "quantity": "1 bowl" },
+      { "name": "teriyaki sauce", "quantity": "2 tbsp" },
+      { "name": "broccoli", "quantity": "1 cup" },
+      { "name": "sesame seeds", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Cook chicken in teriyaki sauce until glazed.",
+      "Steam broccoli lightly.",
+      "Serve chicken and broccoli over rice.",
+      "Sprinkle sesame seeds."
+    ],
+    "nutrition": { "calories_kcal": 680, "protein_g": 44, "carbs_g": 66, "fat_g": 20 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["soy", "sesame"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegetarian Sweet Corn Soup",
+    "ingredients": [
+      { "name": "corn kernels", "quantity": "1 cup" },
+      { "name": "carrot", "quantity": "1 piece" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "vegetable stock", "quantity": "400ml" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Sauté onion and carrot in olive oil.",
+      "Add corn and vegetable stock.",
+      "Simmer 10 minutes, blend partially.",
+      "Serve warm."
+    ],
+    "nutrition": { "calories_kcal": 400, "protein_g": 12, "carbs_g": 68, "fat_g": 8 },
+    "diet_type": "Vegetarian",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Pumpkin Coconut Soup",
+    "ingredients": [
+      { "name": "pumpkin", "quantity": "200g" },
+      { "name": "coconut milk", "quantity": "150ml" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Sauté onion and garlic in olive oil.",
+      "Add pumpkin and cook 5 minutes.",
+      "Add coconut milk and simmer until soft.",
+      "Blend until smooth and serve."
+    ],
+    "nutrition": { "calories_kcal": 450, "protein_g": 6, "carbs_g": 48, "fat_g": 22 },
+    "diet_type": "Vegan",
+    "allergens": ["coconut"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Non-vegetarian Beef Stir Fry",
+    "ingredients": [
+      { "name": "beef slices", "quantity": "200g" },
+      { "name": "bell pepper", "quantity": "1 piece" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "soy sauce", "quantity": "1 tbsp" },
+      { "name": "sesame oil", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Stir-fry beef slices in sesame oil until brown.",
+      "Add vegetables and soy sauce.",
+      "Cook until vegetables are tender.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 520, "protein_g": 36, "carbs_g": 20, "fat_g": 28 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["soy", "sesame"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegetarian Ratatouille",
+    "ingredients": [
+      { "name": "eggplant", "quantity": "1 piece" },
+      { "name": "zucchini", "quantity": "1 piece" },
+      { "name": "tomato", "quantity": "2 pieces" },
+      { "name": "bell pepper", "quantity": "1 piece" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Chop all vegetables.",
+      "Sauté in olive oil until tender.",
+      "Season with salt and pepper.",
+      "Serve warm."
+    ],
+    "nutrition": { "calories_kcal": 380, "protein_g": 8, "carbs_g": 42, "fat_g": 20 },
+    "diet_type": "Vegetarian",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Vegan Avocado Chickpea Salad",
+    "ingredients": [
+      { "name": "avocado", "quantity": "1 piece" },
+      { "name": "chickpeas", "quantity": "1 cup" },
+      { "name": "tomato", "quantity": "1 piece" },
+      { "name": "cucumber", "quantity": "1/2 piece" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Mash avocado and mix with chickpeas.",
+      "Chop tomato and cucumber, add to mix.",
+      "Drizzle olive oil and toss.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 520, "protein_g": 18, "carbs_g": 44, "fat_g": 30 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  },
+  {
+    "name": "Non-vegetarian Eggplant Chicken Curry",
+    "ingredients": [
+      { "name": "chicken", "quantity": "200g" },
+      { "name": "eggplant", "quantity": "1 piece" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "curry powder", "quantity": "1 tbsp" },
+      { "name": "coconut milk", "quantity": "200ml" }
+    ],
+    "steps": [
+      "Cook onion and chicken until lightly browned.",
+      "Add curry powder and coconut milk.",
+      "Add eggplant and simmer until cooked.",
+      "Serve hot with rice."
+    ],
+    "nutrition": { "calories_kcal": 710, "protein_g": 42, "carbs_g": 38, "fat_g": 38 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["coconut"],
+    "meal_type": "dinner",
+    "created_at": "2026-01-30T08:00:00+08:00"
+  }
+]

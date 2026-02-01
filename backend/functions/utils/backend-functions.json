@@ -1,0 +1,49 @@
+{
+  "getShelfItems": {
+    "description": "Get items from user shelf",
+    "parameters": {
+      "category": "string , optional (Include when want get items by category)"
+    },
+    "response": {
+      "success": "boolean",
+      "message":"string",
+      "data":[]
+    }
+  },
+
+  "addShelfItem": {
+    "description": "Manual add item to shelf",
+    "parameters": {
+      "user_id": "string, required",
+      "item_name":"string , required",
+      "category":"string , required in between ('fresh produce' , 'packaged food' , 'packaged beverage')",
+      "quantity":"number , required",
+      "expiry_date":"date, required",
+      "calories_kcal":"number , required",
+    "protein_g":"number , required",
+    "fat_g":"number , required",
+    "carbs_g":"number , required"
+    },
+    "response": {
+      "success": "boolean"
+    }
+  },
+  
+  "getRecipes": {
+    "description": "Manual add item to shelf",
+    "parameters": {
+      "user_id": "string, required",
+      "item_name":"string , required",
+      "category":"string , required in between ('fresh produce' , 'packaged food' , 'packaged beverage')",
+      "quantity":"number , required",
+      "expiry_date":"date, required",
+      "calories_kcal":"number , required",
+    "protein_g":"number , required",
+    "fat_g":"number , required",
+    "carbs_g":"number , required"
+    },
+    "response": {
+      "success": "boolean"
+    }
+  }
+}

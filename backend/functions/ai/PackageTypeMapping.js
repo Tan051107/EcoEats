@@ -1,4 +1,4 @@
-import admin from '../../utils/firebase-admin.cjs'
+import admin from '../utils/firebase-admin.cjs'
 
 const database = admin.firestore()
 
@@ -12,7 +12,7 @@ export async function packageTypeMapping(materialList){
         for (const[_,typeData] of Object.entries(packageTypeData)){
             for (const key of typeData.similarKeys){
                 lookUp[key.toLowerCase()] ={
-                    packaging:key,
+                    packaging_materials:key,
                     recommendedDisposalWay:typeData.recommendedDisposalWay
                 }
             }
@@ -22,13 +22,12 @@ export async function packageTypeMapping(materialList){
             material = material.toLowerCase();
             if(lookUp[material]){
                 return {
-                    found:true,
                     ...lookUp[material]
                 }
             }
             return{
-                found:false,
-                packaging:material
+                packaging_materials:material,
+                recommendedDisposalWay: "Empty, rinse, and dry it before recycling; if it’s greasy, throw it away"
             }
         })
 
@@ -42,7 +41,7 @@ export async function packageTypeMapping(materialList){
         return{
             success:false,
             message:"Failed to map packaging type with packaging type in database" + err.message,
-            data:{}
+            data:[]
         }
     }
 }

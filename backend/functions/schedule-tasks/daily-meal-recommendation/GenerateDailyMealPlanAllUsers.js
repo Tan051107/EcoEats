@@ -1,5 +1,5 @@
 import { generateDailyMealPlan } from "./GenerateDailyMealPlan.js";
-import { getAllUsersData } from "../utils/GetAllUsersData.js";
+import { getAllUsersData } from "../../utils/GetAllUsersData.js";
 import { getAllRecipes } from "../utils/GetAllRecipes.js";
 
 export async function generateDailyMealPlanAllUsers(){

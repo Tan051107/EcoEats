@@ -25,25 +25,49 @@
     "carbs_g":"number , required"
     },
     "response": {
-      "success": "boolean"
+      "success": "boolean",
+      "message": "string"
     }
   },
   
   "getRecipes": {
     "description": "Manual add item to shelf",
-    "parameters": {
-      "user_id": "string, required",
-      "item_name":"string , required",
-      "category":"string , required in between ('fresh produce' , 'packaged food' , 'packaged beverage')",
-      "quantity":"number , required",
-      "expiry_date":"date, required",
-      "calories_kcal":"number , required",
-    "protein_g":"number , required",
-    "fat_g":"number , required",
-    "carbs_g":"number , required"
-    },
+    "parameters": {},
     "response": {
-      "success": "boolean"
+      "success": "boolean",
+      "message": "string",
+      "data": "array"
+    }
+  },
+
+  "getDailyEatenMeals": {
+    "description": "Get meals eaten by user on that day",
+    "parameters": {},
+    "response": {
+      "success": "boolean",
+      "message": "string",
+      "data": "array"
+    }
+  },
+
+  "getDailySummary": {
+    "description": "To get daily intake of user ( carbs,protein,fats,calories)",
+    "parameters": {},
+    "response": {
+      "success": "boolean",
+      "message": "string",
+      "data": "array"
+    }
+  },
+
+  "getWeeklySummary": {
+    "description": "To get weekly summary of user",
+    "parameters": {},
+    "response": {
+      "success": "boolean",
+      "message": "string",
+      "data": "array"
     }
   }
+ 
 }

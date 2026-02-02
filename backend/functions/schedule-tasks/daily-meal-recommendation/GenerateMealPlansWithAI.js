@@ -1,9 +1,9 @@
-import ai from '../ai/VertexAIClient.js'
+ import ai from '../utils/VertexAIClient.js'
 import {SchemaType} from '@google/generative-ai'
-import {getAllRecipes} from '../recipes/getRecipes.js'
-import { addRecipes } from '../utils/import-data/AddRecipes.js'
+import { getAllRecipes } from '../../recipes/GetAllRecipesHelper.js'
+import { addRecipes } from '../../utils/import-data/AddRecipes.js'
 
-export async function generateMealPlansWithAI(availableGroceries , dailyCalorieIntake , dietType , userTakenRecipes , allergens){
+export async function generateMealPlansWithAI(availableGroceries , dailyCalorieIntake , dietType , userTakenRecipes , allergies){
     const scheme = {
         type:SchemaType.OBJECT,
         properties:{
@@ -72,7 +72,7 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
                     },
                     diet_type:{
                         type:SchemaType.STRING,
-                        enum:["non-vegetarian" , "vegetarian" , "vegan" , ""]
+                        enum:["non-vegetarian" , "vegetarian" , "vegan"]
                     },
                     ingredients:{
                         type:SchemaType.ARRAY,
@@ -126,7 +126,7 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
                     },
                     diet_type:{
                         type:SchemaType.STRING,
-                        enum:["non-vegetarian" , "vegetarian" , "vegan" , ""]
+                        enum:["non-vegetarian" , "vegetarian" , "vegan"]
                     },
                     ingredients:{
                         type:SchemaType.ARRAY,
@@ -183,7 +183,7 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
                        Generate a meal plan for a single day including breakfast, lunch, and dinner.
 
                        Available groceries: ${availableGroceries}
-                       Allergens: ${allergens}
+                       Allergens: ${allergies}
                        Diet Type: ${dietType}
                        Daily Calorie Intake: ${dailyCalorieIntake}kcal
                        User Taken Recipes: ${userTakenRecipes}

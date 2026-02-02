@@ -1,4 +1,4 @@
-import ai from "./VertexAIClient.js";
+ import ai from './VertexAIClient.js'
 import { SchemaType } from "@google/generative-ai";
 import getImageMimeType from "../utils/getImageMimeType.js";
 

@@ -18,16 +18,16 @@ const shelfItemSchema =Joi.object({
 
 export const addShelfItem = functions.https.onCall(async(data,context)=>{
     if(context.auth){
-        throw new functions.https.HttpsError('unauthenticated' , "Please login to add shelf items.")
+        throw new functions.https.HttpsError('unauthenticated' , "Please login to proceed.")
     }
 
     const userId = context.auth.uid;
     const{ itemData} = data
 
-    const {error , value} = shelfItemSchema.validate(itemData)
+    const {errors , value} = shelfItemSchema.validate(itemData)
 
-    if(error){
-        throw new functions.https.HttpsError('invalid-argument',`Validation failed:${error.details.map(detail=>detail.message).join(",")}`)       
+    if(errors){
+        throw new functions.https.HttpsError('invalid-argument' , `Validation failed:${errors.details.map(detail=>({field:detail.path.join(".") , message:detail.message}))}`)       
     }
 
     try{

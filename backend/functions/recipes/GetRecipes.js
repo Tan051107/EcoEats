@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions'
-import { getAllRecipes } from './GetAllRecipesHelper'
+import { getAllRecipes } from './GetAllRecipesHelper.js'
 
 export const getRecipes = functions.https.onCall(async()=>{
     try{

@@ -1,5 +1,5 @@
 import getImageMimeType from '../utils/getImageMimeType.js'
-import ai from './VertexAIClient.js'
+ import ai from './VertexAIClient.js'
 import { SchemaType } from '@google/generative-ai'
 
 export async function getEstimatedMealNutrition(mealImage){

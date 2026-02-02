@@ -35,6 +35,11 @@ export const markAsRead = functions.https.onCall(async(data,context)=>{
         await userNotificationRef.update({
             read: true
         })
+
+        return{
+            success:true,
+            message:"Successfully mark notification as read."
+        }
     }
     catch(err){
         throw new functions.https.HttpsError("internal" , err.message)

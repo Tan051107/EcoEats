@@ -135,11 +135,7 @@ export async function getEstimatedMealNutrition(mealImage){
         }
     }
     catch(err){
-        return{
-            success:false,
-            message:err.message,
-            data:{}
-        }
+        throw new Error("Failed to receive estimated meal nutrition from Gemini." , {cause:err})
     }
 
 }

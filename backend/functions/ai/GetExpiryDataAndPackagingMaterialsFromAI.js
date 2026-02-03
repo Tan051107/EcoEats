@@ -119,11 +119,7 @@ export async function getExpiryDateAndPackagingMaterialsFromAI(images){
         }
     }
     catch(err){
-        return{
-            success:false,
-            message:"Failed to send request to retrieve expiry date and packaging materials from Gemini" + err.message,
-            data:{}
-        }
+        throw new Error("Failed to receive expiry date and packaging materials from Gemini" , {cause:err})
     }
 }
 

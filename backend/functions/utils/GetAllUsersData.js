@@ -25,11 +25,7 @@ export async function getAllUsersData(){
         }
     }
     catch(err){
-        return{
-            success:false,
-            message:err.message,
-            data:[]
-        }
+        throw new Error("Failed to retrieved users' data" , {cause:err})
     }
 
 

@@ -5,7 +5,11 @@ export const getRecipes = functions.https.onCall(async()=>{
     try{
         const allRecipes = await getAllRecipes()
         
-        return allRecipes
+        return {
+            success:true,
+            message:"Successfully retrieved all recipes",
+            data:allRecipes
+        }
     }
     catch(err){
         throw new functions.https.HttpsError('internal' , err.message)

@@ -7,7 +7,30 @@
     "response": {
       "success": "boolean",
       "message":"string",
-      "data":[]
+      "category" :"string",
+      "data":[
+                {
+                  "shelfItemId": "ABC123",
+                  "item_name": "Tomato",
+                  "category": "vegetable",
+                  "is_packaged": false,
+                  "quantity": 4,
+                  "expiry_date": "2026-01-28",
+                  "estimated_shelf_life": "5-7 days",
+                  "nutrition": {
+                    "calories_kcal": 18,
+                    "protein_g": 0.9,
+                    "carbs_g": 3.9,
+                    "fat_g": 0.2
+                  },
+                  "image_urls": {
+                    "front": "url",
+                    "back": "url"
+                  },
+                  "created_at": "timestamp",
+                  "updated_at": "timestamp"
+                }
+            ]
     }
   },
 
@@ -36,7 +59,31 @@
     "response": {
       "success": "boolean",
       "message": "string",
-      "data": "array"
+      "data": [
+                {
+                  "recipeId":"ABC123",
+                  "name": "Spicy Tomato Pasta",
+                  "ingredients": [
+                    { "name": "tomato", "quantity": "2 pieces" },
+                    { "name": "pasta", "quantity": "100g"}
+                  ],
+                  "steps": [
+                    "Boil pasta",
+                    "Cook tomato sauce",
+                    "Mix and serve"
+                  ],
+                  "nutrition": {
+                    "calories_kcal": 480,
+                    "protein_g": 16,
+                    "carbs_g": 65,
+                    "fat_g": 14
+                  },
+                  "diet_type": "vegetarian",
+                  "allergens": ["gluten"],
+                  "meal_type": "dinner",
+                  "created_at": "timestamp"
+                }
+              ]
     }
   },
 
@@ -46,8 +93,23 @@
     "response": {
       "success": "boolean",
       "message": "string",
-      "data": "array"
-    }
+      "data": [
+                {
+                  "mealId":"ABC123",
+                  "date": "timestamp",
+                  "recipe": "recipe123",
+                  "nutrition": {
+                    "calories": 620,
+                    "protein": 32,
+                    "carbs": 70,
+                    "fat": 18
+                  },
+                  "healthy_score":30,
+                  "comment": "Too oily",
+                  "created_at": "timestamp"
+                }
+              ]
+            }
   },
 
   "getDailySummary": {
@@ -56,7 +118,15 @@
     "response": {
       "success": "boolean",
       "message": "string",
-      "data": "array"
+      "data": {
+                "date": "2026-01-01",
+                "total_calories_kcal":12,
+                "total_protein_g":12,
+                "total_fat_g":12,
+                "total_carbs_g":12,
+                "remaining_calories":100,
+                "daily_calorie_intake":1200
+              }
     }
   },
 
@@ -66,7 +136,54 @@
     "response": {
       "success": "boolean",
       "message": "string",
-      "data": "array"
+      "data": {
+        "each_day_summary":[
+              {
+                "date": "2026-01-01",
+                "total_calories_kcal":12,
+                "total_protein_g":12,
+                "total_fat_g":12,
+                "total_carbs_g":12,
+                "remaining_calories":100,
+                "daily_calorie_intake":1200
+              }
+        ],
+        "average_daily_calories_kcal":12,
+        "average_daily_protein_g":12,
+        "average_daily_fat_g":12,
+        "average_daily_carbs_g":12,
+        "daily_calorie_intake_kcal":12,
+        "recommendations" :["Drink more water" , "Eat more vege"]
+      }
+    }
+  },
+
+  "clearNotifications": {
+    "description": "To clear notifications",
+    "parameters": {},
+    "response": {
+      "success": "boolean",
+      "message": "string"
+    }
+  },
+
+  "markAsRead": {
+    "description": "To clear notifications",
+    "parameters": {
+      "notification_id" : "string, required"
+    },
+    "response": {
+      "success": "boolean",
+      "message": "string"
+    }
+  },
+
+  "markAllAsRead": {
+    "description": "To mark all notifications as read",
+    "parameters": {},
+    "response": {
+      "success": "boolean",
+      "message": "string"
     }
   }
  

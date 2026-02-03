@@ -38,10 +38,6 @@ export async function packageTypeMapping(materialList){
         }
     }
     catch(err){
-        return{
-            success:false,
-            message:"Failed to map packaging type with packaging type in database" + err.message,
-            data:[]
-        }
+        throw new Error("Failed to map packaging type with packaging type in database" , {cause:err})
     }
 }

@@ -18,10 +18,6 @@ export async function getAllRecipes(){
         }
     }
     catch(err){
-        return{
-            success:false,
-            message:err.message,
-            data:[]
-        }
+        throw new Error("Failed to retrieve all recipes" , {cause:err})
     }
 }

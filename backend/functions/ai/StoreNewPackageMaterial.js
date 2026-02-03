@@ -30,10 +30,13 @@ export async function storeNewPackageMaterials(result){
 
     try{
         await packagedSnapShot.set(updates , {merge:true})
-        console.log("Added new materials to packaging_type field in packaged doc")
+        return{
+            success:true,
+            message:"Added new materials to packaging_type field in packaged doc"
+        }
     }
     catch(err){
-        console.log("Error when adding new materials to packaging_type field in packaged doc" + err.message)
+        throw new Error("Error when adding new materials to packaging_type field in packaged doc" , {cause:err})
     }
 
 }

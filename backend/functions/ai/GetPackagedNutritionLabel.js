@@ -43,7 +43,7 @@ export async function getPackagedNutritionLabel(barcode){
 
         return{
             success:true,
-            message:"Successfully retireved nutritional label",
+            message:"Successfully retrieved nutritional label",
             data:{
                     name:product?.name || "",
                     per:"100g",
@@ -58,10 +58,7 @@ export async function getPackagedNutritionLabel(barcode){
         }
     }
     catch(err){
-        return{
-            success:false,
-            message:err.message,
-            data:{}
-        }
+        throw new Error("Failed to retrieve nutritional label" , {cause:err})
     }
+    
 }

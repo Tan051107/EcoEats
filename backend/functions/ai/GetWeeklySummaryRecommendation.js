@@ -57,16 +57,12 @@ export async function getWeeklySummaryRecommendations(weeklySummary ,goal, activ
 
         return{
             success:false,
-            message:"Successfully received recommendations from Gemini.",
+            message:"Successfully received weekly summary recommendations from Gemini.",
             data:finalResult
         }
     }
     catch(err){
-        return{
-            success:false,
-            message:err.message,
-            data:[]
-        }
+        throw new Error("Failed to receive weekly summary recommendations from Gemini." , {cause:err})
     }
 
 }

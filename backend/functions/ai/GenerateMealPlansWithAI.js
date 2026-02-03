@@ -1,15 +1,18 @@
- import ai from '../utils/VertexAIClient.js'
+import ai from './VertexAIClient.js'
 import {SchemaType} from '@google/generative-ai'
-import { getAllRecipes } from '../../recipes/GetAllRecipesHelper.js'
-import { addRecipes } from '../../utils/import-data/AddRecipes.js'
+import { getAllRecipes } from '../recipes/GetAllRecipesHelper.js'
+import { addRecipes } from '../utils/import-data/AddRecipes.js'
 
 export async function generateMealPlansWithAI(availableGroceries , dailyCalorieIntake , dietType , userTakenRecipes , allergies){
-    const scheme = {
+    const schema = {
         type:SchemaType.OBJECT,
         properties:{
             breakfast:{
                 type:SchemaType.OBJECT,
                 properties:{
+                    name:{
+                        type:SchemaType.STRING
+                    },                  
                     allergens:{
                         type:SchemaType.ARRAY,
                         items:{
@@ -64,6 +67,9 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
             lunch:{
                 type:SchemaType.OBJECT,
                 properties:{
+                    name:{
+                        type:SchemaType.STRING
+                    },
                     allergens:{
                         type:SchemaType.ARRAY,
                         items:{
@@ -118,6 +124,9 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
             dinner:{
                 type:SchemaType.OBJECT,
                 properties:{
+                    name:{
+                        type:SchemaType.STRING
+                    },
                     allergens:{
                         type:SchemaType.ARRAY,
                         items:{
@@ -172,10 +181,24 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
             totalCalories:{
                 type:SchemaType.NUMBER
             },
-            groceriesUsed:{
-                type:SchemaType.STRING
-            }, 
+            missingIngredients:{
+                type:SchemaType.ARRAY,
+                items:{
+                    type:SchemaType.OBJECT,
+                    properties:{
+                        mealType:{
+                            type:SchemaType.STRING,
+                            enum:["breakfast" , "lunch" , "dinner"],
+                        },
+                        missingIngredients:{
+                            type:SchemaType.STRING,
+                            description: "List of ingredients for that meal that are not available in available groceries. Set to [] if all ingredients needed are in available groceries"
+                        }
+                    }
+                }
+            }
         },
+        required:["breakfast" , "lunch" , "dinner" , "totalCalories" ,"missingIngredients" ]
 
     }
 
@@ -195,12 +218,22 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
                        4. The total calories of the three meals should be as close as possible to the daily calorie target, without exceeding it or being more than 200 kcal below it.
                        5. Do not generate meals that are in user taken recipes list.
                        6. Generate realistic meals with proper quantities, nutrition, and preparation steps.
+                       7. List down the missing ingredients that are not available in available groceries for each meal.
                    `
     
     try{
         const response = await ai.models.generateContent({
             model: "model:'gemini-2.0-flash",
-            contents:{text:prompt}
+            contents:{
+                role:"user",
+                parts:[
+                    {text:prompt}  
+                ]
+            },
+            config:{
+                responseMimeType:"application/json",
+                responseJsonSchema:schema
+            }
         })
 
         const resultString = response.text;
@@ -217,26 +250,49 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
 
         const existingRecipes = await getAllRecipes();
 
-        const exisitingRecipesData = existingRecipes.data.map(recipe=>recipe.name)
+        const existingRecipesData = existingRecipes.data
+
+        const mealTypes = ["breakfast" , "lunch" , "dinner"]
+
+        mealTypes.forEach(meal=>{
+            finalResult?.[meal] && (finalResult?.[meal].meal_type = meal);
+        })
 
         const generatedRecipes = [finalResult.breakfast , finalResult.lunch , finalResult.dinner]
 
-        const newRecipes = generatedRecipes.filter(recipe=>!exisitingRecipesData.includes(recipe.name))
+        const newRecipes = generatedRecipes.filter(recipe=>!existingRecipesData.some(existingRecipe=>existingRecipe.name === recipe.name))
 
-        addRecipes(newRecipes)
+        const finalResultRecipes = generatedRecipes.filter(recipe=>existingRecipesData.some(existingRecipe=>existingRecipe.name === recipe.name))
+        
+        
+
+        const newRecipesAdded = await addRecipes(newRecipes)
+
+        if(!newRecipesAdded.success){
+            return newRecipesAdded
+        }
+
+        finalResultRecipes = [...finalResultRecipes , ...newRecipesAdded.data]
+        
+        const finalMealPlan = finalResultRecipes.reduce((acc,curr)=>{
+            acc[curr.meal_type] = curr
+            return acc;
+        },{})
+
+        const finalReturnResult = {
+            totalCalories:finalResult.totalCalories,
+            missingIngredients:finalResult.missingIngredients,
+            ...finalMealPlan
+        }
 
         return{
             success:true,
-            message:"Successfully received daily meals from Gemini",
-            data:finalResult
+            message:"Successfully received daily meal recommendation from Gemini",
+            data:finalReturnResult
         }
 
     }
     catch(err){
-        return{
-            success:false,
-            messsage:err.messsage,
-            data:{}
-        }
+        throw new Error("Failed to receive daily meal recommendation from Gemini" , {cause:err})
     }
 }

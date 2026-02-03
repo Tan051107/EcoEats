@@ -154,11 +154,7 @@
                 }
             }
             catch(err){
-                return{
-                    success:false,
-                    message:err.message,
-                    data:{}
-                }
+                throw new Error("Failed to get grocery image analysis from Gemini" , {cause:err})
             }
             
     }

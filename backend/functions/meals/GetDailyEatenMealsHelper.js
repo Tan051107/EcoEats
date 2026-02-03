@@ -22,10 +22,6 @@ export async function getDailyEatenMealsHelper(userId , date){
         }
     }
     catch(err){
-        return{
-            success:false,
-            message:err.message,
-            data:[]
-        }
+        throw new Error("Failed to get user daily eaten meals" , {cause:err})
     }
 }

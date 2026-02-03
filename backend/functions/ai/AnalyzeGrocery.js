@@ -26,10 +26,6 @@ export async function analyzeGroceryImage(images , barcodeValue) {
       return analyzedGroceryImageResult
     }
     catch(err){
-      return{
-        success:false,
-        message:err.message,
-        data:{}
-      }
+      throw new Error("Failed to analyze grocery image" ,{cause:err})
     }
   }

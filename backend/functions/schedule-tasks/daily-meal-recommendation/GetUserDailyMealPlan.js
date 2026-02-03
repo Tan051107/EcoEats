@@ -1,9 +1,9 @@
 import admin from '../../utils/firebase-admin.cjs'
-import { getMostSuitableMealPlans } from './GetMostSuitableMealPlans';
-import { generateMealPlansWithAI } from './GenerateMealPlansWithAI';
+import { generateMealPlan } from './GenerateMealPlan.js';
+import { generateMealPlansWithAI } from '../../ai/GenerateMealPlansWithAI.js';
 import { getUserDailyCalorieIntake } from '../../utils/GetUserDailyCalorieIntake.js';
 
-export async function generateDailyMealPlan(userData ,recipeData){
+export async function getUserDailyMealPlan(userData ,recipeData){
     const database = admin.firestore()
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
     const userDocRef = database.collection('users').doc(userData.userId);
@@ -53,10 +53,10 @@ export async function generateDailyMealPlan(userData ,recipeData){
         
         const dailyCalorieIntake = getUserDailyCalorieIntake(userData.activity_level,userData.goal,userData.bmr)
 
-        const mealPlans = getMostSuitableMealPlans(availableRecipes,dailyCalorieIntake,userGroceries);
+        const mealPlans = generateMealPlan(availableRecipes,dailyCalorieIntake,userGroceries);
 
         if(!mealPlans.success){
-            await generateMealPlansWithAI(userGroceries , dailyCalorieIntake , userDietType , userTakenRecipeNames , allergies )
+            mealPlans = await generateMealPlansWithAI(userGroceries , dailyCalorieIntake , userDietType , userTakenRecipeNames , allergies )
         }
     }
     catch(err){

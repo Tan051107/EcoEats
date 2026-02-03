@@ -5,17 +5,30 @@ export async function addRecipes(recipes){
 
     const database = admin.firestore()
     const batch = database.batch()
+    let recipesAdded = []
 
     try{
         for (const recipe of recipes){
             const docRef = database.collection('recipes').doc();
             batch.set(docRef , recipe)
+            recipesAdded.push({
+                recipeId:docRef,
+                ...recipe
+            })
         }
         await batch.commit()
-        console.log("Done uploading all recipes to Firestore")
+        return{
+            success:true,
+            message:"Added new recipes to database",
+            data:recipesAdded
+        }
     }
     catch(err){
-        console.log("Failed to uploading recipes to Firestore" + err.message)
+        return{
+            success:false,
+            message:"Failed to add new recipes",
+            data:[]
+        }
     }
 }
 

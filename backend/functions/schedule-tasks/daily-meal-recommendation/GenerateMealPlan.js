@@ -30,14 +30,17 @@ function makeSet(array){
 }
 
 function lowerBounds(array,value){
-    let low=0 , high =array.length;
-    while(lo<high){
+    let low= 0 , high =array.length;
+    while(low<high){
         const mid = Math.floor((lo+h1)/2);
         if(array[mid]?.nutrition?.calories_kcal < value){
             low = mid+1
         }
+        else if(array[mid]?.nutrition?.calories_kcal > value){
+            high = mid +1;
+        }
         else{
-            high = mid
+            return mid
         }
     }
     return low
@@ -142,10 +145,7 @@ function findMealPlans(recipes,targetCalories,userGroceries){
                 lunch: bestCombo.lunch,
                 dinner: bestCombo.dinner,
                 totalCalories: bestCombo.totalCalories,
-                groceriesUsed: Array.from(best.usedGroceries),
-                groceriesUnused: unusedGroceries,
-                groceriesUsedCount: bestCombo.usedGroceriesCount,
-                groceriesTotalCount: userGroceriesSet.size
+                missingIngredients: []
             }
         }
     }
@@ -158,7 +158,7 @@ function findMealPlans(recipes,targetCalories,userGroceries){
 
 }
 
-export async function getMostSuitableMealPlans(availableRecipes,dailyCalorieIntake,userGroceries){
+export async function generateMealPlans(availableRecipes,dailyCalorieIntake,userGroceries){
     const groceriesSet = makeSet(userGroceries);
 
     const strictRecipes = availableRecipes.filter(recipe=>strictIngredientsRecipe(recipe,groceriesSet))
@@ -176,9 +176,9 @@ export async function getMostSuitableMealPlans(availableRecipes,dailyCalorieInta
 
     if(plan.success){
         plan.mode = "loose"
-        plan.missing_ingredients = allMeals.map(meal=>({
+        plan.missingIngredients = allMeals.map(meal=>({
             recipe:meal.name,
-            missing_ingredients:missingIngredients(meal,userGroceries)
+            missingIngredients:missingIngredients(meal,userGroceries)
         }))
         return plan
     }

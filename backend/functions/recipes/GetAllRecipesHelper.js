@@ -1,10 +1,20 @@
 import admin from '../utils/firebase-admin.cjs'
 
-export async function getAllRecipes(){
+export async function getAllRecipes(category,chef){
     try{
         const database = admin.firestore()
 
-        const recipesSnapshot = await database.collection('recipes').orderBy('nutrition.calories_kcal' , 'asc').get();
+        let query = database.collection('recipes');
+
+        if(category !== undefined){
+            query = query.where('diet_type', "==" ,category)
+        }
+
+        if(chef !== undefined){
+            query = query.where("chef_name" , "==" , chef)
+        }
+
+        const recipesSnapshot = await query.orderBy('nutrition.calories_kcal' , 'asc').get();
 
         const recipesData = recipesSnapshot.docs.map(doc=>({
             recipeId:doc.id,
@@ -18,6 +28,6 @@ export async function getAllRecipes(){
         }
     }
     catch(err){
-        throw new Error("Failed to retrieve all recipes" , {cause:err})
+        throw new Error("Failed to retrieve all recipes"+ err.message , {cause:err})
     }
 }

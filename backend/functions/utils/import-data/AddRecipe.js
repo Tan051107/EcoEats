@@ -1,5 +1,4 @@
 import admin from '../firebase-admin.cjs'
-//const recipes = require('./json/recipes.json')
 
 export async function addRecipes(recipes){
 
@@ -24,12 +23,6 @@ export async function addRecipes(recipes){
         }
     }
     catch(err){
-        return{
-            success:false,
-            message:"Failed to add new recipes",
-            data:[]
-        }
+        throw new Error("Failed to add new recipes to database" , {cause:err})
     }
 }
-
-

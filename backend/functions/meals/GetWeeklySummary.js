@@ -34,7 +34,7 @@ export const getWeeklySummary = functions.https.onCall(async(_,context)=>{
         let totalWeeklyFat = 0;
         let totalWeeklyCarbs =0
 
-        const {goal,activity_level, bmr ,weight, height ,age, gender} = userData;
+        const {goal,activity_level, bmr ,weight, height ,age, gender,diet_type} = userData;
 
         const userDailyCalorieIntake = getUserDailyCalorieIntake(activity_level,goal,bmr)
 

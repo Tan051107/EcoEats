@@ -16,17 +16,13 @@
                   "is_packaged": false,
                   "quantity": 4,
                   "expiry_date": "2026-01-28",
-                  "estimated_shelf_life": "5-7 days",
                   "nutrition": {
                     "calories_kcal": 18,
                     "protein_g": 0.9,
                     "carbs_g": 3.9,
                     "fat_g": 0.2
                   },
-                  "image_urls": {
-                    "front": "url",
-                    "back": "url"
-                  },
+                  "image_urls": ["url" , "url"],
                   "created_at": "timestamp",
                   "updated_at": "timestamp"
                 }
@@ -43,9 +39,10 @@
       "quantity":"number , required",
       "expiry_date":"date, required",
       "calories_kcal":"number , required",
-    "protein_g":"number , required",
-    "fat_g":"number , required",
-    "carbs_g":"number , required"
+      "protein_g":"number , required",
+      "fat_g":"number , required",
+      "carbs_g":"number , required",
+      "image_urls": "array , optional"
     },
     "response": {
       "success": "boolean",
@@ -54,8 +51,11 @@
   },
   
   "getRecipes": {
-    "description": "Manual add item to shelf",
-    "parameters": {},
+    "description": "Gat all recipes",
+    "parameters": {
+      "category":"string , optional in between ('Vegetarian' , 'Non-vegetarian' , 'Vegan')",
+      "chef":"string , optional (to search recipe by chef name)"
+    },
     "response": {
       "success": "boolean",
       "message": "string",
@@ -79,6 +79,7 @@
                     "fat_g": 14
                   },
                   "diet_type": "vegetarian",
+                  "chef_name":"Madhur Jaffrey",
                   "allergens": ["gluten"],
                   "meal_type": "dinner",
                   "created_at": "timestamp"
@@ -96,13 +97,13 @@
       "data": [
                 {
                   "mealId":"ABC123",
-                  "date": "timestamp",
+                  "date": "2026-03-30",
                   "recipe": "recipe123",
                   "nutrition": {
-                    "calories": 620,
-                    "protein": 32,
-                    "carbs": 70,
-                    "fat": 18
+                    "calories_kcal": 620,
+                    "protein_g": 32,
+                    "carbs_g": 70,
+                    "fat_g": 18
                   },
                   "healthy_score":30,
                   "comment": "Too oily",

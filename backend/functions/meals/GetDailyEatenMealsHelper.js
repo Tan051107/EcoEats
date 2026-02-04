@@ -1,14 +1,14 @@
 import admin from '../utils/firebase-admin.cjs'
+import {format} from 'date-fns'
 
 export async function getDailyEatenMealsHelper(userId , date){
-    const startofToday = new Date(date.getFullYear(),date.getMonth(),date.getDate())
-    const endofToday = new Date(date.getFullYear(),date.getMonth(),date.getDate()+1)
+    const todayDate = format(date,"yyyy-MM-dd")
     const database = admin.firestore()
     try{
         const userRef = database.collection('users').doc(userId)
-        const mealsSnapshot = await userRef.collection('meals').where('date' , '>=' , admin.firestore.Timestamp.fromDate(startofToday))
-                                                     .where('date' , '<' , admin.firestore.Timestamp.fromDate(endofToday))
-                                                     .get()
+        const mealsSnapshot = await userRef.collection('meals').where('date' , '==' , todayDate)
+                                                               .orderBy('created_at' ,'asc')
+                                                               .get()
 
         const userDailyEatenMealsData = mealsSnapshot.docs.map(doc=>({
             mealId:doc.id,

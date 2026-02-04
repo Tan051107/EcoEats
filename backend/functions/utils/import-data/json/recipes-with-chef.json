@@ -1,0 +1,1382 @@
+[
+  {
+    "name": "Mediterranean Chickpea Salad",
+    "chef_name": "Yotam Ottolenghi",
+    "ingredients": [
+      { "name": "chickpeas", "quantity": "1 can" },
+      { "name": "cucumber", "quantity": "1 piece" },
+      { "name": "tomatoes", "quantity": "2 pieces" },
+      { "name": "olive oil", "quantity": "2 tbsp" },
+      { "name": "lemon juice", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Drain and rinse chickpeas.",
+      "Chop cucumber and tomatoes.",
+      "Mix all ingredients with olive oil and lemon juice.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 400, "protein_g": 15, "carbs_g": 45, "fat_g": 18 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T08:25:00+08:00"
+  },
+  {
+    "name": "Butternut Squash Soup",
+    "chef_name": "Nigella Lawson",
+    "ingredients": [
+      { "name": "butternut squash", "quantity": "500g" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "vegetable stock", "quantity": "500ml" },
+      { "name": "coconut milk", "quantity": "100ml" }
+    ],
+    "steps": [
+      "Sauté onion and garlic.",
+      "Add chopped squash and vegetable stock.",
+      "Simmer until soft, then blend.",
+      "Add coconut milk and serve hot."
+    ],
+    "nutrition": { "calories_kcal": 350, "protein_g": 5, "carbs_g": 45, "fat_g": 18 },
+    "diet_type": "Vegan",
+    "allergens": ["coconut"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:30:00+08:00"
+  },
+  {
+    "name": "Chicken Tikka Masala",
+    "chef_name": "Madhur Jaffrey",
+    "ingredients": [
+      { "name": "chicken breast", "quantity": "200g" },
+      { "name": "yogurt", "quantity": "100g" },
+      { "name": "tomato puree", "quantity": "150ml" },
+      { "name": "garam masala", "quantity": "1 tsp" },
+      { "name": "onion", "quantity": "1 piece" }
+    ],
+    "steps": [
+      "Marinate chicken in yogurt and spices.",
+      "Sauté onion and tomato puree.",
+      "Cook chicken until done.",
+      "Combine with sauce and simmer.",
+      "Serve with rice."
+    ],
+    "nutrition": { "calories_kcal": 550, "protein_g": 40, "carbs_g": 35, "fat_g": 25 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:35:00+08:00"
+  },
+  {
+    "name": "Avocado Toast with Poached Egg",
+    "chef_name": "Jamie Oliver",
+    "ingredients": [
+      { "name": "bread slice", "quantity": "2 pieces" },
+      { "name": "avocado", "quantity": "1 piece" },
+      { "name": "egg", "quantity": "2 pieces" },
+      { "name": "lemon juice", "quantity": "1 tsp" },
+      { "name": "salt", "quantity": "to taste" }
+    ],
+    "steps": [
+      "Toast bread slices.",
+      "Mash avocado with lemon juice and salt.",
+      "Spread avocado on toast.",
+      "Poach eggs and place on top.",
+      "Serve immediately."
+    ],
+    "nutrition": { "calories_kcal": 420, "protein_g": 16, "carbs_g": 34, "fat_g": 26 },
+    "diet_type": "Vegetarian",
+    "allergens": ["egg", "gluten"],
+    "meal_type": "breakfast",
+    "created_at": "2026-02-04T08:40:00+08:00"
+  },
+  {
+    "name": "Shrimp Scampi Pasta",
+    "chef_name": "Bobby Flay",
+    "ingredients": [
+      { "name": "spaghetti", "quantity": "150g" },
+      { "name": "shrimp", "quantity": "200g" },
+      { "name": "garlic", "quantity": "3 cloves" },
+      { "name": "butter", "quantity": "2 tbsp" },
+      { "name": "parsley", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Cook pasta until al dente.",
+      "Sauté garlic in butter.",
+      "Add shrimp and cook until pink.",
+      "Mix pasta with shrimp and garnish with parsley.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 600, "protein_g": 35, "carbs_g": 70, "fat_g": 18 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["shellfish", "gluten", "dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:45:00+08:00"
+  },
+  {
+    "name": "Caprese Salad",
+    "chef_name": "Mario Batali",
+    "ingredients": [
+      { "name": "tomatoes", "quantity": "3 pieces" },
+      { "name": "mozzarella", "quantity": "150g" },
+      { "name": "basil", "quantity": "6 leaves" },
+      { "name": "olive oil", "quantity": "2 tbsp" },
+      { "name": "balsamic vinegar", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Slice tomatoes and mozzarella.",
+      "Layer tomatoes, mozzarella, and basil.",
+      "Drizzle with olive oil and balsamic vinegar.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 320, "protein_g": 18, "carbs_g": 8, "fat_g": 24 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T08:50:00+08:00"
+  },
+  {
+    "name": "Beef Stroganoff",
+    "chef_name": "Anthony Bourdain",
+    "ingredients": [
+      { "name": "beef strips", "quantity": "250g" },
+      { "name": "mushrooms", "quantity": "100g" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "sour cream", "quantity": "100ml" },
+      { "name": "butter", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Sauté onion and mushrooms in butter.",
+      "Add beef and cook until brown.",
+      "Stir in sour cream and simmer 5 minutes.",
+      "Serve with rice or pasta."
+    ],
+    "nutrition": { "calories_kcal": 650, "protein_g": 45, "carbs_g": 30, "fat_g": 38 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:55:00+08:00"
+  },
+  {
+    "name": "Herb-Crusted Rack of Lamb",
+    "chef_name": "Gordon Ramsay",
+    "ingredients": [
+      { "name": "rack of lamb", "quantity": "500g" },
+      { "name": "rosemary", "quantity": "2 tsp" },
+      { "name": "garlic", "quantity": "3 cloves" },
+      { "name": "olive oil", "quantity": "2 tbsp" },
+      { "name": "salt", "quantity": "to taste" }
+    ],
+    "steps": [
+      "Preheat oven to 200°C.",
+      "Mix rosemary, garlic, olive oil, and salt.",
+      "Rub mixture on lamb and roast 25 minutes.",
+      "Rest 5 minutes before slicing.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 680, "protein_g": 55, "carbs_g": 2, "fat_g": 50 },
+    "diet_type": "Non-vegetarian",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:00:00+08:00"
+  },
+  {
+    "name": "Mediterranean Quinoa Salad",
+    "chef_name": "Jamie Oliver",
+    "ingredients": [
+      { "name": "quinoa", "quantity": "1 cup" },
+      { "name": "cherry tomatoes", "quantity": "10 pieces" },
+      { "name": "cucumber", "quantity": "1 piece" },
+      { "name": "feta cheese", "quantity": "50g" },
+      { "name": "olive oil", "quantity": "2 tbsp" },
+      { "name": "lemon juice", "quantity": "1 tbsp" }
+    ],
+     "steps": [
+      "Cook quinoa and let it cool.",
+      "Chop cherry tomatoes and cucumber.",
+      "Mix quinoa, vegetables, and feta cheese.",
+      "Drizzle olive oil and lemon juice.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 480, "protein_g": 18, "carbs_g": 52, "fat_g": 20 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T08:00:00+08:00"
+  },
+  {
+    "name": "Spicy Tuna Poke Bowl",
+    "chef_name": "Nobu Matsuhisa",
+    "ingredients": [
+      { "name": "sushi rice", "quantity": "1 bowl" },
+      { "name": "tuna", "quantity": "150g" },
+      { "name": "soy sauce", "quantity": "1 tbsp" },
+      { "name": "sesame oil", "quantity": "1 tsp" },
+      { "name": "avocado", "quantity": "1/2 piece" }
+    ],
+    "steps": [
+      "Cook sushi rice and let it cool.",
+      "Dice tuna and avocado.",
+      "Mix tuna with soy sauce and sesame oil.",
+      "Assemble rice, tuna, and avocado in a bowl.",
+      "Serve immediately."
+    ],
+    "nutrition": { "calories_kcal": 520, "protein_g": 32, "carbs_g": 58, "fat_g": 18 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["soy", "fish"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T08:05:00+08:00"
+  },
+  {
+    "name": "Vegan Sweet Potato Coconut Curry",
+    "chef_name": "Chloe Coscarelli",
+    "ingredients": [
+      { "name": "sweet potato", "quantity": "2 medium" },
+      { "name": "coconut milk", "quantity": "400ml" },
+      { "name": "curry powder", "quantity": "1 tbsp" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "2 cloves" }
+    ],
+    "steps": [
+      "Sauté onion and garlic until soft.",
+      "Add sweet potatoes and curry powder.",
+      "Pour in coconut milk and simmer 20 minutes.",
+      "Serve hot with rice."
+    ],
+    "nutrition": { "calories_kcal": 610, "protein_g": 8, "carbs_g": 88, "fat_g": 28 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:10:00+08:00"
+  },
+  {
+    "name": "Classic Margherita Pizza",
+    "chef_name": "Massimo Bottura",
+    "ingredients": [
+      { "name": "pizza dough", "quantity": "1 base" },
+      { "name": "tomato sauce", "quantity": "100ml" },
+      { "name": "mozzarella", "quantity": "100g" },
+      { "name": "basil", "quantity": "5 leaves" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Preheat oven to 220°C.",
+      "Spread tomato sauce on dough.",
+      "Add mozzarella and basil leaves.",
+      "Drizzle with olive oil.",
+      "Bake 12-15 minutes until golden."
+    ],
+    "nutrition": { "calories_kcal": 680, "protein_g": 28, "carbs_g": 78, "fat_g": 30 },
+    "diet_type": "Vegetarian",
+    "allergens": ["gluten", "dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:15:00+08:00"
+  },
+  {
+    "name": "Grilled Lemon Herb Salmon",
+    "chef_name": "Ina Garten",
+    "ingredients": [
+      { "name": "salmon fillet", "quantity": "200g" },
+      { "name": "lemon", "quantity": "1 piece" },
+      { "name": "dill", "quantity": "1 tsp" },
+      { "name": "olive oil", "quantity": "1 tbsp" },
+      { "name": "salt", "quantity": "to taste" }
+    ],
+    "steps": [
+      "Preheat grill.",
+      "Rub salmon with olive oil, dill, and salt.",
+      "Squeeze lemon over salmon.",
+      "Grill 6-8 minutes until cooked.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 450, "protein_g": 40, "carbs_g": 2, "fat_g": 28 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["fish"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:20:00+08:00"
+  },
+   {
+    "name": "Mediterranean Chickpea Salad",
+    "chef_name": "Yotam Ottolenghi",
+    "ingredients": [
+      { "name": "chickpeas", "quantity": "1 can" },
+      { "name": "cucumber", "quantity": "1 piece" },
+      { "name": "tomatoes", "quantity": "2 pieces" },
+      { "name": "olive oil", "quantity": "2 tbsp" },
+      { "name": "lemon juice", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Drain and rinse chickpeas.",
+      "Chop cucumber and tomatoes.",
+      "Mix all ingredients with olive oil and lemon juice.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 400, "protein_g": 15, "carbs_g": 45, "fat_g": 18 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T08:25:00+08:00"
+  },
+  {
+    "name": "Butternut Squash Soup",
+    "chef_name": "Nigella Lawson",
+    "ingredients": [
+      { "name": "butternut squash", "quantity": "500g" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "vegetable stock", "quantity": "500ml" },
+      { "name": "coconut milk", "quantity": "100ml" }
+    ],
+    "steps": [
+      "Sauté onion and garlic.",
+      "Add chopped squash and vegetable stock.",
+      "Simmer until soft, then blend.",
+      "Add coconut milk and serve hot."
+    ],
+    "nutrition": { "calories_kcal": 350, "protein_g": 5, "carbs_g": 45, "fat_g": 18 },
+    "diet_type": "Vegan",
+    "allergens": ["coconut"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:30:00+08:00"
+  },
+  {
+    "name": "Chicken Tikka Masala",
+    "chef_name": "Madhur Jaffrey",
+    "ingredients": [
+      { "name": "chicken breast", "quantity": "200g" },
+      { "name": "yogurt", "quantity": "100g" },
+      { "name": "tomato puree", "quantity": "150ml" },
+      { "name": "garam masala", "quantity": "1 tsp" },
+      { "name": "onion", "quantity": "1 piece" }
+    ],
+    "steps": [
+      "Marinate chicken in yogurt and spices.",
+      "Sauté onion and tomato puree.",
+      "Cook chicken until done.",
+      "Combine with sauce and simmer.",
+      "Serve with rice."
+    ],
+    "nutrition": { "calories_kcal": 550, "protein_g": 40, "carbs_g": 35, "fat_g": 25 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:35:00+08:00"
+  },
+  {
+    "name": "Avocado Toast with Poached Egg",
+    "chef_name": "Jamie Oliver",
+    "ingredients": [
+      { "name": "bread slice", "quantity": "2 pieces" },
+      { "name": "avocado", "quantity": "1 piece" },
+      { "name": "egg", "quantity": "2 pieces" },
+      { "name": "lemon juice", "quantity": "1 tsp" },
+      { "name": "salt", "quantity": "to taste" }
+    ],
+    "steps": [
+      "Toast bread slices.",
+      "Mash avocado with lemon juice and salt.",
+      "Spread avocado on toast.",
+      "Poach eggs and place on top.",
+      "Serve immediately."
+    ],
+    "nutrition": { "calories_kcal": 420, "protein_g": 16, "carbs_g": 34, "fat_g": 26 },
+    "diet_type": "Vegetarian",
+    "allergens": ["egg", "gluten"],
+    "meal_type": "breakfast",
+    "created_at": "2026-02-04T08:40:00+08:00"
+  },
+  {
+    "name": "Shrimp Scampi Pasta",
+    "chef_name": "Bobby Flay",
+    "ingredients": [
+      { "name": "spaghetti", "quantity": "150g" },
+      { "name": "shrimp", "quantity": "200g" },
+      { "name": "garlic", "quantity": "3 cloves" },
+      { "name": "butter", "quantity": "2 tbsp" },
+      { "name": "parsley", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Cook pasta until al dente.",
+      "Sauté garlic in butter.",
+      "Add shrimp and cook until pink.",
+      "Mix pasta with shrimp and garnish with parsley.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 600, "protein_g": 35, "carbs_g": 70, "fat_g": 18 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["shellfish", "gluten", "dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:45:00+08:00"
+  },
+  {
+    "name": "Caprese Salad",
+    "chef_name": "Mario Batali",
+    "ingredients": [
+      { "name": "tomatoes", "quantity": "3 pieces" },
+      { "name": "mozzarella", "quantity": "150g" },
+      { "name": "basil", "quantity": "6 leaves" },
+      { "name": "olive oil", "quantity": "2 tbsp" },
+      { "name": "balsamic vinegar", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Slice tomatoes and mozzarella.",
+      "Layer tomatoes, mozzarella, and basil.",
+      "Drizzle with olive oil and balsamic vinegar.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 320, "protein_g": 18, "carbs_g": 8, "fat_g": 24 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T08:50:00+08:00"
+  },
+  {
+    "name": "Beef Stroganoff",
+    "chef_name": "Anthony Bourdain",
+    "ingredients": [
+      { "name": "beef strips", "quantity": "250g" },
+      { "name": "mushrooms", "quantity": "100g" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "sour cream", "quantity": "100ml" },
+      { "name": "butter", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Sauté onion and mushrooms in butter.",
+      "Add beef and cook until brown.",
+      "Stir in sour cream and simmer 5 minutes.",
+      "Serve with rice or pasta."
+    ],
+    "nutrition": { "calories_kcal": 650, "protein_g": 45, "carbs_g": 30, "fat_g": 38 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:55:00+08:00"
+  },
+  {
+    "name": "Greek Yogurt Parfait",
+    "chef_name": "Giada De Laurentiis",
+    "ingredients": [
+      { "name": "Greek yogurt", "quantity": "200g" },
+      { "name": "granola", "quantity": "50g" },
+      { "name": "mixed berries", "quantity": "100g" },
+      { "name": "honey", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Layer yogurt, granola, and berries in a glass.",
+      "Drizzle with honey.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 300, "protein_g": 12, "carbs_g": 40, "fat_g": 8 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy", "gluten"],
+    "meal_type": "breakfast",
+    "created_at": "2026-02-04T09:00:00+08:00"
+  },
+  {
+    "name": "Lemon Herb Salmon",
+    "chef_name": "Curtis Stone",
+    "ingredients": [
+      { "name": "salmon fillet", "quantity": "200g" },
+      { "name": "lemon", "quantity": "1 piece" },
+      { "name": "olive oil", "quantity": "1 tbsp" },
+      { "name": "rosemary", "quantity": "1 tsp" },
+      { "name": "garlic", "quantity": "2 cloves" }
+    ],
+    "steps": [
+      "Preheat oven to 200°C.",
+      "Place salmon on baking tray and drizzle with olive oil, lemon juice, garlic, and rosemary.",
+      "Bake for 15-20 minutes.",
+      "Serve hot with vegetables."
+    ],
+    "nutrition": { "calories_kcal": 450, "protein_g": 35, "carbs_g": 0, "fat_g": 30 },
+    "diet_type": "Pescatarian",
+    "allergens": ["fish"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T09:05:00+08:00"
+  },
+  {
+    "name": "Spicy Tofu Stir Fry",
+    "chef_name": "Ching-He Huang",
+    "ingredients": [
+      { "name": "tofu", "quantity": "200g" },
+      { "name": "bell pepper", "quantity": "1 piece" },
+      { "name": "soy sauce", "quantity": "2 tbsp" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "chili flakes", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Cube tofu and sauté until golden.",
+      "Add chopped bell pepper, garlic, and chili flakes.",
+      "Stir in soy sauce and cook 5 more minutes.",
+      "Serve with rice."
+    ],
+    "nutrition": { "calories_kcal": 350, "protein_g": 20, "carbs_g": 25, "fat_g": 18 },
+    "diet_type": "Vegan",
+    "allergens": ["soy"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T09:10:00+08:00"
+  },
+  {
+    "name": "Classic Margherita Pizza",
+    "chef_name": "Massimo Bottura",
+    "ingredients": [
+      { "name": "pizza dough", "quantity": "250g" },
+      { "name": "tomato sauce", "quantity": "100ml" },
+      { "name": "mozzarella", "quantity": "100g" },
+      { "name": "basil", "quantity": "5 leaves" },
+      { "name": "olive oil", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Preheat oven to 220°C.",
+      "Spread tomato sauce over pizza dough.",
+      "Add mozzarella and basil leaves.",
+      "Bake for 12-15 minutes.",
+      "Drizzle olive oil before serving."
+    ],
+    "nutrition": { "calories_kcal": 500, "protein_g": 20, "carbs_g": 60, "fat_g": 20 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy", "gluten"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T09:15:00+08:00"
+  },
+  {
+    "name": "Thai Green Curry Chicken",
+    "chef_name": "Pailin Chongchitnant",
+    "ingredients": [
+      { "name": "chicken breast", "quantity": "200g" },
+      { "name": "green curry paste", "quantity": "2 tbsp" },
+      { "name": "coconut milk", "quantity": "200ml" },
+      { "name": "bamboo shoots", "quantity": "50g" },
+      { "name": "basil", "quantity": "5 leaves" }
+    ],
+    "steps": [
+      "Sauté curry paste in a pan.",
+      "Add chicken and cook until brown.",
+      "Pour in coconut milk and simmer.",
+      "Add bamboo shoots and basil.",
+      "Serve with steamed rice."
+    ],
+    "nutrition": { "calories_kcal": 550, "protein_g": 40, "carbs_g": 30, "fat_g": 30 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["coconut"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T09:20:00+08:00"
+  },
+  {
+    "name": "Quinoa & Black Bean Salad",
+    "chef_name": "Deb Perelman",
+    "ingredients": [
+      { "name": "quinoa", "quantity": "100g" },
+      { "name": "black beans", "quantity": "1 can" },
+      { "name": "corn", "quantity": "50g" },
+      { "name": "lime juice", "quantity": "1 tbsp" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Cook quinoa as per instructions.",
+      "Mix with black beans and corn.",
+      "Drizzle lime juice and olive oil.",
+      "Serve chilled or room temperature."
+    ],
+    "nutrition": { "calories_kcal": 400, "protein_g": 15, "carbs_g": 60, "fat_g": 10 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T09:25:00+08:00"
+  },
+  {
+    "name": "Banana Pancakes",
+    "chef_name": "Rachel Khoo",
+    "ingredients": [
+      { "name": "banana", "quantity": "2 pieces" },
+      { "name": "eggs", "quantity": "2 pieces" },
+      { "name": "flour", "quantity": "50g" },
+      { "name": "milk", "quantity": "100ml" },
+      { "name": "baking powder", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Mash bananas and mix with eggs.",
+      "Add flour, milk, and baking powder.",
+      "Heat a pan and pour batter to make pancakes.",
+      "Cook until golden on both sides.",
+      "Serve with honey or syrup."
+    ],
+    "nutrition": { "calories_kcal": 350, "protein_g": 12, "carbs_g": 50, "fat_g": 10 },
+    "diet_type": "Vegetarian",
+    "allergens": ["egg", "gluten", "dairy"],
+    "meal_type": "breakfast",
+    "created_at": "2026-02-04T09:30:00+08:00"
+  },
+  {
+    "name": "Moroccan Lentil Soup",
+    "chef_name": "Sami Tamimi",
+    "ingredients": [
+      { "name": "red lentils", "quantity": "200g" },
+      { "name": "carrot", "quantity": "1 piece" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "cumin", "quantity": "1 tsp" },
+      { "name": "vegetable stock", "quantity": "500ml" }
+    ],
+    "steps": [
+      "Sauté onion and carrot.",
+      "Add lentils and stock.",
+      "Add cumin and simmer 20 minutes.",
+      "Blend partially and serve."
+    ],
+    "nutrition": { "calories_kcal": 300, "protein_g": 15, "carbs_g": 40, "fat_g": 5 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T09:35:00+08:00"
+  },
+  {
+    "name": "Cajun Grilled Shrimp",
+    "chef_name": "Emeril Lagasse",
+    "ingredients": [
+      { "name": "shrimp", "quantity": "200g" },
+      { "name": "cajun seasoning", "quantity": "1 tbsp" },
+      { "name": "olive oil", "quantity": "1 tbsp" },
+      { "name": "lemon", "quantity": "1 piece" }
+    ],
+    "steps": [
+      "Toss shrimp with olive oil and cajun seasoning.",
+      "Grill for 5 minutes each side.",
+      "Squeeze lemon on top and serve."
+    ],
+    "nutrition": { "calories_kcal": 300, "protein_g": 30, "carbs_g": 5, "fat_g": 18 },
+    "diet_type": "Pescatarian",
+    "allergens": ["shellfish"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T09:40:00+08:00"
+  },
+  {
+    "name": "Moroccan Spiced Lamb Tagine",
+    "chef_name": "Yotam Ottolenghi",
+    "ingredients": [
+      { "name": "lamb shoulder", "quantity": "500g" },
+      { "name": "apricots", "quantity": "100g" },
+      { "name": "cinnamon stick", "quantity": "1 piece" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "olive oil", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Sear lamb in olive oil.",
+      "Add onions and cook until soft.",
+      "Add apricots, cinnamon, and water; simmer 1 hour.",
+      "Serve hot with a sprinkle of fresh coriander."
+    ],
+    "nutrition": { "calories_kcal": 680, "protein_g": 38, "carbs_g": 25, "fat_g": 44 },
+    "diet_type": "Non-vegetarian",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:00:00+08:00"
+  },
+  {
+    "name": "Kale and Quinoa Salad with Citrus Dressing",
+    "chef_name": "Jamie Oliver",
+    "ingredients": [
+      { "name": "kale", "quantity": "3 cups" },
+      { "name": "quinoa", "quantity": "1 cup" },
+      { "name": "orange", "quantity": "1 piece" },
+      { "name": "almonds", "quantity": "30g" },
+      { "name": "olive oil", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Cook quinoa and let cool.",
+      "Massage kale with olive oil and orange juice.",
+      "Mix kale, quinoa, and almonds.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 450, "protein_g": 14, "carbs_g": 52, "fat_g": 20 },
+    "diet_type": "Vegan",
+    "allergens": ["nuts"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T08:10:00+08:00"
+  },
+  {
+    "name": "Seared Duck Breast with Pomegranate Glaze",
+    "chef_name": "Gordon Ramsay",
+    "ingredients": [
+      { "name": "duck breast", "quantity": "2 pieces" },
+      { "name": "pomegranate juice", "quantity": "100ml" },
+      { "name": "honey", "quantity": "1 tbsp" },
+      { "name": "thyme", "quantity": "1 tsp" },
+      { "name": "salt", "quantity": "1 pinch" }
+    ],
+    "steps": [
+      "Score duck skin and sear skin-side down.",
+      "Flip and cook until medium rare.",
+      "Reduce pomegranate juice with honey and thyme into glaze.",
+      "Drizzle over duck and serve."
+    ],
+    "nutrition": { "calories_kcal": 620, "protein_g": 40, "carbs_g": 12, "fat_g": 44 },
+    "diet_type": "Non-vegetarian",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:20:00+08:00"
+  },
+  {
+    "name": "Roasted Beetroot and Walnut Salad",
+    "chef_name": "Nigella Lawson",
+    "ingredients": [
+      { "name": "beetroot", "quantity": "3 pieces" },
+      { "name": "walnuts", "quantity": "50g" },
+      { "name": "goat cheese", "quantity": "50g" },
+      { "name": "arugula", "quantity": "2 cups" },
+      { "name": "balsamic vinegar", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Roast beetroot until tender and slice.",
+      "Toast walnuts lightly.",
+      "Arrange arugula, beetroot, and walnuts; crumble goat cheese on top.",
+      "Drizzle with balsamic vinegar and serve."
+    ],
+    "nutrition": { "calories_kcal": 420, "protein_g": 12, "carbs_g": 38, "fat_g": 26 },
+    "diet_type": "Vegetarian",
+    "allergens": ["nuts", "dairy"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T08:30:00+08:00"
+  },
+  {
+    "name": "Spicy Miso Cod",
+    "chef_name": "Masaharu Morimoto",
+    "ingredients": [
+      { "name": "cod fillet", "quantity": "2 pieces" },
+      { "name": "miso paste", "quantity": "2 tbsp" },
+      { "name": "chili flakes", "quantity": "1 tsp" },
+      { "name": "sesame oil", "quantity": "1 tbsp" },
+      { "name": "spring onion", "quantity": "1 stalk" }
+    ],
+    "steps": [
+      "Marinate cod with miso paste, chili, and sesame oil 30 min.",
+      "Bake cod at 180°C for 12 minutes.",
+      "Garnish with chopped spring onion and serve."
+    ],
+    "nutrition": { "calories_kcal": 460, "protein_g": 38, "carbs_g": 6, "fat_g": 28 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["soy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:40:00+08:00"
+  },
+  {
+    "name": "Avocado and Grapefruit Chia Pudding",
+    "chef_name": "Alice Waters",
+    "ingredients": [
+      { "name": "chia seeds", "quantity": "3 tbsp" },
+      { "name": "coconut milk", "quantity": "200ml" },
+      { "name": "avocado", "quantity": "1 piece" },
+      { "name": "grapefruit", "quantity": "1 piece" },
+      { "name": "maple syrup", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Mix chia seeds with coconut milk and refrigerate 4 hours.",
+      "Blend avocado with maple syrup.",
+      "Layer avocado puree and chia pudding; top with grapefruit segments.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 380, "protein_g": 8, "carbs_g": 28, "fat_g": 26 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "breakfast",
+    "created_at": "2026-02-04T08:50:00+08:00"
+  },
+    {
+    "name": "Moroccan Spiced Lamb Tagine",
+    "chef_name": "Yotam Ottolenghi",
+    "ingredients": [
+      { "name": "lamb shoulder", "quantity": "500g" },
+      { "name": "apricots", "quantity": "100g" },
+      { "name": "cinnamon stick", "quantity": "1 piece" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "olive oil", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Sear lamb in olive oil.",
+      "Add onions and cook until soft.",
+      "Add apricots, cinnamon, and water; simmer 1 hour.",
+      "Serve hot with a sprinkle of fresh coriander."
+    ],
+    "nutrition": { "calories_kcal": 680, "protein_g": 38, "carbs_g": 25, "fat_g": 44 },
+    "diet_type": "Non-vegetarian",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:00:00+08:00"
+  },
+  {
+    "name": "Kale and Quinoa Salad with Citrus Dressing",
+    "chef_name": "Jamie Oliver",
+    "ingredients": [
+      { "name": "kale", "quantity": "3 cups" },
+      { "name": "quinoa", "quantity": "1 cup" },
+      { "name": "orange", "quantity": "1 piece" },
+      { "name": "almonds", "quantity": "30g" },
+      { "name": "olive oil", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Cook quinoa and let cool.",
+      "Massage kale with olive oil and orange juice.",
+      "Mix kale, quinoa, and almonds.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 450, "protein_g": 14, "carbs_g": 52, "fat_g": 20 },
+    "diet_type": "Vegan",
+    "allergens": ["nuts"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T08:10:00+08:00"
+  },
+  {
+    "name": "Seared Duck Breast with Pomegranate Glaze",
+    "chef_name": "Gordon Ramsay",
+    "ingredients": [
+      { "name": "duck breast", "quantity": "2 pieces" },
+      { "name": "pomegranate juice", "quantity": "100ml" },
+      { "name": "honey", "quantity": "1 tbsp" },
+      { "name": "thyme", "quantity": "1 tsp" },
+      { "name": "salt", "quantity": "1 pinch" }
+    ],
+    "steps": [
+      "Score duck skin and sear skin-side down.",
+      "Flip and cook until medium rare.",
+      "Reduce pomegranate juice with honey and thyme into glaze.",
+      "Drizzle over duck and serve."
+    ],
+    "nutrition": { "calories_kcal": 620, "protein_g": 40, "carbs_g": 12, "fat_g": 44 },
+    "diet_type": "Non-vegetarian",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:20:00+08:00"
+  },
+  {
+    "name": "Roasted Beetroot and Walnut Salad",
+    "chef_name": "Nigella Lawson",
+    "ingredients": [
+      { "name": "beetroot", "quantity": "3 pieces" },
+      { "name": "walnuts", "quantity": "50g" },
+      { "name": "goat cheese", "quantity": "50g" },
+      { "name": "arugula", "quantity": "2 cups" },
+      { "name": "balsamic vinegar", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Roast beetroot until tender and slice.",
+      "Toast walnuts lightly.",
+      "Arrange arugula, beetroot, and walnuts; crumble goat cheese on top.",
+      "Drizzle with balsamic vinegar and serve."
+    ],
+    "nutrition": { "calories_kcal": 420, "protein_g": 12, "carbs_g": 38, "fat_g": 26 },
+    "diet_type": "Vegetarian",
+    "allergens": ["nuts", "dairy"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T08:30:00+08:00"
+  },
+  {
+    "name": "Spicy Miso Cod",
+    "chef_name": "Masaharu Morimoto",
+    "ingredients": [
+      { "name": "cod fillet", "quantity": "2 pieces" },
+      { "name": "miso paste", "quantity": "2 tbsp" },
+      { "name": "chili flakes", "quantity": "1 tsp" },
+      { "name": "sesame oil", "quantity": "1 tbsp" },
+      { "name": "spring onion", "quantity": "1 stalk" }
+    ],
+    "steps": [
+      "Marinate cod with miso paste, chili, and sesame oil 30 min.",
+      "Bake cod at 180°C for 12 minutes.",
+      "Garnish with chopped spring onion and serve."
+    ],
+    "nutrition": { "calories_kcal": 460, "protein_g": 38, "carbs_g": 6, "fat_g": 28 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["soy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T08:40:00+08:00"
+  },
+  {
+    "name": "Avocado and Grapefruit Chia Pudding",
+    "chef_name": "Alice Waters",
+    "ingredients": [
+      { "name": "chia seeds", "quantity": "3 tbsp" },
+      { "name": "coconut milk", "quantity": "200ml" },
+      { "name": "avocado", "quantity": "1 piece" },
+      { "name": "grapefruit", "quantity": "1 piece" },
+      { "name": "maple syrup", "quantity": "1 tsp" }
+    ],
+    "steps": [
+      "Mix chia seeds with coconut milk and refrigerate 4 hours.",
+      "Blend avocado with maple syrup.",
+      "Layer avocado puree and chia pudding; top with grapefruit segments.",
+      "Serve chilled."
+    ],
+    "nutrition": { "calories_kcal": 380, "protein_g": 8, "carbs_g": 28, "fat_g": 26 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "breakfast",
+    "created_at": "2026-02-04T08:50:00+08:00"
+  },
+  {
+    "name": "Vietnamese Lemongrass Chicken Skewers",
+    "chef_name": "Christina Tosi",
+    "ingredients": [
+      { "name": "chicken thigh", "quantity": "500g" },
+      { "name": "lemongrass", "quantity": "2 stalks" },
+      { "name": "fish sauce", "quantity": "2 tbsp" },
+      { "name": "garlic", "quantity": "3 cloves" },
+      { "name": "lime juice", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Marinate chicken with crushed lemongrass, garlic, fish sauce, and lime juice 1 hour.",
+      "Thread chicken onto skewers.",
+      "Grill 10–12 minutes until cooked.",
+      "Serve with fresh herbs."
+    ],
+    "nutrition": { "calories_kcal": 400, "protein_g": 35, "carbs_g": 5, "fat_g": 25 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["fish"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T09:00:00+08:00"
+  },
+  {
+    "name": "Stuffed Portobello Mushrooms with Ricotta",
+    "chef_name": "Nigella Lawson",
+    "ingredients": [
+      { "name": "portobello mushrooms", "quantity": "4 pieces" },
+      { "name": "ricotta cheese", "quantity": "100g" },
+      { "name": "spinach", "quantity": "1 cup" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "parmesan", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Sauté garlic and spinach.",
+      "Mix with ricotta and stuff mushrooms.",
+      "Top with parmesan and bake 20 min at 180°C.",
+      "Serve warm."
+    ],
+    "nutrition": { "calories_kcal": 350, "protein_g": 18, "carbs_g": 12, "fat_g": 26 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T09:10:00+08:00"
+  },
+  {
+    "name": "Thai Green Papaya Salad",
+    "chef_name": "Andy Ricker",
+    "ingredients": [
+      { "name": "green papaya", "quantity": "1 cup, shredded" },
+      { "name": "green beans", "quantity": "50g" },
+      { "name": "cherry tomatoes", "quantity": "50g" },
+      { "name": "lime juice", "quantity": "2 tbsp" },
+      { "name": "peanuts", "quantity": "20g" }
+    ],
+    "steps": [
+      "Shred papaya and slice green beans.",
+      "Toss with lime juice, cherry tomatoes, and peanuts.",
+      "Serve immediately."
+    ],
+    "nutrition": { "calories_kcal": 180, "protein_g": 5, "carbs_g": 28, "fat_g": 6 },
+    "diet_type": "Vegan",
+    "allergens": ["nuts"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T09:20:00+08:00"
+  },
+  {
+    "name": "Baked Sea Bass with Herb Butter",
+    "chef_name": "Jamie Oliver",
+    "ingredients": [
+      { "name": "sea bass fillet", "quantity": "2 pieces" },
+      { "name": "butter", "quantity": "50g" },
+      { "name": "parsley", "quantity": "2 tbsp" },
+      { "name": "lemon", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "2 cloves" }
+    ],
+    "steps": [
+      "Mix butter, garlic, and parsley.",
+      "Spread over sea bass fillets.",
+      "Bake 15 minutes at 180°C.",
+      "Serve with a squeeze of lemon."
+    ],
+    "nutrition": { "calories_kcal": 450, "protein_g": 40, "carbs_g": 2, "fat_g": 30 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["dairy", "fish"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T09:30:00+08:00"
+  },
+  {
+    "name": "Roasted Carrot and Ginger Soup",
+    "chef_name": "Alice Waters",
+    "ingredients": [
+      { "name": "carrots", "quantity": "500g" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "ginger", "quantity": "1 inch" },
+      { "name": "vegetable broth", "quantity": "500ml" },
+      { "name": "olive oil", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Roast carrots and onion with olive oil 25 min.",
+      "Blend with ginger and vegetable broth until smooth.",
+      "Heat and serve."
+    ],
+    "nutrition": { "calories_kcal": 180, "protein_g": 3, "carbs_g": 28, "fat_g": 7 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T09:40:00+08:00"
+  },
+  {
+    "name": "Herb-Crusted Rack of Lamb",
+    "chef_name": "Gordon Ramsay",
+    "ingredients": [
+      { "name": "rack of lamb", "quantity": "1kg" },
+      { "name": "rosemary", "quantity": "2 tsp" },
+      { "name": "thyme", "quantity": "2 tsp" },
+      { "name": "garlic", "quantity": "3 cloves" },
+      { "name": "olive oil", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Crush garlic and herbs; rub over lamb.",
+      "Roast 25 min at 200°C.",
+      "Rest 10 min and slice.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 720, "protein_g": 60, "carbs_g": 4, "fat_g": 50 },
+    "diet_type": "Non-vegetarian",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T09:50:00+08:00"
+  },
+  {
+    "name": "Shakshuka with Feta",
+    "chef_name": "Yotam Ottolenghi",
+    "ingredients": [
+      { "name": "eggs", "quantity": "4 pieces" },
+      { "name": "tomatoes", "quantity": "400g" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "bell pepper", "quantity": "1 piece" },
+      { "name": "feta cheese", "quantity": "50g" }
+    ],
+    "steps": [
+      "Cook onions and bell pepper until soft.",
+      "Add tomatoes and simmer 10 min.",
+      "Make wells and crack eggs; cook until set.",
+      "Top with feta and serve."
+    ],
+    "nutrition": { "calories_kcal": 320, "protein_g": 18, "carbs_g": 20, "fat_g": 20 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy", "eggs"],
+    "meal_type": "breakfast",
+    "created_at": "2026-02-04T10:00:00+08:00"
+  },
+  {
+    "name": "Mango and Coconut Tapioca Pudding",
+    "chef_name": "Pierre Hermé",
+    "ingredients": [
+      { "name": "tapioca pearls", "quantity": "50g" },
+      { "name": "coconut milk", "quantity": "200ml" },
+      { "name": "mango", "quantity": "1 piece" },
+      { "name": "sugar", "quantity": "2 tsp" },
+      { "name": "mint", "quantity": "few leaves" }
+    ],
+    "steps": [
+      "Cook tapioca in coconut milk until translucent.",
+      "Sweeten with sugar.",
+      "Serve with mango cubes and mint leaves."
+    ],
+    "nutrition": { "calories_kcal": 280, "protein_g": 3, "carbs_g": 48, "fat_g": 8 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "dessert",
+    "created_at": "2026-02-04T10:10:00+08:00"
+  },
+  {
+    "name": "Crispy Skin Salmon with Lemon Dill Sauce",
+    "chef_name": "Thomas Keller",
+    "ingredients": [
+      { "name": "salmon fillet", "quantity": "2 pieces" },
+      { "name": "lemon", "quantity": "1 piece" },
+      { "name": "dill", "quantity": "1 tbsp" },
+      { "name": "butter", "quantity": "1 tbsp" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Sear salmon skin-side down until crispy.",
+      "Flip and cook 2 min.",
+      "Mix lemon juice, butter, and dill; drizzle over salmon.",
+      "Serve immediately."
+    ],
+    "nutrition": { "calories_kcal": 480, "protein_g": 38, "carbs_g": 2, "fat_g": 34 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["fish", "dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T10:20:00+08:00"
+  },
+  {
+    "name": "Roasted Butternut Squash Risotto Balls",
+    "chef_name": "Jamie Oliver",
+    "ingredients": [
+      { "name": "butternut squash", "quantity": "200g" },
+      { "name": "risotto rice", "quantity": "150g" },
+      { "name": "parmesan", "quantity": "50g" },
+      { "name": "breadcrumbs", "quantity": "50g" },
+      { "name": "olive oil", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Cook risotto with roasted squash.",
+      "Mix with parmesan, form balls, coat with breadcrumbs.",
+      "Bake 15 min until golden.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 320, "protein_g": 9, "carbs_g": 50, "fat_g": 10 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy", "gluten"],
+    "meal_type": "snack",
+    "created_at": "2026-02-04T10:30:00+08:00"
+  },
+  {
+    "name": "Lentil and Roasted Red Pepper Soup",
+    "chef_name": "Alice Waters",
+    "ingredients": [
+      { "name": "red lentils", "quantity": "150g" },
+      { "name": "red bell pepper", "quantity": "2 pieces" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "vegetable stock", "quantity": "500ml" },
+      { "name": "olive oil", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Roast bell peppers and blend with lentils, onion, and stock.",
+      "Simmer 15 min.",
+      "Serve hot."
+    ],
+    "nutrition": { "calories_kcal": 240, "protein_g": 12, "carbs_g": 38, "fat_g": 5 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T10:40:00+08:00"
+  },
+  {
+    "name": "Pan-Seared Scallops with Pea Purée",
+    "chef_name": "Gordon Ramsay",
+    "ingredients": [
+      { "name": "scallops", "quantity": "8 pieces" },
+      { "name": "peas", "quantity": "150g" },
+      { "name": "butter", "quantity": "2 tbsp" },
+      { "name": "lemon juice", "quantity": "1 tbsp" },
+      { "name": "mint", "quantity": "5 leaves" }
+    ],
+    "steps": [
+      "Sear scallops 2 min each side.",
+      "Blend peas with butter, mint, and lemon juice into purée.",
+      "Serve scallops on pea purée."
+    ],
+    "nutrition": { "calories_kcal": 300, "protein_g": 28, "carbs_g": 12, "fat_g": 14 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["shellfish", "dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T10:50:00+08:00"
+  },
+    {
+    "name": "Spicy Chickpea and Quinoa Salad",
+    "chef_name": "Yotam Ottolenghi",
+    "ingredients": [
+      { "name": "chickpeas", "quantity": "200g" },
+      { "name": "quinoa", "quantity": "100g" },
+      { "name": "red chili", "quantity": "1 piece" },
+      { "name": "coriander", "quantity": "2 tbsp" },
+      { "name": "olive oil", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Cook quinoa and chickpeas.",
+      "Mix with chopped chili, coriander, and olive oil.",
+      "Serve warm or cold."
+    ],
+    "nutrition": { "calories_kcal": 360, "protein_g": 14, "carbs_g": 55, "fat_g": 10 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T11:00:00+08:00"
+  },
+  {
+    "name": "Beef Bulgogi Lettuce Wraps",
+    "chef_name": "Maangchi",
+    "ingredients": [
+      { "name": "beef sirloin", "quantity": "300g" },
+      { "name": "soy sauce", "quantity": "2 tbsp" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "lettuce leaves", "quantity": "8 pieces" },
+      { "name": "sesame oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Marinate beef with soy sauce, garlic, and sesame oil.",
+      "Cook beef quickly on high heat.",
+      "Serve in lettuce leaves."
+    ],
+    "nutrition": { "calories_kcal": 400, "protein_g": 35, "carbs_g": 8, "fat_g": 25 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["soy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T11:10:00+08:00"
+  },
+  {
+    "name": "Pumpkin and Sage Gnocchi",
+    "chef_name": "Giada De Laurentiis",
+    "ingredients": [
+      { "name": "pumpkin puree", "quantity": "200g" },
+      { "name": "gnocchi", "quantity": "250g" },
+      { "name": "sage leaves", "quantity": "5 pieces" },
+      { "name": "butter", "quantity": "2 tbsp" },
+      { "name": "parmesan", "quantity": "30g" }
+    ],
+    "steps": [
+      "Cook gnocchi according to package.",
+      "Sauté butter and sage, toss gnocchi with pumpkin puree and butter sauce.",
+      "Top with parmesan."
+    ],
+    "nutrition": { "calories_kcal": 420, "protein_g": 12, "carbs_g": 60, "fat_g": 16 },
+    "diet_type": "Vegetarian",
+    "allergens": ["dairy", "gluten"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T11:20:00+08:00"
+  },
+  {
+    "name": "Spiced Sweet Potato Fries",
+    "chef_name": "Jamie Oliver",
+    "ingredients": [
+      { "name": "sweet potatoes", "quantity": "500g" },
+      { "name": "paprika", "quantity": "1 tsp" },
+      { "name": "cumin", "quantity": "1 tsp" },
+      { "name": "olive oil", "quantity": "2 tbsp" },
+      { "name": "salt", "quantity": "to taste" }
+    ],
+    "steps": [
+      "Cut sweet potatoes into fries.",
+      "Toss with olive oil, paprika, cumin, and salt.",
+      "Bake 25 min at 200°C."
+    ],
+    "nutrition": { "calories_kcal": 280, "protein_g": 3, "carbs_g": 50, "fat_g": 8 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "snack",
+    "created_at": "2026-02-04T11:30:00+08:00"
+  },
+  {
+    "name": "Coconut Shrimp Curry",
+    "chef_name": "Madhur Jaffrey",
+    "ingredients": [
+      { "name": "shrimp", "quantity": "300g" },
+      { "name": "coconut milk", "quantity": "200ml" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "2 cloves" },
+      { "name": "curry powder", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Sauté onion and garlic, add curry powder.",
+      "Add shrimp and cook 5 min.",
+      "Pour coconut milk, simmer 5 min.",
+      "Serve hot with rice."
+    ],
+    "nutrition": { "calories_kcal": 450, "protein_g": 30, "carbs_g": 10, "fat_g": 30 },
+    "diet_type": "Non-vegetarian",
+    "allergens": ["shellfish", "dairy"],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T11:40:00+08:00"
+  },
+  {
+    "name": "Zucchini Noodles with Pesto",
+    "chef_name": "Rachel Ray",
+    "ingredients": [
+      { "name": "zucchini", "quantity": "2 pieces" },
+      { "name": "basil pesto", "quantity": "3 tbsp" },
+      { "name": "cherry tomatoes", "quantity": "50g" },
+      { "name": "pine nuts", "quantity": "10g" },
+      { "name": "olive oil", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Spiralize zucchini into noodles.",
+      "Toss with pesto, cherry tomatoes, and pine nuts.",
+      "Serve immediately."
+    ],
+    "nutrition": { "calories_kcal": 220, "protein_g": 5, "carbs_g": 10, "fat_g": 18 },
+    "diet_type": "Vegetarian",
+    "allergens": ["nuts"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T11:50:00+08:00"
+  },
+  {
+    "name": "Lemon Garlic Roasted Cauliflower",
+    "chef_name": "Nigella Lawson",
+    "ingredients": [
+      { "name": "cauliflower", "quantity": "1 head" },
+      { "name": "lemon", "quantity": "1 piece" },
+      { "name": "garlic", "quantity": "3 cloves" },
+      { "name": "olive oil", "quantity": "2 tbsp" },
+      { "name": "parsley", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Cut cauliflower into florets.",
+      "Toss with olive oil, garlic, and lemon juice.",
+      "Roast 25 min at 200°C, garnish with parsley."
+    ],
+    "nutrition": { "calories_kcal": 180, "protein_g": 5, "carbs_g": 15, "fat_g": 12 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T12:00:00+08:00"
+  },
+  {
+    "name": "Avocado and Black Bean Tacos",
+    "chef_name": "Rick Bayless",
+    "ingredients": [
+      { "name": "tortillas", "quantity": "4 pieces" },
+      { "name": "black beans", "quantity": "200g" },
+      { "name": "avocado", "quantity": "1 piece" },
+      { "name": "corn", "quantity": "50g" },
+      { "name": "lime juice", "quantity": "1 tbsp" }
+    ],
+    "steps": [
+      "Heat tortillas.",
+      "Fill with black beans, corn, and avocado slices.",
+      "Drizzle with lime juice and serve."
+    ],
+    "nutrition": { "calories_kcal": 350, "protein_g": 10, "carbs_g": 50, "fat_g": 12 },
+    "diet_type": "Vegan",
+    "allergens": ["gluten"],
+    "meal_type": "lunch",
+    "created_at": "2026-02-04T12:10:00+08:00"
+  },
+  {
+    "name": "Moroccan Chicken Tagine",
+    "chef_name": "Claudia Roden",
+    "ingredients": [
+      { "name": "chicken thighs", "quantity": "500g" },
+      { "name": "onion", "quantity": "1 piece" },
+      { "name": "cinnamon", "quantity": "1 tsp" },
+      { "name": "apricots", "quantity": "50g" },
+      { "name": "olive oil", "quantity": "2 tbsp" }
+    ],
+    "steps": [
+      "Sauté onion and chicken with olive oil and cinnamon.",
+      "Add apricots and simmer 25 min.",
+      "Serve with couscous."
+    ],
+    "nutrition": { "calories_kcal": 500, "protein_g": 35, "carbs_g": 30, "fat_g": 25 },
+    "diet_type": "Non-vegetarian",
+    "allergens": [],
+    "meal_type": "dinner",
+    "created_at": "2026-02-04T12:20:00+08:00"
+  },
+  {
+    "name": "Chocolate Avocado Mousse",
+    "chef_name": "Pierre Hermé",
+    "ingredients": [
+      { "name": "avocado", "quantity": "2 pieces" },
+      { "name": "cocoa powder", "quantity": "3 tbsp" },
+      { "name": "maple syrup", "quantity": "2 tbsp" },
+      { "name": "vanilla extract", "quantity": "1 tsp" },
+      { "name": "salt", "quantity": "pinch" }
+    ],
+    "steps": [
+      "Blend avocado with cocoa powder, maple syrup, vanilla, and salt until smooth.",
+      "Chill 30 min and serve."
+    ],
+    "nutrition": { "calories_kcal": 300, "protein_g": 4, "carbs_g": 25, "fat_g": 22 },
+    "diet_type": "Vegan",
+    "allergens": [],
+    "meal_type": "dessert",
+    "created_at": "2026-02-04T12:30:00+08:00"
+  }
+]

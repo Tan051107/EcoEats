@@ -2,3 +2,5 @@ backend/functions/utils/serviceAccountKey.json
 backend/functions/ai/json/packagingTypes.json
 backend/functions/ai/vision/not-used-functions
 backend/functions/ai/visionClientServiceAccountKey.json
+backend/functions/utils/InitializeApp.js
+backend/functions/utils/test-functions

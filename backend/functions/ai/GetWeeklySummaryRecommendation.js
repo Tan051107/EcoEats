@@ -1,6 +1,6 @@
 import ai from './VertexAIClient.js'
 import { SchemaType } from '@google/generative-ai'
-export async function getWeeklySummaryRecommendations(weeklySummary ,goal, activityLevel , weight , height , age , gender){
+export async function getWeeklySummaryRecommendations(weeklySummary ,goal, activityLevel , weight , height , age , gender, dietType){
 
     const schema = {
         type:SchemaType.ARRAY,
@@ -17,6 +17,10 @@ export async function getWeeklySummaryRecommendations(weeklySummary ,goal, activ
 
                     Based on the following user details and nutrition data, analyze intake trends and provide 3 high-level and actionable meal recommendations.
 
+                    Output Format: Return only a JSON array of strings like:
+                    ["Recommendation1", "Recommendation2", "Recommendation3"]
+                    Do NOT include explanations, bullet points, or extra text outside the array. Keep each recommendation concise (1-2 sentences).
+
                     User details:
                     1. Goal:${goal}
                     2. Activity Level:${activityLevel},
@@ -24,6 +28,7 @@ export async function getWeeklySummaryRecommendations(weeklySummary ,goal, activ
                     4. Height (cm): ${height},
                     5. Age: ${age},
                     6. Gender: ${gender}
+                    7. Diet Type: ${dietType}
 
                     User meal details:
                     1. Daily meal summary: ${each_day_summary},
@@ -56,7 +61,7 @@ export async function getWeeklySummaryRecommendations(weeklySummary ,goal, activ
         const finalResult = JSON.parse(resultString)
 
         return{
-            success:false,
+            success:true,
             message:"Successfully received weekly summary recommendations from Gemini.",
             data:finalResult
         }

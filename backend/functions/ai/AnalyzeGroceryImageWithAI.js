@@ -44,7 +44,7 @@
                     items: {
                         type: SchemaType.OBJECT,
                         properties: {
-                        material: { 
+                        name: { 
                             type: SchemaType.STRING,
                             description:'The material of the packaging used to package the product. Set to "" if product could not be identified.'
                         },
@@ -91,7 +91,7 @@
                         For packaged food or packaged drinks:
                         - Set is_packaged=true.
                         - Include packaging materials. For each packaging material, include:
-                            -material (plastic, glass, metal, carton, paper, etc.)
+                            - name (plastic, glass, metal, carton, paper, etc.)
                             - recommendedDisposalWay (how the user should dispose it) and. 
                         - Include 'expiry_date' ONLY if clearly visible.
                         - NUTRITION: If values aren't visible, provide realistic estimates for the item shown.        

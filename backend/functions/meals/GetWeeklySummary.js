@@ -5,13 +5,13 @@ import { getAllUsersData } from '../utils/GetAllUsersData.js';
 import * as functions from 'firebase-functions'
 import { getWeeklySummaryRecommendations } from '../ai/GetWeeklySummaryRecommendation.js';
 
-export const getWeeklySummary = functions.https.onCall(async(_,context)=>{
+export const getWeeklySummary = functions.https.onCall(async(data)=>{
 
-    if(!context.auth){
+    if(!data.auth){
         throw new functions.https.HttpsError("unauthenticated" , "Please login to proceed")
     }
 
-    const userId = context.auth.uid;
+    const userId = data.auth.uid;
 
     try{
         const allUsers = await getAllUsersData();
@@ -65,7 +65,7 @@ export const getWeeklySummary = functions.https.onCall(async(_,context)=>{
             daily_calorie_intake_kcal:userDailyCalorieIntake
         }
 
-        const recommendations = await getWeeklySummaryRecommendations(result,goal,activity_level,weight,height,age,gender)
+        const recommendations = await getWeeklySummaryRecommendations(result,goal,activity_level,weight,height,age,gender,diet_type)
 
         if(!recommendations.success){
             throw functions.https.HttpsError(recommendations.message)

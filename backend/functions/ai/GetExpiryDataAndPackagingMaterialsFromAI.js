@@ -1,6 +1,7 @@
  import ai from './VertexAIClient.js'
 import { SchemaType } from "@google/generative-ai";
 import getImageMimeType from "../utils/getImageMimeType.js";
+import { storeNewPackageMaterials } from './StoreNewPackageMaterial.js';
 
 export async function getExpiryDateAndPackagingMaterialsFromAI(images){
     const allowedImageTypes = ["images/jpeg" , "images/png"]
@@ -58,7 +59,7 @@ export async function getExpiryDateAndPackagingMaterialsFromAI(images){
                         - Ignore unrelated numbers like barcode, batch number, serial number.
                         - If multiple dates exist, pick the expiry/best before/use by date.
                     2. Identify packaging materials in the image. For each material identified, include:
-                        - material (plastic, glass, metal, carton, paper, etc.)
+                        - name (plastic, glass, metal, carton, paper, etc.)
                         - recommendedDisposalWay (how the user should dispose it)
                     3. Include confidence score for the result given.
                     `
@@ -111,6 +112,7 @@ export async function getExpiryDateAndPackagingMaterialsFromAI(images){
         }
 
         const finalResult = JSON.parse(resultString)
+        await storeNewPackageMaterials(finalResult.packaging_materials)
         
         return{
             success:true,

@@ -12,7 +12,7 @@ export async function storeNewPackageMaterials(result){
 
 
     for (const [_,data] of Object.entries(packagedKeyData.packaging_types)){
-            result = result.filter(material => !data.similarKeys.some(key=>key.toLowerCase() === material?.material.toLowerCase()))
+            result = result.filter(material => !data.similarKeys.some(key=>key.toLowerCase() === material?.name.toLowerCase()))
         }
 
     if(!Array.isArray(result) || result.length === 0){
@@ -22,9 +22,9 @@ export async function storeNewPackageMaterials(result){
     const updates ={};
 
     for (const material of result){
-        if(material?.material && material?.recommendedDisposalWay){
-            updates[`packaging_types.${material.material}.recommendedDisposalWay`] = material.recommendedDisposalWay;
-            updates[`packaging_types.${material.material}.similarKeys`] = material.material;
+        if(material?.name && material?.recommendedDisposalWay){
+            updates[`packaging_types.${material.name}.recommendedDisposalWay`] = material.recommendedDisposalWay;
+            updates[`packaging_types.${material.name}.similarKeys`] = [material.name];
         }
     }
 

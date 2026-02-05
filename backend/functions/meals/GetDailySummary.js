@@ -3,13 +3,13 @@ import {getAllUsersData} from '../utils/GetAllUsersData.js'
 import * as functions from 'firebase-functions'
 import{getUserDailyCalorieIntake} from '../utils/GetUserDailyCalorieIntake.js'
 
-export const getDailySummary = functions.https.onCall(async(_,context)=>{
-    if(!context.auth){
+export const getDailySummary = functions.https.onCall(async(data)=>{
+    if(!data.auth){
         throw new functions.https.HttpsError('unauthenticated' , "Please login to proceed.")
     }
 
     try{
-        const userId = context.auth.uid;
+        const userId = data.auth.uid;
 
         const today = new Date()
 
@@ -33,7 +33,7 @@ export const getDailySummary = functions.https.onCall(async(_,context)=>{
 
         return{
             ...userDailySummary,
-            remaining_calories:remainingCalories,
+            remaining_calories:remainingCalories <= 0 ? 0 : remainingCalories,
             daily_calorie_intake:userDailyCalorieIntake
         }
     }

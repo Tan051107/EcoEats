@@ -12,7 +12,7 @@ export async function packageTypeMapping(materialList){
         for (const[_,typeData] of Object.entries(packageTypeData)){
             for (const key of typeData.similarKeys){
                 lookUp[key.toLowerCase()] ={
-                    packaging_materials:key,
+                    name:key,
                     recommendedDisposalWay:typeData.recommendedDisposalWay
                 }
             }
@@ -26,14 +26,14 @@ export async function packageTypeMapping(materialList){
                 }
             }
             return{
-                packaging_materials:material,
-                recommendedDisposalWay: "Empty, rinse, and dry it before recycling; if it’s greasy, throw it away"
+                name:material,
+                recommendedDisposalWay: "Empty, rinse, and dry it before recycling; if it is greasy, throw it away."
             }
         })
 
         return {
             success:true,
-            message:"Retrieved mappings for item packaging",
+            message:"Retrieved mappings for item packaging.",
             data:materialsFound
         }
     }

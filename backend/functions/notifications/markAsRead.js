@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions'
-import admin from '../utils/firebase-admin.cjs'
+import admin, { firestore } from '../utils/firebase-admin.cjs'
 import Joi from 'joi'
 
 export const markAsRead = functions.https.onCall(async(data,context)=>{
@@ -33,7 +33,8 @@ export const markAsRead = functions.https.onCall(async(data,context)=>{
         }
 
         await userNotificationRef.update({
-            read: true
+            read: true,
+            read_at:admin.firestore.FieldValue.serverTimestamp()
         })
 
         return{

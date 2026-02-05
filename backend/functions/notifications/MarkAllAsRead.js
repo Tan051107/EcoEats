@@ -20,7 +20,11 @@ export const markAllAsRead = functions.https.onCall(async(_,context)=>{
         const batch = database.batch()
 
         notificationsSnapshot.docs.forEach(doc=>{
-            batch.update(doc.ref , {read:true})
+            batch.update(doc.ref , {
+                read:true,
+                read_at:admin.firestore.FieldValue.serverTimestamp()       
+            }
+            )
         })
 
         await batch.commit()

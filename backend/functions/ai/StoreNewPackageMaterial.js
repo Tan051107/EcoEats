@@ -16,15 +16,22 @@ export async function storeNewPackageMaterials(result){
         }
 
     if(!Array.isArray(result) || result.length === 0){
-        return;
+        return{
+            success:true,
+            message:"No new packaging material needed to be add."
+        }
     }
 
     const updates ={};
 
+    updates['packaging_types'] = updates['packaging_types'] || {}
+    
     for (const material of result){
         if(material?.name && material?.recommendedDisposalWay){
-            updates[`packaging_types.${material.name}.recommendedDisposalWay`] = material.recommendedDisposalWay;
-            updates[`packaging_types.${material.name}.similarKeys`] = [material.name];
+            updates["packaging_types"][material.name] ={
+                recommendedDisposalWay:material.recommendedDisposalWay,
+                similarKeys:[material.name]
+            }
         }
     }
 

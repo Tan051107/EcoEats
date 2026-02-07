@@ -36,6 +36,14 @@ export async function getPackagedNutritionLabel(barcode){
             }
         }
 
+        if(product.nutriments == undefined){
+            return{
+                success:false,
+                message:"No nutrition label",
+                data:{}
+            }     
+        }
+
         const productNutriments = product.nutriments;
         const calories = productNutriments?.["energy-kcal_100g"] || (productNutriments?.["energy-kj_100g"] / 4.184) || ""
         const packagings = getPackagingMaterial(product.packagings)

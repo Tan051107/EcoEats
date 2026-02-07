@@ -3,7 +3,7 @@ import { SchemaType } from "@google/generative-ai";
 import getImageMimeType from "../utils/getImageMimeType.js";
 import { storeNewPackageMaterials } from './StoreNewPackageMaterial.js';
 
-export async function getExpiryDateAndPackagingMaterialsFromAI(images){
+export async function getExpiryDateAndPackagingMaterialsFromAI(image1,image2){
     const allowedImageTypes = ["images/jpeg" , "images/png"]
 
     const schema = {
@@ -85,12 +85,17 @@ export async function getExpiryDateAndPackagingMaterialsFromAI(images){
                 {
                     role:"user",
                     parts:[
-                        {text:prompt},
-                        images.map(image=>(
-                            {
-                                inline
+                        {
+                            inlineData:{
+                                mimeType:"image/jpeg",
+                                data:image1
+                            },
+                            inlineData:{
+                                mimeType:"image/jpeg",
+                                data:image2
                             }
-                        )),
+                        },
+                        {text:prompt}
                     ],
                     //parts:parts (used when receive image in uri)
                 }
@@ -121,7 +126,7 @@ export async function getExpiryDateAndPackagingMaterialsFromAI(images){
         }
     }
     catch(err){
-        throw new Error("Failed to receive expiry date and packaging materials from Gemini" , {cause:err})
+        throw new Error(`Failed to receive expiry date and packaging materials from Gemini, ${err.message}` , {cause:err})
     }
 }
 

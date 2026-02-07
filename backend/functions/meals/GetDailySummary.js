@@ -1,4 +1,4 @@
-import { getDailySummaryHelper } from "./GetDailySummaryHelper";
+import { getDailySummaryHelper } from './GetDailySummaryHelper.js'
 import {getAllUsersData} from '../utils/GetAllUsersData.js'
 import * as functions from 'firebase-functions'
 import{getUserDailyCalorieIntake} from '../utils/GetUserDailyCalorieIntake.js'
@@ -32,9 +32,13 @@ export const getDailySummary = functions.https.onCall(async(data)=>{
         const remainingCalories = userDailyCalorieIntake - userDailySummary.total_calories_kcal;
 
         return{
-            ...userDailySummary,
-            remaining_calories:remainingCalories <= 0 ? 0 : remainingCalories,
-            daily_calorie_intake:userDailyCalorieIntake
+            success:true,
+            message:"Successfully retrieved user's daily summary",
+            data:{
+                ...userDailySummary,
+                remaining_calories:remainingCalories <= 0 ? 0 : remainingCalories,
+                daily_calorie_intake:userDailyCalorieIntake
+            }
         }
     }
     catch(err){

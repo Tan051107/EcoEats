@@ -1,8 +1,15 @@
 import getImageMimeType from '../utils/getImageMimeType.js'
  import ai from './VertexAIClient.js'
 import { SchemaType } from '@google/generative-ai'
+import * as functions from 'firebase-functions'
+import Joi from 'joi'
+import {storeNewPackageMaterials} from './StoreNewPackageMaterial.js'
 
-export async function getEstimatedMealNutrition(mealImage){
+export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>{
+
+    if(!request.auth){
+        throw new functions.https.HttpsError('unauthenticated' , "Please login to proceed")
+    }
 
     // if(!getImageMimeType(mealImage)){
     //     return {
@@ -10,6 +17,21 @@ export async function getEstimatedMealNutrition(mealImage){
     //         message: "Please provide meal image in JPG, JPEG or PNG",
     //         data:{}
     //     }
+    // }
+
+    // const validateSchema = Joi.object({
+    //     image:Joi.string().uri().pattern(/\.(jpg|jpeg|png)$/i).required()
+    // })
+
+    // const {error , value} = validateSchema.validate(request.data)
+
+    // const {image} = value
+    //**WILL DO WHEN INTEGRATE WITH URI */
+
+    const {image} = request.data;
+
+    // if(error){
+    //     throw new functions.https.HttpsError('invalid-argument' , `Validation failed: ${error.details.map(d => `${d.path.join(".")}: ${d.message}`).join(", ")}`)
     // }
 
     const schema = {
@@ -44,16 +66,16 @@ export async function getEstimatedMealNutrition(mealImage){
                 items: {
                     type: SchemaType.OBJECT,
                     properties: {
-                    material: { 
-                        type: SchemaType.STRING,
-                        description:'The material of the packaging used to package the food or beverage. Set to "" if materials could not be identified.'
+                        name: { 
+                            type: SchemaType.STRING,
+                            description:'The material of the packaging used to package the food or beverage. Set to "" if materials could not be identified.'
+                        },
+                        recommendedDisposalWay: { 
+                            type: SchemaType.STRING,
+                            description:'Describe in a sentence the recommended way to dispose the packaging that has such material.Set to "" if materials could not be identified.'
+                        }
                     },
-                    recommendedDisposalWay: { 
-                        type: SchemaType.STRING,
-                        description:'Describe in a sentence the recommended way to dispose the packaging that has such material.Set to "" if materials could not be identified.'
-                    }
-                    },
-                    required:['material' , 'recommendedDisposalWay']
+                    required:['name' , 'recommendedDisposalWay']
                 },
                 description: 'The list of materials used to form the package to package the food or beverage. Set to [] if no packaging.'
             },
@@ -105,7 +127,7 @@ export async function getEstimatedMealNutrition(mealImage){
                     {
                         inlineData:{
                             mimeType:'image/png',
-                            data:mealImage
+                            data:image
                         }
                     }
                 ]
@@ -128,14 +150,15 @@ export async function getEstimatedMealNutrition(mealImage){
 
         const finalResult = JSON.parse(resultString)
 
+        const storeNewPackagingResponse = await storeNewPackageMaterials(finalResult.packaging_materials);
         return{
             success:true,
+            storeNewPackagingResponse: storeNewPackagingResponse.message,
             message:"Successfully received estimated meal nutrition from Gemini.",
             data:finalResult
         }
     }
     catch(err){
-        throw new Error("Failed to receive estimated meal nutrition from Gemini." , {cause:err})
+        throw new Error(`Failed to receive estimated meal nutrition from Gemini:${err.message}` , {cause:err})
     }
-
-}
+})

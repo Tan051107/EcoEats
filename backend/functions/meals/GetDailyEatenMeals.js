@@ -12,7 +12,10 @@ export const getDailyEatenMeals = functions.https.onCall(async(data)=>{
     try{
         const userDailyEatenMeals = await getDailyEatenMealsHelper(userId ,today);
 
-        return userDailyEatenMeals;
+        return {
+            userId:userId,
+            ...userDailyEatenMeals
+        }
     }
     catch(err){
         throw new functions.https.HttpsError("internal" , err.message)

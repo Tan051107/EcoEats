@@ -1,26 +1,26 @@
 
 export function getUserDailyCalorieIntake(activityLevel,goal,bmr){
-    let activityLevel = 1.2;
+    let activityLevelFactor = 1.2;
     let calorieIntakePercentage = 1
 
     switch(activityLevel){
         case "sedentary":
-            activityLevel = 1.2;
+            activityLevelFactor = 1.2;
             break;
         case "light":
-            activityLevel = 1.375;
+            activityLevelFactor = 1.375;
             break;
         case"moderate":
-            activityLevel = 1.55;
+            activityLevelFactor = 1.55;
             break;
         case "active":
-            activityLevel = 1.725;
+            activityLevelFactor = 1.725;
             break;
         case "very_active":
-            activityLevel = 1.9;
+            activityLevelFactor = 1.9;
             break;
         default:
-            activityLevel = 1.2;
+            activityLevelFactor = 1.2;
             break;
     }
 
@@ -32,8 +32,6 @@ export function getUserDailyCalorieIntake(activityLevel,goal,bmr){
             calorieIntakePercentage = 1.15
             break;
         case "maintain_weight":
-            calorieIntakePercentage = 1
-            break;
         case "eat_healthier":
             calorieIntakePercentage = 1
             break;
@@ -42,7 +40,7 @@ export function getUserDailyCalorieIntake(activityLevel,goal,bmr){
             break;
     }
 
-    const dailyCalorieIntake = bmr*activityLevel*calorieIntakePercentage;
+    const dailyCalorieIntake = bmr*activityLevelFactor*calorieIntakePercentage;
 
     return dailyCalorieIntake;
 }

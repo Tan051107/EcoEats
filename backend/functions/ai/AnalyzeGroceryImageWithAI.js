@@ -3,7 +3,7 @@
     import { storeNewPackageMaterials } from './StoreNewPackageMaterial.js';
     import getImageMimeType from '../utils/getImageMimeType.js';
 
-    export async function analyzeGroceryImageWithAI(images){
+    export async function analyzeGroceryImageWithAI(image1 , image2){
 
         const allowedImageTypes = ["images/png" , "images/jpeg"]
 
@@ -53,7 +53,7 @@
                             description:'Describe in a sentence the recommended way to dispose the packaging that has such material.Set to "" if product packaging could not be identified.'
                         }
                         },
-                        required:['material' , 'recommendedDisposalWay']
+                        required:['name' , 'recommendedDisposalWay']
                     },
                     description: 'The list of materials used to form the package to package the product. Omit if grocery is fresh produce.'
                 },
@@ -119,7 +119,11 @@
                                 {
                                     inlineData:{
                                         mimeType:"image/jpeg",
-                                        data:images
+                                        data:image1
+                                    },
+                                    inlineData:{
+                                        mimeType:"image/jpeg",
+                                        data:image2
                                     }
                                 },
                                 {text:prompt}
@@ -149,12 +153,12 @@
 
                 return{
                     success:true,
-                    message:"Successfully retrieved grocery analysis.",
+                    message:"Successfully retrieved grocery image analysis from Gemini.",
                     data:result
                 }
             }
             catch(err){
-                throw new Error("Failed to get grocery image analysis from Gemini" , {cause:err})
+                throw new Error(`Failed to get grocery image analysis from Gemini, ${err.message}` , {cause:err})
             }
             
     }

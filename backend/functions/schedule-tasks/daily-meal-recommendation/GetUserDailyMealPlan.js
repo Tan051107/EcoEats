@@ -16,6 +16,9 @@ export async function getUserDailyMealPlan(userData ,recipeData){
                 userMealsRef.where("created_at" , ">=" , sevenDaysAgo).get(), //get meals from last seven days)
                 userGroceriesRef.get()
             ]);
+
+        const userGroceries = userGroceriesSnapshot.docs.map(doc=>doc.data().item_name.toLowerCase())
+                                                    .filter(Boolean) //avoid undefined
         
         const userTakenRecipes = userMealsSnapshot.docs.map(doc=>({
             docId:doc.id,
@@ -26,16 +29,12 @@ export async function getUserDailyMealPlan(userData ,recipeData){
         
         const userTakenRecipeNames = userTakenRecipes.map(recipe=>recipe.name)
         
-        const userGroceries = userGroceriesSnapshot.docs.map(doc=>doc.data().item_name.toLowerCase())
-                                                         .filter(Boolean) //avoid undefined
         
-        const {allergies} = userData;
+        const {allergies ,diet_type:userDietType ,activity_level,goal,bmr} = userData;
         
-        const availableRecipes = recipeData.filter(recipe=>!userTakenRecipeIds.some(userTakenRecipe=> userTakenRecipe === recipe.recipeId))
+        const availableRecipes = recipeData.filter(recipe=>!userTakenRecipeIds.includes(recipe.recipeId))
                                             .filter(recipe=>recipe.allergens.some(allergen=>allergies.includes(allergen)))
         
-        const userDietType = userData.diet_type;
-
         switch(userDietType){
             case "vegetarian":
                 availableRecipes.filter(recipe=>recipe.diet_type !== 'Non-vegetarian');
@@ -47,13 +46,15 @@ export async function getUserDailyMealPlan(userData ,recipeData){
                 break;   
         }
 
-        if(availableRecipes.length === 0){
-            console.log("Call vertex ai to generate recipe")
-        }
-        
-        const dailyCalorieIntake = getUserDailyCalorieIntake(userData.activity_level,userData.goal,userData.bmr)
+        let mealPlans;
 
-        const mealPlans = generateMealPlan(availableRecipes,dailyCalorieIntake,userGroceries);
+        const dailyCalorieIntake = getUserDailyCalorieIntake(activity_level,goal,bmr)
+
+        if(availableRecipes.length === 0){
+            mealPlans = await generateMealPlansWithAI(userGroceries , dailyCalorieIntake , userDietType , userTakenRecipeNames , allergies)
+        }
+
+        mealPlans = generateMealPlan(availableRecipes,dailyCalorieIntake,userGroceries);
 
         if(!mealPlans.success){
             mealPlans = await generateMealPlansWithAI(userGroceries , dailyCalorieIntake , userDietType , userTakenRecipeNames , allergies )

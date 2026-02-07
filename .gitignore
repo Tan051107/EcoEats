@@ -4,3 +4,4 @@ backend/functions/ai/vision/not-used-functions
 backend/functions/ai/visionClientServiceAccountKey.json
 backend/functions/utils/InitializeApp.js
 backend/functions/utils/test-functions
+backend/functions/ai/test-image

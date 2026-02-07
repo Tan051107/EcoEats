@@ -3,11 +3,11 @@ function normalize(string){
 }
 
 function looseIngredientsRecipe(recipe, userGroceries ){
-    return recipe.ingredients.some(ingredient=>userGroceries.has(normalize(ingredient.name)))
+    return recipe.ingredients.some(ingredient=>userGroceries.some(userGrocery=>ingredient.toLowerCase().includes(userGrocery.toLowerCase())))
 }
 
 function strictIngredientsRecipe(recipe,userGroceries){
-    return recipe.ingredients.every(ingredient=>userGroceries.has(normalize(ingredient.name)))
+    return recipe.ingredients.every(ingredient=>userGroceries.some(userGrocery=>ingredient.toLowerCase().includes(userGrocery.toLowerCase())))
 }
 
 function missingIngredients(recipe,userGroceries){
@@ -33,10 +33,10 @@ function lowerBounds(array,value){
     let low= 0 , high =array.length;
     while(low<high){
         const mid = Math.floor((lo+h1)/2);
-        if(array[mid]?.nutrition?.calories_kcal < value){
+        if(array[mid]?.calories < value){
             low = mid+1
         }
-        else if(array[mid]?.nutrition?.calories_kcal > value){
+        else if(array[mid]?.calories > value){
             high = mid +1;
         }
         else{
@@ -97,14 +97,14 @@ function findMealPlans(recipes,targetCalories,userGroceries){
         const maxCalories = targetCalories - breakfast.nutrition.calories_kcal
         const minCalories = targetCalories - 100 - breakfast.nutrition.calories_kcal
 
-        if(maxCalories <0){
+        if(maxCalories <=0){
             continue;
         }
 
         const start = lowerBounds(pairs , minCalories)
         const end = lowerBounds(pairs, maxCalories+1) -1
 
-        if(minCalories > start || end <start){
+        if(start >=pairs.length || end <start){
             continue;
         }
 
@@ -115,13 +115,13 @@ function findMealPlans(recipes,targetCalories,userGroceries){
             const usedCount = pair.usedGroceries.size + breakfastUsedGroceries.size;
             const diff = targetCalories - totalCalories
 
-            if(!bestCombo || (usedCount >= bestCombo.usedCount && diff < best.diff)){
+            if(!bestCombo || (usedCount >= bestCombo.usedCount && diff < bestCombo.diff)){
                 bestCombo = {
                     breakfast: b,
                     lunch: pair.lunch,
                     dinner: pair.dinner,
                     totalCalories:totalCalories,
-                    usedGroceriesCount:usedCount,
+                    usedCount:usedCount,
                     diff:diff,
                     usedGroceries: unionSet(breakfastUsedGroceries, pair.usedGroceries)
                     };

@@ -1,4 +1,4 @@
-import { getDailyEatenMealsHelper } from "./GetDailyEatenMealsHelper"
+import { getDailyEatenMealsHelper } from "./GetDailyEatenMealsHelper.js"
 import { format } from "date-fns";
 
 export async function getDailySummaryHelper(userId, date){
@@ -17,9 +17,9 @@ export async function getDailySummaryHelper(userId, date){
 
         for (const mealNutrition of userMealNutrition){
             dailyCalories+=mealNutrition?.calories_kcal || 0;
-            dailyProtein+=mealNutrition?.protein_kcal || 0;
-            dailyCarbs += mealNutrition?.carbs_kcal || 0;
-            dailyFat+=mealNutrition?.fat_kcal || 0
+            dailyProtein+=mealNutrition?.protein_g || 0;
+            dailyCarbs += mealNutrition?.carbs_g || 0;
+            dailyFat+=mealNutrition?.fat_g || 0
         }
 
         return{
@@ -31,6 +31,6 @@ export async function getDailySummaryHelper(userId, date){
         }
     }
     catch(err){
-        throw new Error("Failed to generate daily summary" , {cause:err})
+        throw new Error(`Failed to generate daily summary: ${err.message}` , {cause:err})
     }
 }

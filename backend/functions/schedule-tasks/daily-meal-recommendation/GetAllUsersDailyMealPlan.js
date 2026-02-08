@@ -1,4 +1,4 @@
-import { getUserDailyMealPlan } from "./getUserDailyMealPlan.js";
+import { getUserDailyMealPlan } from "./GetUserDailyMealPlan.js";
 import { getAllUsersData } from "../../utils/GetAllUsersData.js";
 import { getAllRecipes } from "../../recipes/GetAllRecipesHelper.js";
 import { addUserDailyMealPlan } from "./AddUserMealDailyMealPlan.js";
@@ -18,8 +18,8 @@ export async function getAllUsersDailyMealPlan(){
         }
 
         for (const userData of usersData.data){
-            const userMealPlan = await getUserDailyMealPlan(userData , recipesData)
-            addUserDailyMealPlan(batch,userData.userId,userMealPlan)
+            const userMealPlan = await getUserDailyMealPlan(userData , recipesData.data)
+            addUserDailyMealPlan(batch,userData.userId,userMealPlan.data)
             batchCount++;
             if(batchCount === 450){ //only allow max of 450 batch commit
                 await batch.commit();
@@ -45,3 +45,5 @@ export async function getAllUsersDailyMealPlan(){
         }
     }
 }
+
+const data = getAllUsersDailyMealPlan()

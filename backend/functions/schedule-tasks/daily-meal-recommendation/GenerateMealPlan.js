@@ -3,11 +3,11 @@ function normalize(string){
 }
 
 function looseIngredientsRecipe(recipe, userGroceries ){
-    return recipe.ingredients.some(ingredient=>userGroceries.some(userGrocery=>ingredient.toLowerCase().includes(userGrocery.toLowerCase())))
+    return recipe.ingredients.some(ingredient=>[...userGroceries].some(userGrocery=>normalize(ingredient.name) === normalize(userGrocery)))
 }
 
 function strictIngredientsRecipe(recipe,userGroceries){
-    return recipe.ingredients.every(ingredient=>userGroceries.some(userGrocery=>ingredient.toLowerCase().includes(userGrocery.toLowerCase())))
+    return recipe.ingredients.every(ingredient=>[...userGroceries].some(userGrocery=>normalize(ingredient.name) === normalize(userGrocery)))
 }
 
 function missingIngredients(recipe,userGroceries){
@@ -32,27 +32,19 @@ function makeSet(array){
 function lowerBounds(array,value){
     let low= 0 , high =array.length;
     while(low<high){
-        const mid = Math.floor((lo+h1)/2);
+        const mid = Math.floor((low+high)/2);
         if(array[mid]?.calories < value){
             low = mid+1
         }
-        else if(array[mid]?.calories > value){
-            high = mid +1;
-        }
         else{
-            return mid
+            high = mid
         }
     }
     return low
 }
 
 function unionSet(a, b){
-    const set = new Set(a)
-    for (const x of b){
-        set.add(x)
-    }
-
-    return set
+    return new Set([...a,...b])
 }
 
 
@@ -94,28 +86,33 @@ function findMealPlans(recipes,targetCalories,userGroceries){
 
     for (const b of breakfast){
         const breakfastUsedGroceries = usedGroceriesByRecipe(b.ingredients , userGroceriesSet)
-        const maxCalories = targetCalories - breakfast.nutrition.calories_kcal
-        const minCalories = targetCalories - 100 - breakfast.nutrition.calories_kcal
-
+        const maxCalories = targetCalories - b.nutrition.calories_kcal
+        const minCalories = targetCalories - 100 - b.nutrition.calories_kcal
         if(maxCalories <=0){
             continue;
         }
 
         const start = lowerBounds(pairs , minCalories)
         const end = lowerBounds(pairs, maxCalories+1) -1
-
+        
         if(start >=pairs.length || end <start){
             continue;
         }
 
         for (let i = end ; i >=start ; i--){
             const pair = pairs[i];
-            const totalCalories = breakfast.nutrition.calories_kcal + pair.calories;
-            if(totalCalories < minCalories || totalCalories > maxCalories) continue;
-            const usedCount = pair.usedGroceries.size + breakfastUsedGroceries.size;
-            const diff = targetCalories - totalCalories
+            const totalCalories = b.nutrition.calories_kcal + pair.calories;
+            if(totalCalories < targetCalories-100 || totalCalories > targetCalories) continue;
+            
+            const currentUsedGroceries = unionSet(breakfastUsedGroceries, pair.usedGroceries);
+            const usedCount = currentUsedGroceries.size;
+            const diff = Math.abs(targetCalories - totalCalories); 
 
-            if(!bestCombo || (usedCount >= bestCombo.usedCount && diff < bestCombo.diff)){
+            // 1. Prefer more groceries used
+            // 2. If groceries equal, prefer closer calories
+            if(!bestCombo || 
+               (usedCount > bestCombo.usedCount) || 
+               (usedCount === bestCombo.usedCount && diff < bestCombo.diff)){
                 bestCombo = {
                     breakfast: b,
                     lunch: pair.lunch,
@@ -123,18 +120,22 @@ function findMealPlans(recipes,targetCalories,userGroceries){
                     totalCalories:totalCalories,
                     usedCount:usedCount,
                     diff:diff,
-                    usedGroceries: unionSet(breakfastUsedGroceries, pair.usedGroceries)
-                    };
+                    usedGroceries: currentUsedGroceries
+                };
             }
         }
     }
 
-    const unusedGroceries = []
-    for (const grocery of userGroceriesSet){
-        if(!bestCombo.usedGroceries.has(grocery)){
-            unusedGroceries.push(grocery)
+    if(bestCombo){
+        const unusedGroceries = []
+        for (const grocery of userGroceriesSet){
+            if(!bestCombo.usedGroceries.has(grocery)){
+                unusedGroceries.push(grocery)
+            }
         }
     }
+
+
 
     if(bestCombo){
         return{
@@ -158,11 +159,10 @@ function findMealPlans(recipes,targetCalories,userGroceries){
 
 }
 
-export async function generateMealPlans(availableRecipes,dailyCalorieIntake,userGroceries){
+export function generateMealPlans(availableRecipes,dailyCalorieIntake,userGroceries){
     const groceriesSet = makeSet(userGroceries);
 
     const strictRecipes = availableRecipes.filter(recipe=>strictIngredientsRecipe(recipe,groceriesSet))
-
     let plan = findMealPlans(strictRecipes,dailyCalorieIntake,userGroceries);
 
     if(plan.success){
@@ -173,15 +173,13 @@ export async function generateMealPlans(availableRecipes,dailyCalorieIntake,user
     const looseRecipes = availableRecipes.filter(recipe=>looseIngredientsRecipe(recipe,groceriesSet))
     plan = findMealPlans(looseRecipes,dailyCalorieIntake,userGroceries);
     const allMeals = [plan.data.breakfast , plan.data.lunch , plan.data.dinner];
-
     if(plan.success){
         plan.mode = "loose"
-        plan.missingIngredients = allMeals.map(meal=>({
+        plan.data.missingIngredients = allMeals.map(meal=>({
             recipe:meal.name,
-            missingIngredients:missingIngredients(meal,userGroceries)
+            missingIngredients:missingIngredients(meal, groceriesSet) 
         }))
         return plan
     }
-
     return plan
 } 

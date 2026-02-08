@@ -16,7 +16,7 @@ export function addUserDailyMealPlan(batch , userId , mealPlanData){
     for (const meal of meals){
         totalCarbs+=meal.nutrition.carbs_g;
         totalProtein+=meal.nutrition.protein_g;
-        totalFat+=meal.fat_g
+        totalFat+=meal.nutrition.fat_g
     }
 
     const fields = {
@@ -41,10 +41,7 @@ export function addUserDailyMealPlan(batch , userId , mealPlanData){
         batch.set(mealPlanRef,fields)
     }
     catch(err){
-        return {
-            success:false,
-            message:err.message
-        }
+        throw new Error("Failed to add uaer daily meal plans" , err.message)
     }
     
 }

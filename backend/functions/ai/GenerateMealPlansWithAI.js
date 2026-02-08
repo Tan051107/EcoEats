@@ -1,7 +1,7 @@
 import ai from './VertexAIClient.js'
 import {SchemaType} from '@google/generative-ai'
 import { getAllRecipes } from '../recipes/GetAllRecipesHelper.js'
-import { addRecipes } from '../utils/import-data/AddRecipes.js'
+import {addRecipes} from '../recipes/AddRecipe.js'
 
 export async function generateMealPlansWithAI(availableGroceries , dailyCalorieIntake , dietType , userTakenRecipes , allergies){
     const schema = {
@@ -62,7 +62,7 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
                         }
                     }
                 },
-                required:["allergens" , "diet_type" , "ingredients" , "nutrition" , "steps"]
+                required:["name" , "allergens" , "diet_type" , "ingredients" , "nutrition" , "steps"]
             },
             lunch:{
                 type:SchemaType.OBJECT,
@@ -113,13 +113,13 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
                         }
                     },
                     steps:{
-                        type:SchemaType.OBJECT,
+                        type:SchemaType.ARRAY,
                         items:{
                             type:SchemaType.STRING
                         }
                     },
                 },
-                required:["allergens" , "diet_type" , "ingredients" , "nutrition" , "steps"]
+                required:["name" , "allergens" , "diet_type" , "ingredients" , "nutrition" , "steps"]
             },
             dinner:{
                 type:SchemaType.OBJECT,
@@ -170,13 +170,13 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
                         }
                     },
                     steps:{
-                        type:SchemaType.OBJECT,
+                        type:SchemaType.ARRAY,
                         items:{
                             type:SchemaType.STRING
                         }
                     }
                 },
-                required:["allergens" , "diet_type" , "ingredients" , "nutrition" , "steps"]
+                required:["name" , "allergens" , "diet_type" , "ingredients" , "nutrition" , "steps"]
             },
             totalCalories:{
                 type:SchemaType.NUMBER
@@ -255,21 +255,19 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
         const mealTypes = ["breakfast" , "lunch" , "dinner"]
 
         mealTypes.forEach(meal=>{
-            finalResult?.[meal] && (finalResult?.[meal].meal_type = meal);
+            finalResult?.[meal] && (finalResult[meal].meal_type = meal);
         })
 
         const generatedRecipes = [finalResult.breakfast , finalResult.lunch , finalResult.dinner]
 
-        const newRecipes = generatedRecipes.filter(recipe=>!existingRecipesData.some(existingRecipe=>existingRecipe.name === recipe.name))
+        const newRecipes = generatedRecipes.filter(recipe=>!existingRecipesData.some(existingRecipe=>existingRecipe.name.toLowerCase() === recipe.name.toLowerCase()))
 
-        const finalResultRecipes = generatedRecipes.filter(recipe=>existingRecipesData.some(existingRecipe=>existingRecipe.name === recipe.name))
+        const finalResultRecipes = generatedRecipes.filter(recipe=>existingRecipesData.some(existingRecipe=>existingRecipe.name.toLowerCase() === recipe.name.toLowerCase()))
         
-        
+        let newRecipesAdded = [];
 
-        const newRecipesAdded = await addRecipes(newRecipes)
-
-        if(!newRecipesAdded.success){
-            return newRecipesAdded
+        if(newRecipes.length >0){
+            newRecipesAdded = await addRecipes(newRecipes)
         }
 
         finalResultRecipes = [...finalResultRecipes , ...newRecipesAdded.data]

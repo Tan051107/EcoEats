@@ -1,4 +1,4 @@
-import admin from '../firebase-admin.cjs'
+import admin from '../utils/firebase-admin.cjs'
 
 export async function addRecipes(recipes){
 
@@ -11,7 +11,7 @@ export async function addRecipes(recipes){
             const docRef = database.collection('recipes').doc();
             batch.set(docRef , recipe)
             recipesAdded.push({
-                recipeId:docRef,
+                recipeId:docRef.id,
                 ...recipe
             })
         }

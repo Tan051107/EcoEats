@@ -1,5 +1,5 @@
 import admin from '../utils/firebase-admin.cjs'
-import { getPackagedInfoPendingEdits } from './GetPackagedInfoPendingEdits';
+import { getPackagedInfoPendingEdits } from './GetPackagedInfoPendingEdits.js';
 import { overwritePackagedInfo } from './OverwritePackagedInfo.js';
 
 export async function storePackagedFoodNutrition(barcode , packagedFoodData){

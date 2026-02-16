@@ -4,7 +4,18 @@ import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/recipe_overview_card.dart';
 
 class CookbookList extends StatefulWidget {
-  const CookbookList({super.key});
+  const CookbookList(
+    {
+      super.key,
+      required this.recipeType,
+      required this.icon,
+      required this.iconColor
+    }
+  );
+
+  final String recipeType;
+  final IconData icon;
+  final Color iconColor;
 
   @override
   State<CookbookList> createState() => _CookbookListState();
@@ -19,6 +30,7 @@ class _CookbookListState extends State<CookbookList> {
     final getRecipes = functions.httpsCallable('getRecipes');
     try{
       final response = await getRecipes.call({
+        "category":widget.recipeType
       });
       final List<dynamic> dataList = response.data['data'];
       final List<Map<String,dynamic>> recipeData = dataList.map((recipe)=>Map<String,dynamic>.from(recipe)).toList();
@@ -47,7 +59,7 @@ class _CookbookListState extends State<CookbookList> {
     return Scaffold(
       body:Column(
         children: [
-          Header(subtitle: "${recipes.length} recipes",title: "Vegan",icon: Icons.eco, iconColor: Colors.green,),
+          Header(subtitle: "${recipes.length} recipes",title: widget.recipeType,icon: widget.icon, iconColor:widget.iconColor, isShowBackButton: true,),
           Expanded(
             child:isLoading
                   ?Center(

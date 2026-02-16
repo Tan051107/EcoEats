@@ -57,7 +57,7 @@ class _NotificationsState extends State<Notifications> {
             )
             : Column(
         children: [
-          Header(title: "Notifications" , icon: Icons.notifications, iconColor: Colors.black,),
+          Header(title: "Notifications" , icon: Icons.notifications, iconColor: Colors.black,isShowBackButton: false,),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(

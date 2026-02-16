@@ -9,6 +9,7 @@ class Header extends StatelessWidget {
       this.subtitle,
       this.icon,
       this.iconColor,
+      required this.isShowBackButton
     }
   );
 
@@ -16,16 +17,19 @@ class Header extends StatelessWidget {
   final String title;
   final IconData? icon;
   final Color? iconColor;
+  final bool isShowBackButton;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding:EdgeInsets.only(top:50.0 , left:16.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
+                if(isShowBackButton)...[
                 GestureDetector(
                   onTap: (){
                     Navigator.pop(context);
@@ -38,7 +42,7 @@ class Header extends StatelessWidget {
                     ),
                     child: Icon(Icons.arrow_back_ios_outlined),
                 ),
-                ),
+                )],
                 if(icon != null)...[
                   Icon(
                     icon,
@@ -50,8 +54,8 @@ class Header extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    fontWeight: HeaderTextStyle.headerText.fontWeight,
-                    fontSize: HeaderTextStyle.headerText.fontSize
+                    fontWeight: headerText.fontWeight,
+                    fontSize: headerText.fontSize
                   ),
                 )
               ],
@@ -61,8 +65,8 @@ class Header extends StatelessWidget {
               Text(
                 subtitle!,
                 style: TextStyle(
-                  fontSize: HeaderTextStyle.subtitleText.fontSize,
-                  color: HeaderTextStyle.subtitleText.color
+                  fontSize: subtitleText.fontSize,
+                  color: subtitleText.color
                 ),
               )
           ]

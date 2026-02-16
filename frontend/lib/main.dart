@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/cookbook_list.dart';
 import 'package:frontend/pages/dashboard.dart';
 import 'package:frontend/pages/notifications.dart';
+import 'package:frontend/pages/weekly_summary.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,7 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context){
-          return Dashboard() ;
+          return WeeklySummary() ;
         })
       );
     } catch (e) {

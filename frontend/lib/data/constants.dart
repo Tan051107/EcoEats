@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const TextStyle headerText = TextStyle(
   fontSize: 30,
   fontWeight: FontWeight.bold,
+  color: Colors.black
 );
 
 const TextStyle subtitleText = TextStyle(

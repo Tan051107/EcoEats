@@ -3,7 +3,6 @@ import 'package:frontend/pages/notifications.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +38,6 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFunctions _functions = FirebaseFunctions.instance;
 
   final TextEditingController emailController = TextEditingController(text: "bbc@example.com");
   final TextEditingController passwordController = TextEditingController(text: "123456");

@@ -56,7 +56,7 @@ class Header extends StatelessWidget {
                 )
               ],
             ),
-            if(subtitle != null)..
+            if(subtitle != null)...[
               SizedBox(height: 5),
               Text(
                 subtitle!,
@@ -65,7 +65,8 @@ class Header extends StatelessWidget {
                   color: HeaderTextStyle.subtitleText.color
                 ),
               )
-          ],
+          ]
+        ],
         ),
       );
   }

@@ -1,10 +1,17 @@
 import * as functions from 'firebase-functions'
 import { getAllRecipes } from './GetAllRecipesHelper.js'
 import Joi from 'joi'
+import { getUsersFavourite } from '../utils/GetUsersFavourite.js'
+
 
 export const getRecipes = functions.https.onCall(async(request)=>{
+    if(!request.auth){
+        throw new functions.https.HttpsError("unauthenticated" , "Please login to proceed.")
+    }
+    const userId = request.auth.uid;
     console.log("Received data:", request.data)
     try{
+        const userFavouriteRecipesId = await getUsersFavourite(userId);
         const schema = Joi.object({
             category:Joi.string().valid("Vegetarian" ,"Non-vegetarian" , "Vegan").invalid(null,""),
             chef:Joi.string().invalid("" , null)
@@ -20,6 +27,10 @@ export const getRecipes = functions.https.onCall(async(request)=>{
 
         const allRecipes = await getAllRecipes(category,chef)
         console.log(chef)
+
+        allRecipes.data.forEach(recipe=>{
+            recipe.is_favourite = userFavouriteRecipesId.includes(recipe.recipeId)
+        })
         
         return {
             success:true,

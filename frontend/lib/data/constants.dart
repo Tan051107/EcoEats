@@ -19,6 +19,6 @@ class ElevatedButtonStyle{
 
   static const TextStyle elevatedButtonTextStyle = TextStyle(
     color: Color(0xFF267A3D),
-    fontWeight: FontWeight)
+    fontWeight: FontWeight.bold
   );
 }

@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 
 class RecipeOverviewCard extends StatefulWidget {
-  RecipeOverviewCard(
+  const RecipeOverviewCard(
     {
       super.key,
       required this.mealName,
@@ -17,7 +16,7 @@ class RecipeOverviewCard extends StatefulWidget {
   final String mealType;
   final int mealCalories;
   final String mealDesc;
-  bool isFavourite;
+  final bool isFavourite;
 
   @override
   State<RecipeOverviewCard> createState() => _RecipeOverviewCardState();
@@ -25,10 +24,19 @@ class RecipeOverviewCard extends StatefulWidget {
 
 class _RecipeOverviewCardState extends State<RecipeOverviewCard> {
 
+  late bool _isFavourite;
+
   Future<void>addToFavourite()async{
     setState(() {
-      widget.isFavourite = !widget.isFavourite;   
+      _isFavourite = !_isFavourite;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _isFavourite = widget.isFavourite;
   }
 
   @override
@@ -102,19 +110,19 @@ class _RecipeOverviewCardState extends State<RecipeOverviewCard> {
                         ],
                       )
                     ),
-                    SizedBox(width: 10), 
+                    SizedBox(width: 10),
                     GestureDetector(
-                      o'n
+                      onTap: () => addToFavourite(),
                       child:Icon(
-                        widget.isFavourite? Icons.favorite :Icons.favorite_border,
-                        color: widget.isFavourite ? Colors.red[400] : Colors.black,
+                        _isFavourite? Icons.favorite :Icons.favorite_border,
+                        color: _isFavourite ? Colors.red[400] : Colors.black,
                         size: 30.0,
                       ),
-                    )                
+                    )
                   ],
                 ),
               )
-          ),     
+          ),
     );
   }
 }

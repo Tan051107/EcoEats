@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/cookbook_list.dart';
 import 'package:frontend/pages/notifications.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme:ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: SignInScreen(),
     );
@@ -54,7 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context){
-          return Notifications();
+          return CookbookList() ;
         })
       );
     } catch (e) {

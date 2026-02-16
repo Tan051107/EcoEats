@@ -5,3 +5,54 @@ backend/functions/ai/visionClientServiceAccountKey.json
 backend/functions/utils/InitializeApp.js
 backend/functions/utils/test-functions
 backend/functions/ai/test-image
+
+# IDE files from opening the root folder
+.idea/
+
+# General ignores for the Flutter project in the 'frontend' directory
+frontend/.DS_Store
+frontend/build/
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.packages
+frontend/pubspec.lock
+
+# Android specific ignores
+frontend/android/.gradle/
+frontend/android/app/build/
+frontend/android/app/google-services.json
+frontend/android/local.properties
+frontend/android/key.properties
+frontend/android/*.jks
+
+# iOS specific ignores
+frontend/ios/Pods/
+frontend/ios/.symlinks/
+frontend/ios/Runner/GeneratedPluginRegistrant.*
+frontend/ios/Flutter/
+frontend/ios/xcuserdata/
+
+# It's recommended to NOT ignore firebase.json as it's useful for team collaboration
+!backend/firebase.json
+
+.DS_Store
+Thumbs.db
+backend/.firebase/
+backend/logs
+backend/*.log
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+backend/firebase-debug.log*
+backend/firebase-debug.*.log*
+backend/functions/node_modules/
+backend/functions/lib-cov
+backend/functions/coverage
+backend/functions/.nyc_output
+backend/functions/.grunt
+backend/functions/bower_components
+backend/functions/build/Release
+backend/functions/.eslintcache
+backend/functions/.npm
+backend/functions/.dataconnect

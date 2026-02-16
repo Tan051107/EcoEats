@@ -43,14 +43,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# Android-specific files
-/android/app/google-services.json
-/android/local.properties
-/android/key.properties
-/android/*.jks
-
-# firebase.json is a file created by the FlutterFire CLI and should NOT be
-# ignored, as it helps the CLI synchronize your local project with your
-# Firebase project.
-!firebase.json

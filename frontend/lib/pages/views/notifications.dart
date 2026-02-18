@@ -44,11 +44,12 @@ class _NotificationsState extends State<Notifications> {
       body: isLoadingNotifications
             ?Center(
             child: Column(
-            children: [
-              Text("Loading Recipes"),
-              SizedBox(height: 5.0,),
-              CircularProgressIndicator(),
-            ], 
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Loading Notifications"),
+                SizedBox(height: 5.0,),
+                CircularProgressIndicator(),
+              ], 
             ),
             )
             :notifications.isEmpty

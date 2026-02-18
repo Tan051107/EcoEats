@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/data/constants.dart';
 
 class RecipeOverviewCard extends StatefulWidget {
   const RecipeOverviewCard(
@@ -48,8 +49,8 @@ class _RecipeOverviewCardState extends State<RecipeOverviewCard> {
     switch(widget.mealType.toLowerCase()){
       case "breakfast":
         recipeIcon = Icons.wb_sunny_outlined;
-        iconBackgroundColor = Color(0x1AEBB517);
-        iconColor =Color(0xFFF0A500);
+        iconBackgroundColor = lightYellow;
+        iconColor =normalYellow;
         break;
       case "lunch":
         recipeIcon = Icons.cloud_outlined;
@@ -64,7 +65,7 @@ class _RecipeOverviewCardState extends State<RecipeOverviewCard> {
       default:
         recipeIcon = Icons.set_meal;
         iconBackgroundColor =Color(0x1A1E9BD7);
-        iconColor = Color(0xFF1E9BD7);
+        iconColor = normalBlue;
 
     }
     return Padding(

@@ -4,7 +4,20 @@ import 'package:frontend/data/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OverviewNutritionCard extends StatelessWidget {
-  const OverviewNutritionCard({super.key});
+  const OverviewNutritionCard(
+    {
+      super.key,
+      required this.nutritionName,
+      required this.icon,
+      required this.iconBgColor,
+      required this.nutritionValue,
+    }
+  );
+
+  final String nutritionName;
+  final String icon;
+  final Color iconBgColor;
+  final int nutritionValue;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +33,12 @@ class OverviewNutritionCard extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: orange,
+                color: iconBgColor,
               ),
               child:Padding(
                 padding: EdgeInsets.all(10.0),
                 child: SvgPicture.asset(
-                      'assets/icons/meat.svg',
+                      icon,
                       width: 35.0,
                       height: 35.0,
                     ),
@@ -33,7 +46,7 @@ class OverviewNutritionCard extends StatelessWidget {
             ),
             SizedBox(height: 3.0),
             Text(
-              "Protein",
+              nutritionName,
               style: TextStyle(
                 fontSize: subtitleText.fontSize,
                 color: subtitleText.color
@@ -43,7 +56,7 @@ class OverviewNutritionCard extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: "35 ",
+                    text: nutritionValue.toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -51,7 +64,7 @@ class OverviewNutritionCard extends StatelessWidget {
                     )
                   ),
                   TextSpan(
-                    text: "g",
+                    text: " g",
                     style: TextStyle(
                       fontSize: subtitleText.fontSize,
                       color: subtitleText.color

@@ -15,51 +15,6 @@ class Dashboard extends StatefulWidget {
 
 
 class _DashboardState extends State<Dashboard> {
-
-  List<Map<String,dynamic>> quickAccessButtons = [
-    {
-      "name":"Daily Meals",
-      "icon": Icons.fastfood_outlined,
-      "color":normalGreen,
-      "bgColor":lightGreen
-    },
-    {
-      "name":"Favourites",
-      "icon": Icons.favorite_border_sharp,
-      "color":normalGreen,
-      "bgColor":lightGreen
-    },
-    {
-      "name":"Scan Food",
-      "icon":Icons.camera_alt_outlined,
-      "color":Colors.white,
-      "bgColor":normalGreen,
-    },
-    {
-      "name":"Add Grocery",
-      "icon":Icons.local_grocery_store_outlined,
-      "color":Colors.white,
-      "bgColor":orange
-    }
-  ];
-
-  String getGreetings() {
-    DateTime now = DateTime.now();
-
-    if (now.hour < 12) {
-      return "Good morning";
-    } else if (now.hour < 18) {
-      return "Good afternoon";
-    } else {
-      return "Good evening";
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,50 +22,14 @@ class _DashboardState extends State<Dashboard> {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child:Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Header(title: "Dashboard" , subtitle: getGreetings(), isShowBackButton: false),
-                        Padding(
-                          padding:EdgeInsets.only(top:50.0 , left:16.0),
-                          child:Container(
-                                padding: EdgeInsets.all(10.0),
-                                decoration:BoxDecoration(
-                                  color:normalGreen,
-                                  shape: BoxShape.circle
-                                ),
-                                child: Icon(
-                                  Icons.person,
-                                  size: 50.0,
-                                  color: Colors.white,
-                                )
-                              ),
-                        )],
-                    ),
-            ),
             SizedBox(height: 20.0),
             Expanded(
               child:SingleChildScrollView(
                       child:Column(
                         children: [
+                          _HeaderSection(),
                           NutritionOverview(),
-                          GridView.count(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              childAspectRatio: 1.8,
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10.0,
-                              mainAxisSpacing: 10.0,
-                              children: List.generate(
-                                quickAccessButtons.length, (index){
-                                  final button = quickAccessButtons[index];
-                                  return QuickAccessButtons(name: button["name"], icon: button["icon"] , fontColor: button["color"], bgColor: button["bgColor"]);
-                                }),
-                            ),
+                          QuickAccessButtonsSection(),
                           TodayMealSection(),
                           SizedBox(height: 20.0),
                           CookBookSection()
@@ -124,6 +43,48 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 }
+
+
+Widget _HeaderSection(){
+  String getGreetings() {
+    DateTime now = DateTime.now();
+
+    if (now.hour < 12) {
+      return "Good morning";
+    } else if (now.hour < 18) {
+      return "Good afternoon";
+    } else {
+      return "Good evening";
+    }
+  }
+
+  return Padding(
+          padding: EdgeInsets.all(10.0),
+          child:Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Header(title: "Dashboard" , subtitle: getGreetings(), isShowBackButton: false),
+                    Padding(
+                      padding:EdgeInsets.only(top:50.0 , left:16.0),
+                      child:Container(
+                            padding: EdgeInsets.all(10.0),
+                            decoration:BoxDecoration(
+                              color:normalGreen,
+                              shape: BoxShape.circle
+                            ),
+                            child: Icon(
+                              Icons.person,
+                              size: 50.0,
+                              color: Colors.white,
+                            )
+                          ),
+                    )],
+                ),
+        );
+}
+
 
 class NutritionOverview extends StatelessWidget {
   const NutritionOverview({super.key});
@@ -238,12 +199,97 @@ class NutritionOverview extends StatelessWidget {
             SizedBox(height: 20.0),
             Row(
               children: [
-                OverviewNutritionCard(),
-                OverviewNutritionCard(),
-                OverviewNutritionCard()
+                OverviewNutritionCard(icon: "assets/icons/meat.svg", nutritionName: "Protein", iconBgColor: orange, nutritionValue: 35),
+                OverviewNutritionCard(icon: "assets/icons/wheat.svg", nutritionName: "Carbs", iconBgColor:normalYellow, nutritionValue: 35),
+                OverviewNutritionCard(icon: "assets/icons/droplet.svg", nutritionName: "Fats", iconBgColor:normalBlue, nutritionValue: 35)
               ],
             ),
           ],
+    );
+  }
+}
+
+class QuickAccessButtonsSection extends StatelessWidget {
+  QuickAccessButtonsSection({super.key});
+
+  final List<Map<String,dynamic>> quickAccessButtons = [
+    {
+      "name":"Daily Meals",
+      "icon": Icons.fastfood_outlined,
+      "color":normalGreen,
+      "bgColor":lightGreen
+    },
+    {
+      "name":"Favourites",
+      "icon": Icons.favorite_border_sharp,
+      "color":normalGreen,
+      "bgColor":lightGreen
+    },
+    {
+      "name":"Scan Food",
+      "icon":Icons.camera_alt_outlined,
+      "color":Colors.white,
+      "bgColor":normalGreen,
+    },
+    {
+      "name":"Add Grocery",
+      "icon":Icons.local_grocery_store_outlined,
+      "color":Colors.white,
+      "bgColor":orange
+    }
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            childAspectRatio: 1.8,
+            crossAxisCount: 2,
+            crossAxisSpacing: 10.0,
+            mainAxisSpacing: 10.0,
+            children: List.generate(
+              quickAccessButtons.length, (index){
+                final button = quickAccessButtons[index];
+                return QuickAccessButtons(name: button["name"], icon: button["icon"] , fontColor: button["color"], bgColor: button["bgColor"]);
+              }),
+          );
+  }
+}
+
+class TodayMealSection extends StatelessWidget {
+  const TodayMealSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Today's Meal",
+              style: TextStyle(
+                fontSize: headingTwoText.fontSize,
+                fontWeight: headingTwoText.fontWeight
+              ),
+            ),
+            Text(
+              "See All  >",
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                color: normalGreen
+              ),
+            )
+          ],
+        ),
+        SizedBox(height: 10.0,),
+        TodayMealCard(),
+        TodayMealCard(),
+        TodayMealCard()
+      ],
     );
   }
 }
@@ -318,43 +364,6 @@ class CookBookSection extends StatelessWidget {
             return RecipeTypeCard(iconColor: type["iconColor"], icon: type["icon"], name: type["name"], subtitle: type["subtitle"], bgColor: type["bgColor"]);
           }),
         )
-      ],
-    );
-  }
-}
-
-class TodayMealSection extends StatelessWidget {
-  const TodayMealSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Today's Meal",
-              style: TextStyle(
-                fontSize: headingTwoText.fontSize,
-                fontWeight: headingTwoText.fontWeight
-              ),
-            ),
-            Text(
-              "See All  >",
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
-                color: normalGreen
-              ),
-            )
-          ],
-        ),
-        SizedBox(height: 10.0,),
-        TodayMealCard(),
-        TodayMealCard(),
-        TodayMealCard()
       ],
     );
   }

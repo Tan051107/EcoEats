@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
-import 'package:frontend/pages/cookbook_list.dart';
+import 'package:frontend/pages/views/cookbook_list.dart';
 
 class RecipeTypeCard extends StatelessWidget {
   const RecipeTypeCard(

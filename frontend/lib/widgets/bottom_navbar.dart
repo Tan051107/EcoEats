@@ -94,6 +94,7 @@ class BottomNavbar extends StatelessWidget {
                 )
               ],
               onDestinationSelected: (int value){
+                previousPageNotifier.value = selectedPage;
                 selectedPageNotifier.value = value;
               },
               selectedIndex: selectedPage,

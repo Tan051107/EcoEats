@@ -11,7 +11,7 @@ import 'package:frontend/widgets/bottom_navbar.dart';
 List<Widget> pages = [
   Dashboard(),
   Dashboard(),
-  TakePicture(isTakingFoodPicture: true),
+  TakePicture(),
   WeeklySummary(),
   Notifications()
 ];

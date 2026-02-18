@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
+import 'package:frontend/data/notifiers.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/overview_nutrition_card.dart';
 import 'package:frontend/widgets/quick_access_buttons.dart';
@@ -30,6 +31,7 @@ class _DashboardState extends State<Dashboard> {
                           _HeaderSection(),
                           NutritionOverview(),
                           QuickAccessButtonsSection(),
+                          SizedBox(height: 20.0),
                           TodayMealSection(),
                           SizedBox(height: 20.0),
                           CookBookSection()
@@ -212,32 +214,55 @@ class NutritionOverview extends StatelessWidget {
 class QuickAccessButtonsSection extends StatelessWidget {
   QuickAccessButtonsSection({super.key});
 
-  final List<Map<String,dynamic>> quickAccessButtons = [
+  void scanFood(){
+    selectedPageNotifier.value = 2;
+    isTakingFoodPictureNotifier.value = true;
+  }
+
+  void addGrocery(){
+    selectedPageNotifier.value =2;
+    isTakingFoodPictureNotifier.value = false;
+  }
+
+  void viewDailyMeals(){
+
+  }
+
+  void viewFavourites(){
+
+  }
+
+  late final List<Map<String,dynamic>> quickAccessButtons = [
     {
       "name":"Daily Meals",
       "icon": Icons.fastfood_outlined,
       "color":normalGreen,
-      "bgColor":lightGreen
+      "bgColor":lightGreen,
+      "onTap":viewDailyMeals
     },
     {
       "name":"Favourites",
       "icon": Icons.favorite_border_sharp,
       "color":normalGreen,
-      "bgColor":lightGreen
+      "bgColor":lightGreen,
+      "onTap":viewFavourites
     },
     {
       "name":"Scan Food",
       "icon":Icons.camera_alt_outlined,
       "color":Colors.white,
       "bgColor":normalGreen,
+      "onTap":scanFood
     },
     {
       "name":"Add Grocery",
       "icon":Icons.local_grocery_store_outlined,
       "color":Colors.white,
-      "bgColor":orange
+      "bgColor":orange,
+      "onTap":addGrocery
     }
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +276,13 @@ class QuickAccessButtonsSection extends StatelessWidget {
             children: List.generate(
               quickAccessButtons.length, (index){
                 final button = quickAccessButtons[index];
-                return QuickAccessButtons(name: button["name"], icon: button["icon"] , fontColor: button["color"], bgColor: button["bgColor"]);
+                return QuickAccessButtons(
+                  name: button["name"], 
+                  icon: button["icon"] , 
+                  fontColor: button["color"], 
+                  bgColor: button["bgColor"],
+                  onTap: button["onTap"],
+                );
               }),
           );
   }

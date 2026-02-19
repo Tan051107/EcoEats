@@ -60,6 +60,10 @@ Widget _HeaderSection(){
     }
   }
 
+  void viewProfile(){
+    selectedPageNotifier.value = 5;
+  }
+
   return Padding(
           padding: EdgeInsets.all(10.0),
           child:Row(
@@ -70,7 +74,9 @@ Widget _HeaderSection(){
                     Header(title: "Dashboard" , subtitle: getGreetings(), isShowBackButton: false),
                     Padding(
                       padding:EdgeInsets.only(top:50.0 , left:16.0),
-                      child:Container(
+                      child:GestureDetector(
+                        onTap: () => viewProfile(),
+                        child: Container(
                             padding: EdgeInsets.all(10.0),
                             decoration:BoxDecoration(
                               color:normalGreen,
@@ -82,6 +88,7 @@ Widget _HeaderSection(){
                               color: Colors.white,
                             )
                           ),
+                      )
                     )],
                 ),
         );

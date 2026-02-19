@@ -10,6 +10,13 @@ class BottomNavbar extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: selectedPageNotifier, 
       builder: (context,selectedPage,child){
+        int navBarIndex;
+        if(selectedPage <5){
+          navBarIndex = selectedPage;
+        }
+        else{
+          navBarIndex = 0;
+        }
         return Container(
           decoration: BoxDecoration(
             border: Border(
@@ -97,7 +104,7 @@ class BottomNavbar extends StatelessWidget {
                 previousPageNotifier.value = selectedPage;
                 selectedPageNotifier.value = value;
               },
-              selectedIndex: selectedPage,
+              selectedIndex: navBarIndex,
             ),
           )
         );

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 import 'package:frontend/data/notifiers.dart';
+import 'package:frontend/pages/views/login.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/icon_subtitle.dart';
 import 'package:frontend/widgets/multi_select_icon_subtitle.dart';
@@ -178,6 +179,16 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
   }
 
   void onBackButtonClicked(){
+    if(currentProgress == 0){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context){
+            return Login(isLogin: false);
+          }
+        )
+      );
+    }
     if (currentProgress > 0) {
       setState(() {
         currentProgress--;

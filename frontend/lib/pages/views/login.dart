@@ -102,7 +102,7 @@ class _LoginState extends State<Login> {
 }
 
 
-Widget Desc(_isLogin){
+Widget Desc(bool _isLogin){
   return Column(
     children: [
       Text(

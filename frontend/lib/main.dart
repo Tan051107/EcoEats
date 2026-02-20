@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/auth_wrapper.dart';
+import 'package:frontend/providers/favourite_provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,7 +14,16 @@ void main()async {
     options: DefaultFirebaseOptions.currentPlatform
   );
   await GoogleSignIn.instance.initialize();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_)=>FavouriteProvider()
+        )
+      ],
+      child: const MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,6 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(

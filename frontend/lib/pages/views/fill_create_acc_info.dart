@@ -1,13 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 import 'package:frontend/data/notifiers.dart';
-import 'package:frontend/pages/views/login.dart';
+import 'package:frontend/services/auth_service.dart';
+import 'package:frontend/services/fcm_service.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/icon_subtitle.dart';
 import 'package:frontend/widgets/multi_select_icon_subtitle.dart';
 import 'package:frontend/widgets/radio_card_selector.dart';
 import 'package:frontend/widgets/shrink_button.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 class FillCreateAccInfo extends StatefulWidget {
   const FillCreateAccInfo({super.key});
@@ -41,20 +42,27 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
   bool isButtonEnabled = false;
   Map<String,String> get currentHeader => headerTexts[currentProgress];
 
+  final AuthService authService = AuthService();
+  final FcmService fcmService = FcmService();
+  String get userName => authService.currentUser?.displayName ?? "";
+  String get email => authService.currentUser?.email ?? "";
+
   final ageController = TextEditingController();
   final heightController = TextEditingController();
   final weightController = TextEditingController();
   final otherAllergiesController = TextEditingController();
+  late TextEditingController nameController = TextEditingController(text: userName);
 
   List<Widget> get fillUpPages => [
     FirstFillUpSection(
       activityLevelSelected: activityLevelSelected,
-      setActivityLevel: setActivityLevel, 
-      genderSelected: genderSelected, 
+      setActivityLevel: setActivityLevel,
+      genderSelected: genderSelected,
       setGender: setGender,
       ageController: ageController,
       heightController: heightController,
       weightController: weightController,
+      nameController: nameController
     ),
     SecondFillUpSection(
       goalSelected: goalSelected,
@@ -65,7 +73,7 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
       setDietTypeSelected: setDietType,
       allergiesSelected: allergiesSelected,
       setAllergiesSelected: setAllergiesSelected,
-      otherAllergiesController:otherAllergiesController
+      otherAllergiesController:otherAllergiesController,
     ),
   ];
 
@@ -76,6 +84,7 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
     heightController.addListener(updateButtonState);
     weightController.addListener(updateButtonState);
     otherAllergiesController.addListener(updateButtonState);
+    nameController.addListener(updateButtonState);
     updateButtonState();
   }
 
@@ -88,13 +97,14 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
     heightController.dispose();
     weightController.dispose();
     otherAllergiesController.dispose();
+    nameController.dispose();
     super.dispose();
   }
 
   void setActivityLevel(String activityLevelLabel){
     if (activityLevelSelected != activityLevelLabel) {
       setState(() {
-        activityLevelSelected = activityLevelLabel;   
+        activityLevelSelected = activityLevelLabel;
       });
       updateButtonState();
     }
@@ -144,8 +154,9 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
   void updateButtonState(){
     bool shouldBeEnabled = false;
     if (currentProgress == 0) {
-      shouldBeEnabled = ageController.text.isNotEmpty 
-                        && heightController.text.isNotEmpty 
+      shouldBeEnabled = ageController.text.isNotEmpty
+                        &&nameController.text.isNotEmpty
+                        && heightController.text.isNotEmpty
                         && weightController.text.isNotEmpty
                         && genderSelected.isNotEmpty
                         && activityLevelSelected.isNotEmpty;
@@ -174,20 +185,17 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
       });
       updateButtonState();
     } else {
-      selectedPageNotifier.value = 0;
+      onSubmit();
+      FcmService.setFcmToken();
     }
   }
 
-  void onBackButtonClicked(){
+  void onBackButtonClicked() async {
     if(currentProgress == 0){
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context){
-            return Login(isLogin: false);
-          }
-        )
-      );
+      // Sign out the user so AuthWrapper can properly rebuild when they log in again
+      await authService.signOut();
+      // AuthWrapper will automatically rebuild and show Onboarding when user is null
+      return;
     }
     if (currentProgress > 0) {
       setState(() {
@@ -199,10 +207,54 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
     }
   }
 
-  void onSubmit(){
-    Map<String,dynamic> userInfo ={
-      "height":double.tryParse(heightController.text.trim()) ?? 0.0,
+  void onSubmit()async{
+
+    Map<String,String> activityLevelMap ={
+      "Sedentary" :"sedentary",
+      "Light" : "light",
+      "Moderate" : "moderate",
+      "Active": "active",
+      "Very Active": "very_active"
     };
+
+    Map<String,String> gaolMap ={
+      "Lose Weight" :"lose_weight",
+      "Gain Weight" : "gain_weight",
+      "Maintain Weight" : "maintain_weight",
+      "Eat Healthier": "eat_healthier"
+    };
+
+    if(allergiesSelected.contains("Others")){
+      List <String> otherAllergies = otherAllergiesController.text.split(",");
+      allergiesSelected.remove("Others");
+      allergiesSelected = {...allergiesSelected, ...otherAllergies}.toList();
+    }
+    Map<String,dynamic> userInfo ={
+      "name":nameController.text.trim(),
+      "email":email,
+      "gender":genderSelected.toLowerCase(),
+      "age":int.tryParse(ageController.text) ?? 1,
+      "height":double.tryParse(heightController.text.trim()) ?? 0.0,
+      "weight":double.tryParse(weightController.text.trim()) ?? 0.0,
+      "activity_level":activityLevelMap[activityLevelSelected],
+      "diet_type":dietTypeSelected,
+      "allergies":allergiesSelected,
+      "goal":gaolMap[goalSelected]
+    };
+
+    print(userInfo);
+
+    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final updateUserProfile = functions.httpsCallable("updateUserProfile");
+    try{
+      await updateUserProfile.call(userInfo);
+    }
+    on FirebaseFunctionsException catch(err){
+      print("Failed to create new user info doc $err");
+    }
+    catch(err){
+      print("Failed to create new user info doc $err");
+    }
   }
 
   @override
@@ -210,7 +262,7 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed:() => onBackButtonClicked(), 
+          onPressed:() => onBackButtonClicked(),
           icon: const Icon(
             Icons.arrow_back,
             size: 30.0
@@ -305,6 +357,7 @@ Widget FirstFillUpSection({
   required final TextEditingController ageController,
   required final TextEditingController heightController,
   required final TextEditingController weightController,
+  required final TextEditingController nameController
 }) {
   final List<Map<String,dynamic>> genders = [
     {
@@ -333,6 +386,30 @@ Widget FirstFillUpSection({
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
+          "Name",
+          style: subtitleText,
+        ),
+        SizedBox(height: 10),
+        TextField(
+          controller: nameController,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: lightGreen,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color: normalGreen,
+                width: 2.0
+              )
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
+        Text(
           "Gender",
           style: subtitleText,
         ),
@@ -340,7 +417,7 @@ Widget FirstFillUpSection({
         Row(
           children: [
             ...List.generate(
-              genders.length, 
+              genders.length,
               (index){
                 final gender = genders[index];
                 return Row(
@@ -348,8 +425,8 @@ Widget FirstFillUpSection({
                     GestureDetector(
                       onTap: ()=>setGender(gender["gender"]),
                       child:IconSubtitle(
-                        icon:gender["icon"] , 
-                        name: gender["gender"], 
+                        icon:gender["icon"] ,
+                        name: gender["gender"],
                         iconColor: gender["iconColor"],
                         activeCard: genderSelected,
                       ),
@@ -396,7 +473,7 @@ Widget FirstFillUpSection({
                   GestureDetector(
                     onTap: ()=>setActivityLevel(activityLevel["label"]),
                     child: RadioCardSelector(
-                      label:activityLevel["label"] , 
+                      label:activityLevel["label"] ,
                       subtitle: activityLevel["subtitle"],
                       activeCard: activityLevelSelected,
                     ),
@@ -491,7 +568,7 @@ Widget SecondFillUpSection({
   return Column(
       children: [
         ...List.generate(
-          goals.length, 
+          goals.length,
           (index){
             final Map<String,String> goal = goals[index];
             return Padding(
@@ -536,7 +613,7 @@ Widget ThirdFillUpSection({
   ];
 
 
-  final List<Map<String,dynamic>> allergicTypes =[ 
+  final List<Map<String,dynamic>> allergicTypes =[
     {
       "icon":"assets/icons/nut.svg",
       "name": "Nuts",

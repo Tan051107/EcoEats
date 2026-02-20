@@ -84,11 +84,7 @@ class _CookbookListState extends State<CookbookList> {
                     itemBuilder: (context,index){
                       final meal = recipes[index];
                       return RecipeOverviewCard(
-                        mealName: meal['name'] ?? "Meal name", 
-                        mealType: meal["meal_type"] ?? "Meal Type", 
-                        mealCalories: meal["nutrition"]["calories_kcal"] ?? "Meal Calories", 
-                        mealDesc: meal["description"] ?? "Meal Description",
-                        isFavourite: meal["is_favourite"] ?? false,
+                        mealData: meal,
                       );
                     }
                   )

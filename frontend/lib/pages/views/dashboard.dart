@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 import 'package:frontend/data/notifiers.dart';
+import 'package:frontend/providers/favourite_provider.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/overview_nutrition_card.dart';
 import 'package:frontend/widgets/quick_access_buttons.dart';
 import 'package:frontend/widgets/recipe_type_card.dart';
 import 'package:frontend/widgets/today_meal_card.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -18,6 +20,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
+    final FavouriteProvider favouriteProvider = context.watch<FavouriteProvider>();
+    final int totalFavourites = favouriteProvider.favourites.length;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -30,7 +34,9 @@ class _DashboardState extends State<Dashboard> {
                         children: [
                           _HeaderSection(),
                           NutritionOverview(),
-                          QuickAccessButtonsSection(),
+                          QuickAccessButtonsSection(
+                            totalFavourites: totalFavourites,
+                          ),
                           SizedBox(height: 20.0),
                           TodayMealSection(),
                           SizedBox(height: 20.0),
@@ -220,7 +226,15 @@ class NutritionOverview extends StatelessWidget {
 }
 
 class QuickAccessButtonsSection extends StatelessWidget {
-  QuickAccessButtonsSection({super.key});
+  QuickAccessButtonsSection(
+    {
+      super.key,
+      required this.totalFavourites
+    }
+  );
+
+  final int totalFavourites;
+
 
   void scanFood(){
     selectedPageNotifier.value = 2;
@@ -237,7 +251,7 @@ class QuickAccessButtonsSection extends StatelessWidget {
   }
 
   void viewFavourites(){
-
+    selectedPageNotifier.value = 6;
   }
 
   late final List<Map<String,dynamic>> quickAccessButtons = [
@@ -249,7 +263,7 @@ class QuickAccessButtonsSection extends StatelessWidget {
       "onTap":viewDailyMeals
     },
     {
-      "name":"Favourites",
+      "name":"Favourites (${totalFavourites.toString()})",
       "icon": Icons.favorite_border_sharp,
       "color":normalGreen,
       "bgColor":lightGreen,

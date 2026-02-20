@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/notifiers.dart';
 import 'package:frontend/pages/views/dashboard.dart';
+import 'package:frontend/pages/views/favourites.dart';
 import 'package:frontend/pages/views/notifications.dart';
 import 'package:frontend/pages/views/profile.dart';
 import 'package:frontend/pages/views/take_picture.dart';
@@ -15,7 +16,8 @@ List<Widget> pages = [
   TakePicture(),
   WeeklySummary(),
   Notifications(),
-  ProfilePage()
+  ProfilePage(),
+  Favourites(),
 ];
 
 class WidgetTree extends StatelessWidget {

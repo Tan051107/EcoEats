@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
+import 'package:frontend/providers/favourite_provider.dart';
+import 'package:provider/provider.dart';
 
 class RecipeOverviewCard extends StatefulWidget {
   const RecipeOverviewCard(
     {
       super.key,
-      required this.mealName,
-      required this.mealType,
-      required this.mealCalories,
-      required this.mealDesc,
-      required this.isFavourite
+      required this.mealData
     }
   );
 
-  final String mealName;
-  final String mealType;
-  final int mealCalories;
-  final String mealDesc;
-  final bool isFavourite;
+  final Map<String,dynamic> mealData;
 
   @override
   State<RecipeOverviewCard> createState() => _RecipeOverviewCardState();
@@ -25,28 +19,26 @@ class RecipeOverviewCard extends StatefulWidget {
 
 class _RecipeOverviewCardState extends State<RecipeOverviewCard> {
 
-  late bool _isFavourite;
-
-  Future<void>addToFavourite()async{
-    setState(() {
-      _isFavourite = !_isFavourite;
-    });
-  }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _isFavourite = widget.isFavourite;
   }
 
   @override
   Widget build(BuildContext context) {
+    final FavouriteProvider favouriteProvider = context.watch<FavouriteProvider>();
     IconData recipeIcon = Icons.set_meal;
     Color iconBackgroundColor =Color(0x1A1E9BD7);
     Color iconColor = Color(0xFF1E9BD7);
+    String mealName = widget.mealData['name'] ?? "Meal name";
+    String mealType = widget.mealData["meal_type"] ?? "Meal Type";
+    int mealCalories = widget.mealData["nutrition"]["calories_kcal"] ?? "Meal Calories";
+    String mealDesc = widget.mealData["description"] ?? "Meal Description";
+    String recipeId = widget.mealData["recipeId"] ?? "";
 
-    switch(widget.mealType.toLowerCase()){
+
+    switch(mealType.toLowerCase()){
       case "breakfast":
         recipeIcon = Icons.wb_sunny_outlined;
         iconBackgroundColor = lightYellow;
@@ -98,25 +90,25 @@ class _RecipeOverviewCardState extends State<RecipeOverviewCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.mealName,
+                            mealName,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold
                             ),
                           ),
                           SizedBox(height: 4),
-                          Text(widget.mealDesc),
+                          Text(mealDesc),
                           SizedBox(height: 4),
-                          Text("${widget.mealCalories.toString()} kcal")
+                          Text("${mealCalories.toString()} kcal")
                         ],
                       )
                     ),
                     SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () => addToFavourite(),
+                      onTap: () => favouriteProvider.addToFavourite(widget.mealData),
                       child:Icon(
-                        _isFavourite? Icons.favorite :Icons.favorite_border,
-                        color: _isFavourite ? Colors.red[400] : Colors.black,
+                        favouriteProvider.isFavourite(recipeId) ? Icons.favorite :Icons.favorite_border,
+                        color: favouriteProvider.isFavourite(recipeId) ? Colors.red[400] : Colors.black,
                         size: 30.0,
                       ),
                     )

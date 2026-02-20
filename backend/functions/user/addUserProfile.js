@@ -13,7 +13,6 @@ const schema = Joi.object({
   activity_level:Joi.string().valid("sedentary","light","moderate","active","very_active").required(),
   diet_type:Joi.string().valid("Vegetarian","Non-vegetarian","Vegan").required(),
   allergies:Joi.array().items(Joi.string()).required(),
-  fcm_token:Joi.string().required(),
   goal:Joi.string().valid("lose_weight","gain_weight","maintain_weight","eat_healthier")
 })
 

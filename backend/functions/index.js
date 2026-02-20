@@ -20,3 +20,5 @@ export * from './user/AddUserProfile.js'
 export * from './favourite/AddUsersFavourite.js'
 
 export * from './favourite/GetUsersFavourite.js'
+
+export * from './user/UpdateUserFcmToken.js'

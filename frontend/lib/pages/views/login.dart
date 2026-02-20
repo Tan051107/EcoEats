@@ -55,48 +55,50 @@ class _LoginState extends State<Login> {
             )
           )
         ),
-        body:Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Center(
-            child: Column(
-              children: [
-                Desc(_isLogin),
-                SizedBox(height: 18.0),
-                LogInWithGoogleButton(authService: widget._authService,),
-                SizedBox(height: 18.0),
-                OrLine(),
-                SizedBox(height: 18.0),
-                SignInForm(isLogin: _isLogin),
-                SizedBox(height: 18.0),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: _isLogin ? "Don't have an account? ": "Already have an account? ",
-                        style: subtitleText
-                      ),
-                      TextSpan(
-                        text: _isLogin ? "Sign Up" : "Sign In",
-                        style: TextStyle(
-                          color: normalGreen,
-                          fontSize: subtitleText.fontSize,
-                          fontWeight: FontWeight.bold
+        body:SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Center(
+              child: Column(
+                children: [
+                  Desc(_isLogin),
+                  SizedBox(height: 18.0),
+                  LogInWithGoogleButton(authService: widget._authService,),
+                  SizedBox(height: 18.0),
+                  OrLine(),
+                  SizedBox(height: 18.0),
+                  SignInForm(isLogin: _isLogin , authService:widget._authService),
+                  SizedBox(height: 18.0),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: _isLogin ? "Don't have an account? ": "Already have an account? ",
+                          style: subtitleText
                         ),
-                        recognizer: TapGestureRecognizer()
-                        ..onTap = (){
-                          setState(() {
-                            _isLogin = !_isLogin;
-                          });
-                        }
-                      )
-                    ]
+                        TextSpan(
+                          text: _isLogin ? "Sign Up" : "Sign In",
+                          style: TextStyle(
+                            color: normalGreen,
+                            fontSize: subtitleText.fontSize,
+                            fontWeight: FontWeight.bold
+                          ),
+                          recognizer: TapGestureRecognizer()
+                          ..onTap = (){
+                            setState(() {
+                              _isLogin = !_isLogin;
+                            });
+                          }
+                        )
+                      ]
+                    )
                   )
-                )
 
-              ],
+                ],
+              ),
             ),
           ),
-        ),
+        )
       );
   }
 }
@@ -158,12 +160,13 @@ class LogInWithGoogleButton extends StatelessWidget {
     Future<void>signInWithGoogle()async{
       try{
         final UserCredential userCredential = await authService.signInWithGoogle();
+        Navigator.of(context).pop();
       }
       catch(err){
         print(err);
       }
-
     }
+    
     return ShrinkButton(
       onPressed: ()=>signInWithGoogle(), 
       child: Container(
@@ -209,11 +212,13 @@ class SignInForm extends StatefulWidget {
   const SignInForm(
     {
       super.key,
-      required this.isLogin
+      required this.isLogin,
+      required this.authService
     }
   );
 
   final bool isLogin;
+  final AuthService authService;
 
   @override
   State<SignInForm> createState() => _SignInFormState();
@@ -242,6 +247,7 @@ class _SignInFormState extends State<SignInForm> {
               ),
               SizedBox(height: 8.0),
               TextFormField(
+                controller: emailController,
                 decoration: InputDecoration(
                   prefixIcon: Icon(
                     Icons.email_outlined,
@@ -279,6 +285,7 @@ class _SignInFormState extends State<SignInForm> {
               ),
               SizedBox(height: 8.0),
               TextFormField(
+                controller: passwordController,
                 obscureText: hidePassword,
                 decoration: InputDecoration(
                   prefixIcon: Icon(
@@ -314,8 +321,27 @@ class _SignInFormState extends State<SignInForm> {
           ),
           SizedBox(height: 20.0),
           ShrinkButton(
-            onPressed: () {
-              
+            onPressed: () async{
+              try{
+                print(emailController.text);
+                print(passwordController.text);
+                if(widget.isLogin){
+                  await widget.authService.signIn(
+                    email: emailController.text, 
+                    password: passwordController.text
+                  );
+                }
+                else{
+                  await widget.authService.signUp(
+                    email: emailController.text, 
+                    password: passwordController.text
+                  );
+                }
+                Navigator.of(context).pop();
+              }
+              catch(err){
+                print(err);
+              }
             }, 
             child: Container(
               width: double.infinity,
@@ -327,7 +353,7 @@ class _SignInFormState extends State<SignInForm> {
                 padding: EdgeInsets.all(15.0),
                 child: Text(
                   textAlign: TextAlign.center,
-                  widget.isLogin ? "Create Account" : "Sign In",
+                  widget.isLogin ? "Sign In" :"Create Account",
                   style: TextStyle(
                     fontSize: subtitleText.fontSize,
                     color: Colors.white,

@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:frontend/data/constants.dart';
-import 'package:frontend/pages/views/dashboard.dart';
 import 'package:frontend/pages/views/onboarding.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:frontend/widgets/shrink_button.dart';

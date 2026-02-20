@@ -20,6 +20,7 @@ class _WeeklySummaryState extends State<WeeklySummary> {
         padding: EdgeInsets.all(10.0),
         child: Column(
           children: [
+            SizedBox(height: 50.0),
             Header(title: "Weekly Summary", isShowBackButton: false , subtitle: "Jan 13 - Jan 19, 2026"),
             SizedBox(height: 15.0),
             Expanded(

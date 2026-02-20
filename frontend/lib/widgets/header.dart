@@ -21,57 +21,61 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding:EdgeInsets.only(top:50.0 , left:16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Column(
+      children: [
+        Padding(
+            padding:EdgeInsets.only(left:16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if(isShowBackButton)...[
-                GestureDetector(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child:Container(
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white
+                Row(
+                  children: [
+                    if(isShowBackButton)...[
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child:Container(
+                        padding: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white
+                        ),
+                        child: Icon(Icons.arrow_back_ios_outlined),
                     ),
-                    child: Icon(Icons.arrow_back_ios_outlined),
+                    )],
+                    if(icon != null)...[
+                      Icon(
+                        icon,
+                        color: iconColor,
+                        size: 30,
+                      ),
+                      SizedBox(width: 10),
+                    ],
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontWeight: headerText.fontWeight,
+                        fontSize: headerText.fontSize
+                      ),
+                    )
+                  ],
                 ),
-                )],
-                if(icon != null)...[
-                  Icon(
-                    icon,
-                    color: iconColor,
-                    size: 30,
-                  ),
-                  SizedBox(width: 10),
-                ],
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: headerText.fontWeight,
-                    fontSize: headerText.fontSize
-                  ),
-                )
-              ],
+                if(subtitle != null)...[
+                  SizedBox(height: 5),
+                  Text(
+                    subtitle!,
+                    style: TextStyle(
+                      fontSize: subtitleText.fontSize,
+                      color: subtitleText.color
+                    ),
+                  )
+              ]
+            ],
             ),
-            if(subtitle != null)...[
-              SizedBox(height: 5),
-              Text(
-                subtitle!,
-                style: TextStyle(
-                  fontSize: subtitleText.fontSize,
-                  color: subtitleText.color
-                ),
-              )
-          ]
-        ],
-        ),
-      );
+          ),
+      ],
+    );
   }
 }

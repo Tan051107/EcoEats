@@ -32,6 +32,7 @@ const Color normalGreen = Color(0xFF2BAB56);
 const Color lightGreen = Color(0xFFE2EDE5);
 const Color darkGreen = Color(0xFF267A3D);
 
+const Color lightOrange =  Color.fromRGBO(232, 118, 58, 0.1);
 const Color orange = Color(0xFFEB6B3E);
 
 const Color normalYellow = Color(0xFFF2B80C);

@@ -71,6 +71,7 @@ Widget _HeaderSection(){
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(height:50.0),
                     Header(title: "Dashboard" , subtitle: getGreetings(), isShowBackButton: false),
                     Padding(
                       padding:EdgeInsets.only(top:50.0 , left:16.0),

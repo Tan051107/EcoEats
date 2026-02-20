@@ -174,14 +174,14 @@ Widget _FeatureCard(String feature , String svgUrl){
         children: [
           SvgPicture.asset(
             svgUrl,
-            width: 30.0,
-            height: 30.0,
+            width: 25.0,
+            height: 25.0,
           ),
           SizedBox(width: 5.0),
           Text(
             feature,
             style: TextStyle(
-              fontSize: 16.0,
+              fontSize: 12.0,
               fontWeight: FontWeight.bold
             ),
           )
@@ -220,7 +220,7 @@ class FeaturesSection extends StatelessWidget {
       crossAxisCount: 2,
       mainAxisSpacing: 10.0,
       crossAxisSpacing: 10.0,
-      childAspectRatio: 2.3,
+      childAspectRatio: 3,
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap:true,
       children:List.generate(

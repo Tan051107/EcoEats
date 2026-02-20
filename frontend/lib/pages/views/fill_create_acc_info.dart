@@ -199,6 +199,12 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
     }
   }
 
+  void onSubmit(){
+    Map<String,dynamic> userInfo ={
+      "height":double.tryParse(heightController.text.trim()) ?? 0.0,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

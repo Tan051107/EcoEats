@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions'
 import { getAllRecipes } from './GetAllRecipesHelper.js'
 import Joi from 'joi'
-import { getUsersFavourite } from '../utils/GetUsersFavourite.js'
+import { getUsersFavouriteHelper } from '../favourite/GetUsersFavouriteHelper.js'
 
 
 export const getRecipes = functions.https.onCall(async(request)=>{
@@ -11,7 +11,7 @@ export const getRecipes = functions.https.onCall(async(request)=>{
     const userId = request.auth.uid;
     console.log("Received data:", request.data)
     try{
-        const userFavouriteRecipesId = await getUsersFavourite(userId);
+        const userFavouriteRecipesId = await getUsersFavouriteHelper(userId);
         const schema = Joi.object({
             category:Joi.string().valid("Vegetarian" ,"Non-vegetarian" , "Vegan").invalid(null,""),
             chef:Joi.string().invalid("" , null)

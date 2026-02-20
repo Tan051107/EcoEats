@@ -14,3 +14,9 @@ export * from './meals/GetWeeklySummary.js'
 export * from './ai/GetEstimatedMealNutrition.js'
 
 export * from './ai/AnalyzeGrocery.js'
+
+export * from './user/AddUserProfile.js'
+
+export * from './favourite/AddUsersFavourite.js'
+
+export * from './favourite/GetUsersFavourite.js'

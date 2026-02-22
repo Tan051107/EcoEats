@@ -1,7 +1,9 @@
-// lib/pages/profile.dart
+// lib/pages/views/profile.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'edit_profile.dart';
+import 'package:frontend/main.dart'; // 导入 SignInScreen
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -152,8 +154,30 @@ class _ProfilePageState extends State<ProfilePage> {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _loadUserData, 
+            icon: const Icon(Icons.edit),
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditProfilePage(
+                    userName: _userName,
+                    age: _age,
+                    gender: _gender,
+                    height: _height,
+                    weight: _weight,
+                    dietGoal: _dietGoal,
+                    dietType: _dietType,
+                    allergies: _allergies,
+                    activityLevel: _activityLevel,
+                    healthGoals: _healthGoals,
+                  ),
+                ),
+              );
+
+              if (result == true) {
+                _loadUserData();
+              }
+            },
           ),
         ],
       ),
@@ -213,7 +237,11 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              // Navigate to sign in screen
+              // Navigate to sign in screen (replace current page)
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const SignInScreen()),
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
@@ -389,13 +417,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildActivityAndGoalsCard() {
     String healthGoalsText = _healthGoals.isEmpty 
         ? 'Not specified' 
-        : _healthGoals.map((goal) {
-            switch(goal) {
-              case 'healthyDiet': return 'Healthy Diet';
-              case 'loseWeight': return 'Weight Loss';
-              default: return goal;
-            }
-          }).join(', ');
+        : _healthGoals.join(', ');
     
     return Card(
       elevation: 2,

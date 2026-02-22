@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'edit_profile.dart';
-import 'package:frontend/main.dart'; // 导入 SignInScreen
+import 'package:frontend/main.dart'; 
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

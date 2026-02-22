@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'edit_profile.dart';
-import 'package:frontend/main.dart'; 
+import 'package:frontend/pages/auth_wrapper.dart'; 
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -240,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
               // Navigate to sign in screen (replace current page)
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const SignInScreen()),
+                MaterialPageRoute(builder: (context) => AuthWrapper()),
               );
             },
             style: ElevatedButton.styleFrom(

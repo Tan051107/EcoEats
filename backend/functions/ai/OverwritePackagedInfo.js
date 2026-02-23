@@ -1,8 +1,7 @@
 import admin from '../utils/firebase-admin.cjs'
 
-export async function overwritePackagedInfo(pendingEdits){
+export async function overwritePackagedInfo(pendingEdits,packagedFoodDataDocId){
     const database = admin.firestore();
-    const packagedFoodDataDocId = barcode || packagedFoodData?.item_name || ""
     const packagedFoodDocRef = database.collection("packagedFoodInfo").doc(packagedFoodDataDocId)
     try{
         for (let i =0 ; i<pendingEdits.length ; i++){
@@ -10,22 +9,32 @@ export async function overwritePackagedInfo(pendingEdits){
             if(pendingEdit.verified_count > 5){
                 if(pendingEdit.hasOwnProperty("nutrition")){
                     for(const [nutritionKey,nutritionValue] of Object.entries(pendingEdit.nutrition)){
+                        console.log(`Verified count  > 5 , overwrite ${nutritionKey} current info`)
                         await packagedFoodDocRef.set(
-                            {nutrition:{
-                                [nutritionKey]:nutritionValue
-                            }
-                        }, {merge:true})
+                            {
+                                info:{
+                                    nutrition:{
+                                        [nutritionKey]:nutritionValue
+                                    }
+                                }
+                            }, {merge:true})
                     }
                 }
-                if(pendingEdit.hasOwnProperty("item_name")){
+                if(pendingEdit.hasOwnProperty("name")){
+                    console.log(`Verified count  > 5 , overwrite item_name current info`)
                     await packagedFoodDocRef.set(
-                        {item_name:pendingEdit.item_name},
+                        {
+                            info:{category:pendingEdit.item_name}
+                        },
                         {merge:true}
                     )
                 }
                 if(pendingEdit.hasOwnProperty("category")){
+                    console.log(`Verified count  > 5 , overwrite category current info`)
                     await packagedFoodDocRef.set(
-                        {category:pendingEdit.category},
+                        {
+                            info:{category:pendingEdit.category},
+                        },
                         {merge:true}
                     )
                 }   
@@ -33,7 +42,10 @@ export async function overwritePackagedInfo(pendingEdits){
             }
         }
         await packagedFoodDocRef.set(
-            {pending_edit:pendingEdits},
+            {
+                pending_edits:pendingEdits,
+                updated_at:admin.firestore.FieldValue.serverTimestamp()
+            },
             {merge:true}
         )
     }

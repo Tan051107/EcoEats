@@ -1,11 +1,11 @@
     import { SchemaType } from '@google/generative-ai'
     import ai from './VertexAIClient.js'
     import { storeNewPackageMaterials } from './StoreNewPackageMaterial.js';
-    import getImageMimeType from '../utils/getImageMimeType.js';
+    import admin from '../utils/firebase-admin.cjs'
 
-    export async function analyzeGroceryImageWithAI(image1 , image2){
+    export async function analyzeGroceryImageWithAI(images){
 
-        const allowedImageTypes = ["images/png" , "images/jpeg"]
+        const bucket = admin.storage().bucket();
 
         const schema = {
             type: SchemaType.OBJECT,
@@ -22,7 +22,7 @@
                     type: SchemaType.NUMBER,
                     description:'The fats labelled or estimated. Unit in gram. Set to 0 if could not be identified.'
                 },
-                carbohydrates_g: { 
+                carbs_g: {
                     type: SchemaType.NUMBER,
                     description:'The fats labelled or estimated. Unit in gram. Set to 0 if could not be identified.'
                 },
@@ -59,11 +59,7 @@
                 },
                 expiry_date:{
                     type:SchemaType.STRING,
-                    description: 'The expiry_date of the product labelled on package for packaged food or beverage. Omit if grocery is fresh produce.'
-                },
-                estimated_shelf_life:{
-                    type:SchemaType.STRING,
-                    description: 'Estimated shelf life in days for fresh produce (fruit or vegetable). Omit if grocery is not fresh produce.'
+                    description: 'The expiry_date of the product labelled on package for packaged food or beverage. Estimate the expiry_date if the grocery is fresh produce.'
                 },
                 is_packaged:{
                     type:SchemaType.BOOLEAN,
@@ -71,7 +67,7 @@
                 },
                 confidence: { type: SchemaType.NUMBER }
             },
-            required: ["per" , "name","calories_kcal", "fat_g", "carbohydrates_g", "protein_g", "category", "confidence" , "is_packaged"]
+            required: ["per" , "name","calories_kcal", "fat_g", "carbs_g", "protein_g", "category", "confidence" , "is_packaged","expiry_date"]
         };
 
         const prompt = `
@@ -79,15 +75,16 @@
 
                         Task
                         1. Identify the item and classify it as "fresh produce", "packaged food", or "packaged beverage".
-                        2. EXTRACT visible nutrition/expiry data from packaged food or packaged beverage.
-                        3. ESTIMATE standard nutritional values for fresh produce or unlabeled items based on a common serving size (set in 'per').
-                        4. Include confidence (0-100) for the result given.
+                        2. EXTRACT visible nutrition/expiry date from packaged food or packaged beverage.
+                        3. ESTIMATE the expiry date for fresh produce
+                        4. ESTIMATE standard nutritional values for fresh produce or unlabeled items based on a common serving size (set in 'per').
+                        5. Include confidence (0-100) for the result given.
 
                         Logic Rules
                         For fresh produced:
                         - Set is_packaged=false. 
-                        - Include 'estimated_shelf_life'. 
-                        - Omit 'packaging' and 'expiry_date'.
+                        - Include 'expiry_date' by estimating the expiry date of fresh produce. 
+                        - Omit 'packaging'.
                         For packaged food or packaged drinks:
                         - Set is_packaged=true.
                         - Include packaging materials. For each packaging material, include:
@@ -96,18 +93,37 @@
                         - Include 'expiry_date' ONLY if clearly visible.
                         - NUTRITION: If values aren't visible, provide realistic estimates for the item shown.        
                         `
-            // const imageParts = images.filter(image=> allowedImageTypes.some(type=>type === getImageMimeType(image)))
-            //                          .map(image=>({
-            //                             fileData:{
-            //                                 fileUri:image,
-            //                                 mimeType:getImageMimeType(image)
-            //                             }
-            //                          }))
+
+            const imagesWithMimeType = await Promise.all(
+            images.map(async (image) => {
+                try {
+                const file = bucket.file(image);
+                const [metadata] = await file.getMetadata();
+
+                return {
+                    imageUri: `gs://${bucket.name}/${image}`,
+                    mimeType: metadata?.contentType || ""
+                };
+                } catch (err) {
+                console.error("Metadata error:", image, err);
+                return null;
+                }
+            })
+            );
             
-            // const parts = [
-            //     {text:prompt},
-            //     ...imageParts
-            // ] //(used when receive image in uri)
+            const validImages = imagesWithMimeType.filter(Boolean);
+
+            const parts = [
+                {text: prompt},
+                ...validImages.map(img => ({
+                    fileData:{
+                        fileUri: img.imageUri,
+                        mimeType: img.mimeType
+                    }
+                })),
+            ];
+            
+            console.log(parts)
         
             try{
                 const response = await ai.models.generateContent({
@@ -115,20 +131,7 @@
                     contents:[
                         {
                             role:"user",
-                            parts:[
-                                {
-                                    inlineData:{
-                                        mimeType:"image/jpeg",
-                                        data:image1
-                                    },
-                                    inlineData:{
-                                        mimeType:"image/jpeg",
-                                        data:image2
-                                    }
-                                },
-                                {text:prompt}
-                            ],
-                            //parts:parts (used when receive image in uri)
+                            parts:parts
                         }
                     ],
                     config:{
@@ -148,8 +151,10 @@
                 const responseString = response.text;
 
                 const result = JSON.parse(responseString)
-
-                await storeNewPackageMaterials(result.packaging_materials)
+                
+                if(result.packaging_materials != undefined){
+                    await storeNewPackageMaterials(result.packaging_materials)
+                }
 
                 return{
                     success:true,

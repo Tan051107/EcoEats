@@ -18,7 +18,7 @@ export async function getUserDailyMealPlan(userData ,recipeData){
             ]);
 
 
-        const userGroceries = userGroceriesSnapshot.docs.map(doc=>doc.data().item_name.toLowerCase())
+        const userGroceries = userGroceriesSnapshot.docs.map(doc=>doc.data().name.toLowerCase())
                                                     .filter(Boolean) //avoid undefined
         
         
@@ -55,7 +55,7 @@ export async function getUserDailyMealPlan(userData ,recipeData){
 
         if(availableRecipes.length === 0){
             console.log("No available recipes.Calling vertex ai to generate meal plan")
-            //mealPlans = await generateMealPlansWithAI(userGroceries , dailyCalorieIntake , userDietType , userTakenRecipeNames , allergies)
+            mealPlans = await generateMealPlansWithAI(userGroceries , dailyCalorieIntake , userDietType , userTakenRecipeNames , allergies)
         }
 
         console.log("EXECUTING TO CALL GENERATE MEAL PLAN")
@@ -65,7 +65,7 @@ export async function getUserDailyMealPlan(userData ,recipeData){
 
         if(!mealPlans.success){
             console.log("Failed to generate suitable recipes from database.Calling vertex ai to generate meal plan")
-            //mealPlans = await generateMealPlansWithAI(userGroceries , dailyCalorieIntake , userDietType , userTakenRecipeNames , allergies )
+            mealPlans = await generateMealPlansWithAI(userGroceries , dailyCalorieIntake , userDietType , userTakenRecipeNames , allergies )
         }
 
         return mealPlans;

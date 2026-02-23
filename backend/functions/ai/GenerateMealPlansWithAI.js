@@ -35,7 +35,7 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
                                     type:SchemaType.STRING
                                 }
                             },
-                            required:[name,quantity]
+                            required:["name","quantity"]
                         }
                     },
                     nutrition:{
@@ -92,7 +92,7 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
                                     type:SchemaType.STRING
                                 }
                             },
-                            required:[name,quantity]
+                            required:["name","quantity"]
                         }
                     },
                     nutrition:{
@@ -149,7 +149,7 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
                                     type:SchemaType.STRING
                                 }
                             },
-                            required:[name,quantity]
+                            required:["name","quantity"]
                         }
                     },
                     nutrition:{

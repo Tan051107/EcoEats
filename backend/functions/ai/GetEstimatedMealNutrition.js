@@ -1,38 +1,20 @@
-import getImageMimeType from '../utils/getImageMimeType.js'
- import ai from './VertexAIClient.js'
+import ai from './VertexAIClient.js'
 import { SchemaType } from '@google/generative-ai'
 import * as functions from 'firebase-functions'
-import Joi from 'joi'
 import {storeNewPackageMaterials} from './StoreNewPackageMaterial.js'
+import admin from '../utils/firebase-admin.cjs'
+
 
 export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>{
+
+    const bucket = admin.storage().bucket();
 
     if(!request.auth){
         throw new functions.https.HttpsError('unauthenticated' , "Please login to proceed")
     }
 
-    // if(!getImageMimeType(mealImage)){
-    //     return {
-    //         success:false,
-    //         message: "Please provide meal image in JPG, JPEG or PNG",
-    //         data:{}
-    //     }
-    // }
+    const {images} = request.data;
 
-    // const validateSchema = Joi.object({
-    //     image:Joi.string().uri().pattern(/\.(jpg|jpeg|png)$/i).required()
-    // })
-
-    // const {error , value} = validateSchema.validate(request.data)
-
-    // const {image} = value
-    //**WILL DO WHEN INTEGRATE WITH URI */
-
-    const {image} = request.data;
-
-    // if(error){
-    //     throw new functions.https.HttpsError('invalid-argument' , `Validation failed: ${error.details.map(d => `${d.path.join(".")}: ${d.message}`).join(", ")}`)
-    // }
 
     const schema = {
         type:SchemaType.OBJECT,
@@ -49,7 +31,7 @@ export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>
                 type: SchemaType.NUMBER,
                 description:'The fats estimated. Unit in gram. Set to 0 if could not be identified.'
             },
-            carbohydrates_g: { 
+            carbs_g: { 
                 type: SchemaType.NUMBER,
                 description:'The carbohydrates estimated. Unit in gram. Set to 0 if could not be identified.'
             },
@@ -92,7 +74,7 @@ export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>
                 type:SchemaType.NUMBER
             }
         },
-        required:["name","calories_kcal", "fat_g", "carbohydrates_g", "protein_g", "serving_size", "health_rating" , "comment" , "confidence"]
+        required:["name","calories_kcal", "fat_g", "carbs_g", "protein_g", "serving_size", "health_rating" , "comment" , "confidence"]
     }
     
     const prompt = `
@@ -117,19 +99,42 @@ export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>
                         5. Include confidence (0-100) for the result given.
                    `
     
+    const imagesWithMimeType = await Promise.all(
+    images.map(async (image) => {
+        try {
+        const file = bucket.file(image);
+        const [metadata] = await file.getMetadata();
+
+        return {
+            imageUri: `gs://${bucket.name}/${image}`,
+            mimeType: metadata?.contentType || ""
+        };
+        } catch (err) {
+        console.error("Metadata error:", image, err);
+        return null;
+        }
+    })
+    );
+    
+    const validImages = imagesWithMimeType.filter(Boolean);
+
+    const parts = [
+        {text: prompt},
+        ...validImages.map(img => ({
+            fileData:{
+                fileUri: img.imageUri,
+                mimeType: img.mimeType
+            }
+        })),
+    ];
+    
     try{
         const response =  await ai.models.generateContent({
             model:"gemini-2.0-flash",
             contents:{
                 role:"user",
                 parts:[
-                    {text:prompt},
-                    {
-                        inlineData:{
-                            mimeType:'image/png',
-                            data:image
-                        }
-                    }
+                    parts
                 ]
             },
             config:{

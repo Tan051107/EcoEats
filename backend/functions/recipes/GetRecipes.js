@@ -1,20 +1,18 @@
 import * as functions from 'firebase-functions'
 import { getAllRecipes } from './GetAllRecipesHelper.js'
 import Joi from 'joi'
-import { getUsersFavouriteHelper } from '../favourite/GetUsersFavouriteHelper.js'
 
 
 export const getRecipes = functions.https.onCall(async(request)=>{
     if(!request.auth){
         throw new functions.https.HttpsError("unauthenticated" , "Please login to proceed.")
     }
-    const userId = request.auth.uid;
     console.log("Received data:", request.data)
     try{
-        const userFavouriteRecipesId = await getUsersFavouriteHelper(userId);
         const schema = Joi.object({
             category:Joi.string().valid("Vegetarian" ,"Non-vegetarian" , "Vegan").invalid(null,""),
-            chef:Joi.string().invalid("" , null)
+            chef:Joi.string().invalid("" , null),
+            recipe_id:Joi.string().invalid("" , null)
         })
 
         const {error , value} = schema.validate(request.data ,{ stripUnknown: true });
@@ -23,15 +21,11 @@ export const getRecipes = functions.https.onCall(async(request)=>{
             throw new functions.https.HttpsError("invalid-argument" , `Validation failed: ${error.details.map(d => `${d.path.join(".")}: ${d.message}`).join(", ")}`)
         }
 
-        const {category ,chef} = value;
+        const {category ,chef,recipe_id} = value;
 
-        const allRecipes = await getAllRecipes(category,chef)
+        const allRecipes = await getAllRecipes(category,chef,recipe_id)
         console.log(chef)
 
-        allRecipes.data.forEach(recipe=>{
-            recipe.is_favourite = userFavouriteRecipesId.includes(recipe.recipeId)
-        })
-        
         return {
             success:true,
             message:"Successfully retrieved all recipes",

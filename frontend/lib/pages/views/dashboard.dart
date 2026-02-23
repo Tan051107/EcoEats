@@ -237,11 +237,13 @@ class QuickAccessButtonsSection extends StatelessWidget {
 
 
   void scanFood(){
+    previousPageNotifier.value = selectedPageNotifier.value;
     selectedPageNotifier.value = 2;
     isTakingFoodPictureNotifier.value = true;
   }
 
   void addGrocery(){
+    previousPageNotifier.value = selectedPageNotifier.value;
     selectedPageNotifier.value =2;
     isTakingFoodPictureNotifier.value = false;
   }
@@ -251,6 +253,7 @@ class QuickAccessButtonsSection extends StatelessWidget {
   }
 
   void viewFavourites(){
+    previousPageNotifier.value = selectedPageNotifier.value;
     selectedPageNotifier.value = 6;
   }
 

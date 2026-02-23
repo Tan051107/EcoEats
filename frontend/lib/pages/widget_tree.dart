@@ -4,6 +4,7 @@ import 'package:frontend/data/notifiers.dart';
 import 'package:frontend/pages/views/dashboard.dart';
 import 'package:frontend/pages/views/favourites.dart';
 import 'package:frontend/pages/views/notifications.dart';
+import 'package:frontend/pages/views/pantry.dart';
 import 'package:frontend/pages/views/profile.dart';
 import 'package:frontend/pages/views/take_picture.dart';
 import 'package:frontend/pages/views/weekly_summary.dart';
@@ -12,7 +13,7 @@ import 'package:frontend/widgets/bottom_navbar.dart';
 
 List<Widget> pages = [
   Dashboard(),
-  Dashboard(),
+  Pantry(),
   TakePicture(),
   WeeklySummary(),
   Notifications(),

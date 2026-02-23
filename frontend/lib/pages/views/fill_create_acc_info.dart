@@ -5,7 +5,9 @@ import 'package:frontend/services/auth_service.dart';
 import 'package:frontend/services/fcm_service.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/icon_subtitle.dart';
+import 'package:frontend/widgets/int_text_field.dart';
 import 'package:frontend/widgets/multi_select_icon_subtitle.dart';
+import 'package:frontend/widgets/decimal_text_field.dart';
 import 'package:frontend/widgets/radio_card_selector.dart';
 import 'package:frontend/widgets/shrink_button.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -445,15 +447,15 @@ Widget FirstFillUpSection({
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: _buildTextField(controller: ageController, label: "Age", unit: "years"),
+                child: IntTextField(controller: ageController, label: "Age", unit: "years"),
               ),
               const SizedBox(width: 10.0),
               Expanded(
-                child: _buildTextField(controller: heightController, label: "Height", unit: "cm"),
+                child: DecimalTextField(controller: heightController, label: "Height", unit: "cm"),
               ),
               const SizedBox(width: 10.0),
               Expanded(
-                child: _buildTextField(controller:weightController, label: "Weight", unit: "kg"),
+                child: DecimalTextField(controller:weightController, label: "Weight", unit: "kg"),
               ),
             ],
           )
@@ -488,58 +490,6 @@ Widget FirstFillUpSection({
     );
 }
 
-Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required String unit,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: subtitleText,
-        ),
-        const SizedBox(height: 10.0),
-        TextFormField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: lightGreen,
-            suffixText: unit,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              borderSide: BorderSide.none,
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              borderSide: BorderSide(
-                color: normalGreen,
-                width: 2.0
-              )
-            ),
-          ),
-          validator:(value) {
-            if(value == null || value.isEmpty){
-              return "Required";
-            }
-            if(label == "Age"){
-              if(int.tryParse(value) == null){
-                return "Invalid";
-              }
-            }
-            else{
-              if(double.tryParse(value) == null){
-                return "Invalid";
-              }
-            }
-            return null;
-          } ,
-        )
-      ],
-    );
-  }
 
 Widget SecondFillUpSection({
   required String goalSelected,

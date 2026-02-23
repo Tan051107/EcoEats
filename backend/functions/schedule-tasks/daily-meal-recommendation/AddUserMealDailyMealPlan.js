@@ -41,7 +41,7 @@ export function addUserDailyMealPlan(batch , userId , mealPlanData){
         batch.set(mealPlanRef,fields)
     }
     catch(err){
-        throw new Error("Failed to add uaer daily meal plans" , err.message)
+        throw new Error("Failed to add user daily meal plans" , err.message)
     }
     
 }

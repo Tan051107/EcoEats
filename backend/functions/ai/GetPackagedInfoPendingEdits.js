@@ -1,21 +1,22 @@
-import adminModule from '../utils/firebase-admin.cjs';
-const admin = adminModule.default ?? adminModule;
-
 const getDiff = (a, b) => {
   if (!a || a === 0) return 0;
   return Math.abs(a - b) / a;
 };
 
 export function getPackagedInfoPendingEdits(newRecordedData ,existingData,pendingEdits){
+    console.log("EXISTING DATA")
+    console.log(JSON.stringify(existingData, null, 2));
+    console.log("NEW DATA")
+    console.log(JSON.stringify(newRecordedData, null, 2));
     const{
-        item_name:currentName,
+        name:currentName,
         category:currentCategory,
         nutrition:currentNutrition
 
     } = existingData
 
     const{
-        item_name:receivedName,
+        name:receivedName,
         category:receivedCategory,
         nutrition:receivedNutrition
 
@@ -31,7 +32,7 @@ export function getPackagedInfoPendingEdits(newRecordedData ,existingData,pendin
     const difference ={}
 
     if(currentName.toLowerCase() !== receivedName.toLowerCase()){
-        difference.item_name = receivedName
+        difference.name = receivedName
     }
 
     if(currentCategory.toLowerCase() !== receivedCategory.toLowerCase() && (receivedCategory == "packaged food" || receivedCategory == "packaged_beverage")){
@@ -41,49 +42,53 @@ export function getPackagedInfoPendingEdits(newRecordedData ,existingData,pendin
     for(const nutritionKey of nutritionKeys){
         const nutritionDifference = getDiff(currentNutrition[nutritionKey],receivedNutrition[nutritionKey])
         if(nutritionDifference > 0.2){
+            if (!difference.nutrition) {
+            difference.nutrition = {};
+        }
             difference.nutrition[nutritionKey] = receivedNutrition[nutritionKey]
         }
     }
+    console.log("DIFFERENCE")
+    console.log(JSON.stringify(difference, null, 2));
 
-    for (const pendingEdit of pendingEdits){
-        if(difference.hasOwnProperty("item_name") && pendingEdit.hasOwnProperty("item_name")){
-            if (pendingEdit.item_name.toLowerCase() === difference.item_name.toLowerCase()){
-                pendingEdit.verified_count++;
-            }
-            else{
-                pendingEdits.push({
-                    item_name:difference.item_name,
-                    verified_count:1,
-                })
-            }
-        }
-        if(difference.hasOwnProperty("category") && pendingEdit.hasOwnProperty("category")){
-            if (pendingEdit.category.toLowerCase() === difference.category.toLowerCase()){
-                pendingEdit.verified_count++;
-            }
-            else{
-                pendingEdits.push({
-                    category:difference.category,
-                    verified_count:1
-                })
-            }
-        }
+    if (Object.keys(difference).length == 0){
+        console.log("No difference with current data")
+        return pendingEdits;
+    }
 
-        if(difference.hasOwnProperty("nutrition") && pendingEdit.hasOwnProperty("nutrition")){
-            for (const [nutritionKey ,nutritionValue] of Object.entries(difference.nutrition)){
-                if(pendingEdit.nutrition.hasOwnProperty(nutritionKey)){
-                    if(getDiff(pendingEdit.nutrition[nutritionKey] , nutritionValue) < 0.2){
-                        pendingEdit.verified_count++;
+    for (const [differenceKey,differenceValue] of Object.entries(difference)){
+        let found = false;
+        for(const pendingEdit of pendingEdits){
+            if (pendingEdit.hasOwnProperty(differenceKey)){
+                if(differenceKey == "nutrition"){
+                    for (const [nutritionKey,nutritionValue] of Object.entries(difference.nutrition)){
+                        if(pendingEdit.nutrition.hasOwnProperty(nutritionKey)){
+                           if(getDiff(nutritionValue , pendingEdit.nutrition[nutritionKey]) < 0.2){
+                            console.log(`different ${nutritionKey} as current info. Found in pending edits. Add pending edits verified count`)
+                            pendingEdit.verified_count++
+                            found = true;
+                            break;
+                           } 
+                        }
                     }
                 }
                 else{
-                    pendingEdits.push({
-                        nutrition:{
-                            [nutritionKey]:nutritionValue
-                        } 
-                    })
+                    if(pendingEdit[differenceKey].toLowerCase() == differenceValue.toLowerCase()){
+                        console.log(`different ${differenceKey} as current info. Found in pending edits.Add pending edits verified count`)
+                        pendingEdit.verified_count++
+                        found = true;
+                        break;
+                    }
                 }
             }
+            if(found)break;
+        }
+        if(!found){
+            console.log(`different ${differenceKey} as current info.Not in pending edits.Add pending edits"`)
+            pendingEdits.push({
+                [differenceKey]:differenceValue,
+                verified_count:1
+            })
         }
     }
 

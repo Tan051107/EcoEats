@@ -53,3 +53,15 @@ class ElevatedButtonStyle{
     fontWeight: FontWeight.bold
   );
 }
+
+final InputDecoration fieldDecoration = InputDecoration(
+  filled: true,
+  fillColor: lightGreen,
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8.0),
+    borderSide: BorderSide.none,
+  ),
+  focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0),
+      borderSide: BorderSide(color: normalGreen, width: 2.0)),
+);

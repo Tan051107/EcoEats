@@ -1,10 +1,11 @@
  import ai from './VertexAIClient.js'
 import { SchemaType } from "@google/generative-ai";
-import getImageMimeType from "../utils/getImageMimeType.js";
 import { storeNewPackageMaterials } from './StoreNewPackageMaterial.js';
+import admin from '../utils/firebase-admin.cjs'
 
-export async function getExpiryDateAndPackagingMaterialsFromAI(image1,image2){
-    const allowedImageTypes = ["images/jpeg" , "images/png"]
+export async function getExpiryDateAndPackagingMaterialsFromAI(images){
+
+    const bucket = admin.storage().bucket();
 
     const schema = {
         type:SchemaType.OBJECT,
@@ -65,18 +66,34 @@ export async function getExpiryDateAndPackagingMaterialsFromAI(image1,image2){
                     `
     
 
-    // const passedImages = images.filter(image=>allowedImageTypes.some(type === getImageMimeType(image)))
-    //                             .map(image=>({
-    //                                 fileData:{
-    //                                     fileUri:image,
-    //                                     mimeType:getImageMimeType(image),
-    //                                 }
-    //                             }))
+    const imagesWithMimeType = await Promise.all(
+    images.map(async (image) => {
+        try {
+        const file = bucket.file(image);
+        const [metadata] = await file.getMetadata();
+
+        return {
+            imageUri: `gs://${bucket.name}/${image}`,
+            mimeType: metadata?.contentType || ""
+        };
+        } catch (err) {
+        console.error("Metadata error:", image, err);
+        return null;
+        }
+    })
+    );
     
-    // const parts = [
-    //     {text:prompt},
-    //     ...passedImages
-    // ] (used when receive image in uri)
+    const validImages = imagesWithMimeType.filter(Boolean);
+
+    const parts = [
+        {text: prompt},
+        ...validImages.map(img => ({
+            fileData:{
+                fileUri: img.imageUri,
+                mimeType: img.mimeType
+            }
+        })),
+    ];
     
     try{
         const result = await ai.models.generateContent({
@@ -84,20 +101,7 @@ export async function getExpiryDateAndPackagingMaterialsFromAI(image1,image2){
             contents:[
                 {
                     role:"user",
-                    parts:[
-                        {
-                            inlineData:{
-                                mimeType:"image/jpeg",
-                                data:image1
-                            },
-                            inlineData:{
-                                mimeType:"image/jpeg",
-                                data:image2
-                            }
-                        },
-                        {text:prompt}
-                    ],
-                    //parts:parts (used when receive image in uri)
+                    parts:parts 
                 }
             ],
             config:{

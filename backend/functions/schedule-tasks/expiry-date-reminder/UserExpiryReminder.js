@@ -33,7 +33,7 @@ export async function userExpiryReminder(userId , userFcmToken){
             if(expiryReminderDay.includes(difference) && grocery.quantity >0){
                 const notificationRef = userRef.collection('notifications').doc()
                 const title = "Grocery will expire soon";
-                const message = `Your ${grocery.item_name} will expire in ${difference} day${difference>1? "s": ""}. Consume it as soon as possible.`
+                const message = `Your ${grocery.name} will expire in ${difference} day${difference>1? "s": ""}. Consume it as soon as possible.`
 
                 const inAppNotification = {
                     type:"expiry_warning",

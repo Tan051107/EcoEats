@@ -217,30 +217,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+5"
-  firebase_app_check:
-    dependency: "direct main"
-    description:
-      name: firebase_app_check
-      sha256: "45f0d279ea7ae4eac1867a4c85aa225761e3ac0ccf646386a860b2bc16581f76"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.1+4"
-  firebase_app_check_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_app_check_platform_interface
-      sha256: e32b4e6adeaac207a6f7afe0906d97c0811de42fb200d9b6317a09155de65e2b
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.1+4"
-  firebase_app_check_web:
-    dependency: transitive
-    description:
-      name: firebase_app_check_web
-      sha256: "2cbc8a18a34813a7e31d7b30f989973087421cd5d0e397b4dd88a90289aa2bed"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.2+2"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -313,6 +289,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
+  firebase_storage:
+    dependency: "direct main"
+    description:
+      name: firebase_storage
+      sha256: d6a0ed2ecb860cbf7537fc94773926036952e89a6ef5b6714673c9d1cb741baa
+      url: "https://pub.dev"
+    source: hosted
+    version: "13.0.6"
+  firebase_storage_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_storage_platform_interface
+      sha256: "99032301dd8ac20acd094270a4472ff8e9510701d9c6ed335df0b91a3ddf4eac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.17"
+  firebase_storage_web:
+    dependency: transitive
+    description:
+      name: firebase_storage_web
+      sha256: d820ddb9419d563f398c85a3c7ad6255af28c3bf9d53d9af7b346b872f54a901
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.11.2"
   fl_chart:
     dependency: "direct main"
     description:
@@ -368,6 +368,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.3+1"
+  google_mlkit_barcode_scanning:
+    dependency: "direct main"
+    description:
+      name: google_mlkit_barcode_scanning
+      sha256: dbf4df99cb490b12e95dcedde3e6741ce711942904f7049da601dfede91c1e0f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.14.2"
+  google_mlkit_commons:
+    dependency: transitive
+    description:
+      name: google_mlkit_commons
+      sha256: "3e69fea4211727732cc385104e675ad1e40b29f12edd492ee52fa108423a6124"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.11.1"
   google_sign_in:
     dependency: "direct main"
     description:

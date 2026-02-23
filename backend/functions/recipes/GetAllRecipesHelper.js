@@ -1,10 +1,27 @@
 import admin from '../utils/firebase-admin.cjs'
 
-export async function getAllRecipes(category,chef){
+export async function getAllRecipes(category,chef,recipeId){
     try{
         const database = admin.firestore()
 
         let query = database.collection('recipes');
+
+        if(recipeId!==undefined){
+            const specificRecipeSnapshot = await query.doc(recipeId).get()
+            if(!specificRecipeSnapshot.exists){
+                throw new Error("no recipe with such recipe Id")
+            }
+            const specificRecipeData = {
+                recipe_id:specificRecipeSnapshot.id,
+                ...specificRecipeSnapshot.data()
+            }
+
+            return{
+                success:true,
+                message:`Successfully retrieved recipe of ${recipeId}`,
+                data:specificRecipeData
+            }
+        }
 
         if(category !== undefined){
             query = query.where('diet_type', "==" ,category)

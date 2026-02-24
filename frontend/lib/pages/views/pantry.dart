@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 import 'package:frontend/services/shelf_item_service.dart';
+import 'package:frontend/widgets/add_grocery_form.dart';
+import 'package:frontend/widgets/form_dialog.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/shelf_item_card.dart';
 
@@ -152,17 +154,25 @@ class _HeaderSectionState extends State<HeaderSection> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Header(title: "Shelf" , subtitle: "${widget.isLoading? "0": widget.itemCount} items in stock", isShowBackButton: false),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            color: normalGreen
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 30.0,
+        GestureDetector(
+          onTap: ()async{
+            await showFormDialog(
+              context: context, 
+              child: AddGroceryForm()
+            );
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.0),
+              color: normalGreen
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(12.0),
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 30.0,
+              ),
             ),
           ),
         )

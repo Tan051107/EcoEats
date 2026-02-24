@@ -1,10 +1,12 @@
 import Joi from 'joi'
-import adminModule from '../utils/firebase-admin.cjs';
-const admin = adminModule.default ?? adminModule; 
+// import adminModule from '../utils/firebase-admin.cjs';
+// const admin = adminModule.default ?? adminModule; 
+import admin from '../utils/firebase-admin.cjs'
 import * as functions from 'firebase-functions'
 import { toFirestoreTimestamp } from '../utils/ToFirestoreTimestamp.js';
 import { storePackagedFoodNutrition } from '../ai/StorePackagedFoodNutrition.js';
 import {differenceInDays, format} from 'date-fns'
+import { HttpsError } from 'firebase-functions/https';
 
 
 const database = admin.firestore();
@@ -12,7 +14,7 @@ const database = admin.firestore();
 const shelfItemSchema =Joi.object({
     name:Joi.string().required(),
     category:Joi.string().valid("fresh produce" , "packaged food" , "packaged beverage").required(),
-    quantity:Joi.number().min(1).required(),
+    quantity:Joi.number().min(0).required(),
     expiry_date:Joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/).required(),
     calories_kcal:Joi.number().required(),
     protein_g:Joi.number().required(),
@@ -20,6 +22,7 @@ const shelfItemSchema =Joi.object({
     carbs_g:Joi.number().required(),
     image_urls:Joi.array().items(Joi.string()).invalid(null),
     barcode:Joi.string(),
+    item_id: Joi.string()
 })
 
 export const addShelfItem = functions.https.onCall(async(request)=>{
@@ -36,7 +39,7 @@ export const addShelfItem = functions.https.onCall(async(request)=>{
         throw new functions.https.HttpsError('invalid-argument' , `Validation failed: ${error.details.map(d => `${d.path.join(".")}: ${d.message}`).join(", ")}`)       
     }
 
-    let {name,category,barcode,calories_kcal,protein_g,carbs_g,fat_g ,expiry_date, ...itemData} = value
+    let {item_id,name,category,barcode,calories_kcal,protein_g,carbs_g,fat_g ,expiry_date,quantity, ...itemData} = value
 
     const [expiryYear,expiryMonth,expiryDay] = expiry_date.split("-").map(Number);
     const today = new Date()
@@ -50,7 +53,24 @@ export const addShelfItem = functions.https.onCall(async(request)=>{
 
     try{
         const userRef = database.collection('users').doc(userId)
-        const itemRef = userRef.collection('shelf').doc();
+        let itemRef = userRef.collection('shelf')
+        if(item_id){
+            itemRef = itemRef.doc(item_id)
+            const itemSnapshot = await itemRef.get();
+            if(!itemSnapshot.exists){
+                throw new HttpsError("not-found" , "Item not found")
+            }
+            if(quantity <=0){
+                await itemRef.delete()
+            }
+            
+        }
+        else{
+            itemRef = itemRef.doc();
+            if(quantity < 0){
+                throw new functions.https.HttpsError('invalid-argument' , "Item quantity must be more than 0")
+            }
+        }
 
         const nutrition = {
             calories_kcal:calories_kcal,

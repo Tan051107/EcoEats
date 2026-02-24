@@ -422,7 +422,8 @@ Widget FirstFillUpSection({
               genders.length,
               (index){
                 final gender = genders[index];
-                return Row(
+                return Expanded(
+                  child:Row(
                   children: [
                     GestureDetector(
                       onTap: ()=>setGender(gender["gender"]),
@@ -433,8 +434,8 @@ Widget FirstFillUpSection({
                         activeCard: genderSelected,
                       ),
                     ),
-                    const SizedBox(width: 50.0),
                   ],
+                )
                 );
               }
             )
@@ -602,22 +603,24 @@ Widget ThirdFillUpSection({
         style: subtitleText,
       ),
       const SizedBox(height: 10.0),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(
-          dietTypes.length,
-          (index){
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(dietTypes.length, (index) {
             final dietType = dietTypes[index];
-            return GestureDetector(
-              onTap: ()=>setDietTypeSelected(dietType["label"]),
-              child: IconSubtitle(
-                icon: dietType["icon"],
-                name: dietType["label"],
-                iconColor: gray,
-                activeCard: dietTypeSelected,
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8.0), // spacing between cards
+              child: GestureDetector(
+                onTap: () => setDietTypeSelected(dietType["label"]),
+                child: IconSubtitle(
+                  icon: dietType["icon"],
+                  name: dietType["label"],
+                  iconColor: gray,
+                  activeCard: dietTypeSelected,
+                ),
               ),
             );
-          }
+          }),
         ),
       ),
       const SizedBox(height: 20.0),
@@ -631,22 +634,24 @@ Widget ThirdFillUpSection({
         style: smallText,
       ),
       const SizedBox(height: 10.0),
-      Wrap(
-        spacing: 10.0,
-        runSpacing: 10.0,
-        children: List.generate(
-          allergicTypes.length,
-          (index) {
-            final allergyType = allergicTypes[index];
-            return GestureDetector(
-              onTap: () => setAllergiesSelected(allergyType["name"]),
-              child: MultiSelectIconSubtitle(
-                icon: allergyType["icon"],
-                name: allergyType["name"],
-                activeCards: allergiesSelected,
-              ),
-            );
-          },
+      Center(
+        child: Wrap(
+          spacing: 10.0,
+          runSpacing: 10.0,
+          children: List.generate(
+            allergicTypes.length,
+            (index) {
+              final allergyType = allergicTypes[index];
+              return GestureDetector(
+                onTap: () => setAllergiesSelected(allergyType["name"]),
+                child: MultiSelectIconSubtitle(
+                  icon: allergyType["icon"],
+                  name: allergyType["name"],
+                  activeCards: allergiesSelected,
+                ),
+              );
+            },
+          ),
         ),
       ),
       const SizedBox(height: 10.0),

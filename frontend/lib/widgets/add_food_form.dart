@@ -1,8 +1,9 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
+import 'package:frontend/providers/daily_meals_provider.dart';
 import 'package:frontend/widgets/decimal_text_field.dart';
 import 'package:frontend/widgets/shrink_button.dart';
+import 'package:provider/provider.dart';
 
 class AddFoodForm extends StatefulWidget {
   const AddFoodForm(
@@ -30,7 +31,7 @@ class _AddFoodFormState extends State<AddFoodForm> {
   late TextEditingController foodCaloriesController;
   bool enableSubmitButton = false;
 
-  Future<void> addGrocery()async{
+  Future<void> addMeal()async{
     Map<String,dynamic> payLoad = {
       "name":foodNameController.text,
       "carbs":double.tryParse(foodCarbsController.text) ?? 0.0,
@@ -39,23 +40,14 @@ class _AddFoodFormState extends State<AddFoodForm> {
       "calories":double.tryParse(foodCaloriesController.text) ?? 0.0,
     };
 
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
-    final logMeal = functions.httpsCallable("logMeal");
-    try{
-      final response = await logMeal.call(payLoad);
-      final Map<String,dynamic> responseResult = response.data;
+    try{ 
+      final DailyMealsProvider dailyMealsProvider = Provider.of<DailyMealsProvider>(context,listen:false);
+      String logMealResult = await dailyMealsProvider.addDailyMeals(payLoad);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(responseResult["message"])
+          content: Text(logMealResult)
         )
       );  
-    }
-    on FirebaseFunctionsException catch (e){
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message.toString())
-        )
-      );
     }
     catch(err){
       ScaffoldMessenger.of(context).showSnackBar(
@@ -200,10 +192,10 @@ class _AddFoodFormState extends State<AddFoodForm> {
             ),
             SizedBox(height: 20.0,),
             ShrinkButton(
-            onPressed: () {
+            onPressed: ()async {
               if(enableSubmitButton){
                 if(_formKey.currentState!.validate()){
-                  addGrocery();
+                  await addMeal();
                   Navigator.pop(context);
                 }
               }

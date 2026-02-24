@@ -23,17 +23,17 @@ class FavouriteProvider extends ChangeNotifier{
     notifyListeners();
   } 
 
-  Future<void>addToFavourite(Map<String,dynamic>favourite)async{
-    bool isAlreadyFavourite = _favourites.any((fav)=>fav["recipeId"] == favourite["recipeId"]);
+  Future<void>addToFavourite(Map<String,dynamic>newFavourite)async{
+    bool isAlreadyFavourite = _favourites.any((fav)=>fav["recipeId"] == newFavourite["recipeId"]);
     if(isAlreadyFavourite){
-      _favourites.removeWhere((fav)=>fav["recipeId"] == favourite["recipeId"]);
+      _favourites.removeWhere((fav)=>fav["recipeId"] == newFavourite["recipeId"]);
     }
     else{
-      _favourites.add(favourite);
+      _favourites.add(newFavourite);
     }
     notifyListeners();
     try{
-      await FavouriteService.addToFavourite(favourite["recipeId"]);
+      await FavouriteService.addToFavourite(newFavourite["recipeId"]);
     }catch(err){
       throw Exception(err);
     }

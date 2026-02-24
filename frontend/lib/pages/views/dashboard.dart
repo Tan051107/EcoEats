@@ -1,6 +1,10 @@
+import 'dart:ffi';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 import 'package:frontend/data/notifiers.dart';
+import 'package:frontend/providers/daily_meals_provider.dart';
 import 'package:frontend/providers/favourite_provider.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/overview_nutrition_card.dart';
@@ -8,6 +12,7 @@ import 'package:frontend/widgets/quick_access_buttons.dart';
 import 'package:frontend/widgets/recipe_type_card.dart';
 import 'package:frontend/widgets/today_meal_card.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -18,10 +23,25 @@ class Dashboard extends StatefulWidget {
 
 
 class _DashboardState extends State<Dashboard> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      final DailyMealsProvider dailyMealsProvider = Provider.of<DailyMealsProvider>(context,listen:false);
+      dailyMealsProvider.fetchDailyMeals();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final FavouriteProvider favouriteProvider = context.watch<FavouriteProvider>();
+    final DailyMealsProvider dailyMealsProvider = context.watch<DailyMealsProvider>();
     final int totalFavourites = favouriteProvider.favourites.length;
+    final List<Map<String,dynamic>> dailyMeals = dailyMealsProvider.dailyMeals;
+    final List<Map<String,dynamic>> mealsToShow = dailyMeals.length > 3 ? dailyMeals.sublist(0,3) : dailyMeals;
+    final Map<String,dynamic> dailySummary = dailyMealsProvider.dailySummary;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -33,14 +53,31 @@ class _DashboardState extends State<Dashboard> {
                       child:Column(
                         children: [
                           _HeaderSection(),
-                          NutritionOverview(),
-                          QuickAccessButtonsSection(
-                            totalFavourites: totalFavourites,
-                          ),
-                          SizedBox(height: 20.0),
-                          TodayMealSection(),
-                          SizedBox(height: 20.0),
-                          CookBookSection()
+                          if (dailyMealsProvider.isLoading)
+                          Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text("Loading Dashboard"),
+                                SizedBox(height: 5.0),
+                                CircularProgressIndicator(),
+                              ],
+                            ),
+                          )
+                          else...[
+                            NutritionOverview(
+                              dailySummaryOverview: dailySummary,
+                            ),
+                            QuickAccessButtonsSection(
+                              totalFavourites: totalFavourites,
+                            ),
+                            SizedBox(height: 20.0),
+                            if(dailyMeals.isNotEmpty)...[
+                              TodayMealSection(dailyMeals:mealsToShow),
+                            ],
+                            SizedBox(height: 20.0),
+                            CookBookSection()                  
+                          ]
                         ],
                       ),
             ),
@@ -103,124 +140,155 @@ Widget _HeaderSection(){
 
 
 class NutritionOverview extends StatelessWidget {
-  const NutritionOverview({super.key});
+  const NutritionOverview(
+    {
+      super.key,
+      required this.dailySummaryOverview
+    }
+  );
+
+  final Map<String,dynamic> dailySummaryOverview;
+  
 
   @override
   Widget build(BuildContext context) {
+    print("Daily Summary Overview:$dailySummaryOverview");
+    final double totalDailyEatenCalories = (dailySummaryOverview["total_calories_kcal"] as num?)?.toDouble() ?? 0.0 ;
+    final double totalDailyIntake = (dailySummaryOverview["daily_calorie_intake"] as num?)?.toDouble() ?? 0.0;
+    final double remainingCalories = (dailySummaryOverview["remaining_calories"] as num?)?.toDouble() ?? 0.0;
+    final String totalEatenCaloriesString = totalDailyEatenCalories.ceil().toString();
+    final String totalDailyIntakeString = totalDailyIntake.ceil().toString();
+    final String remainingCaloriesString = remainingCalories.ceil().toString();
     return Column(
       children: [
         Card(
-              elevation: 8.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.circular(8.0),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(13.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
+          elevation: 8.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(13.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: orange,
-                                shape: BoxShape.circle
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(5.0),
-                                child: Icon(
-                                  Icons.local_fire_department_outlined,
-                                  color: Colors.white,
-                                  size: 45.0,
-                                ),
+                    // LEFT SIDE: Icon + Text
+                    Flexible(
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: orange,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: Icon(
+                                Icons.local_fire_department_outlined,
+                                color: Colors.white,
+                                size: 45.0,
                               ),
                             ),
-                            SizedBox(width: 10.0),
-                            Column(
+                          ),
+                          SizedBox(width: 10.0),
+                          // Text Column
+                          Flexible(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "Today's Calories",
                                   style: TextStyle(
                                     fontSize: subtitleText.fontSize,
-                                    color: subtitleText.color
+                                    color: subtitleText.color,
                                   ),
+                                  overflow: TextOverflow.ellipsis, // prevents overflow
                                 ),
                                 Row(
-                                  textBaseline: TextBaseline.alphabetic,
                                   crossAxisAlignment: CrossAxisAlignment.baseline,
+                                  textBaseline: TextBaseline.alphabetic,
                                   children: [
                                     Text(
-                                      "1200",
+                                      totalEatenCaloriesString,
                                       style: TextStyle(
+                                        color: totalDailyEatenCalories > totalDailyIntake ? normalRed : Colors.black,
                                         fontSize: headerText.fontSize,
-                                        fontWeight: headerText.fontWeight
+                                        fontWeight: headerText.fontWeight,
                                       ),
                                     ),
                                     SizedBox(width: 3.0),
-                                    Text(
-                                      "/2000 kcal",
-                                      style: TextStyle(
-                                        fontSize: subtitleText.fontSize,
-                                        color: subtitleText.color
+                                    Flexible(
+                                      child: Text(
+                                        "/$totalDailyIntakeString",
+                                        style: TextStyle(
+                                          fontSize: subtitleText.fontSize,
+                                          color: subtitleText.color,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                    )
+                                    ),
                                   ],
-                                )
+                                ),
                               ],
-                            )
-                          ],     
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Remaining",
-                              style: TextStyle(
-                                fontSize: subtitleText.fontSize,
-                                color: subtitleText.color
-                              ),
                             ),
-                            Text(
-                              "1230",
-                              style: TextStyle(
-                                color: normalGreen,
-                                fontSize:20.0,
-                                fontWeight: FontWeight.w600
-                              ),
-                            )
-                          ],
-                        )
+                          ),
+                        ],
+                      ),
+                    ),
+                    // RIGHT SIDE: Remaining
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Remaining",
+                          style: TextStyle(
+                            fontSize:15,
+                            color: subtitleText.color,
+                          ),
+                        ),
+                        Text(
+                          remainingCaloriesString,
+                          style: TextStyle(
+                            color: normalGreen,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ],
                     ),
-                    SizedBox(height: 5.0),
-                    SizedBox(
-                      height: 10.0,
-                      child:ClipRRect(
-                        borderRadius:BorderRadiusGeometry.circular(12.0),
-                        child: LinearProgressIndicator(
-                                value: 0.6,
-                                color: normalGreen
-                              ),
-                      )
-                    )
                   ],
                 ),
-              ),
-            ),
-            SizedBox(height: 20.0),
-            Row(
-              children: [
-                OverviewNutritionCard(icon: "assets/icons/meat.svg", nutritionName: "Protein", iconBgColor: orange, nutritionValue: 35),
-                OverviewNutritionCard(icon: "assets/icons/wheat.svg", nutritionName: "Carbs", iconBgColor:normalYellow, nutritionValue: 35),
-                OverviewNutritionCard(icon: "assets/icons/droplet.svg", nutritionName: "Fats", iconBgColor:normalBlue, nutritionValue: 35)
+                SizedBox(height: 5.0),
+                // Progress Bar
+                SizedBox(
+                  height: 10.0,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: LinearProgressIndicator(
+                      value: totalDailyEatenCalories / totalDailyIntake,
+                      color: normalGreen,
+                    ),
+                  ),
+                ),
               ],
             ),
-          ],
+          ),
+        ),
+        SizedBox(height: 20.0),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              OverviewNutritionCard(icon: "assets/icons/meat.svg", nutritionName: "Protein", iconBgColor: orange, nutritionValue: (dailySummaryOverview["total_protein_g"] as num?)?.toDouble() ?? 0,),
+              OverviewNutritionCard(icon: "assets/icons/wheat.svg", nutritionName: "Carbs", iconBgColor:normalYellow, nutritionValue: (dailySummaryOverview["total_carbs_g"] as num?)?.toDouble() ?? 0),
+              OverviewNutritionCard(icon: "assets/icons/droplet.svg", nutritionName: "Fats", iconBgColor:normalBlue, nutritionValue: (dailySummaryOverview["total_fat_g"] as num?)?.toDouble() ?? 0)
+            ],
+          ),
+        )
+      ],
     );
   }
 }
@@ -314,7 +382,14 @@ class QuickAccessButtonsSection extends StatelessWidget {
 }
 
 class TodayMealSection extends StatelessWidget {
-  const TodayMealSection({super.key});
+  const TodayMealSection(
+    {
+      super.key,
+      required this.dailyMeals
+    }
+  );
+
+  final List<Map<String,dynamic>> dailyMeals;
 
   @override
   Widget build(BuildContext context) {
@@ -342,9 +417,28 @@ class TodayMealSection extends StatelessWidget {
           ],
         ),
         SizedBox(height: 10.0,),
-        TodayMealCard(),
-        TodayMealCard(),
-        TodayMealCard()
+        ...List.generate(
+          dailyMeals.length, 
+          (index){
+            final meal = dailyMeals[index];
+            final nutrition = Map<String,dynamic>.from(meal["nutrition"] as Map);
+            final createdAtTime = Map<String,dynamic>.from(meal["created_at"] as Map);
+            final int calories = nutrition["calories_kcal"];
+            final int nanoseconds = createdAtTime["_nanoseconds"];
+            final int seconds = createdAtTime["_seconds"];
+            DateTime eatenTime = DateTime.fromMicrosecondsSinceEpoch(
+              (seconds * 1000) + (nanoseconds ~/ 1000000),
+              isUtc: true
+            );
+            DateTime malaysiaTime = eatenTime.add(Duration(hours: 8));
+            String formattedTime = DateFormat('hh:mm a').format(malaysiaTime);
+            return TodayMealCard(
+              mealName: meal["name"], 
+              calories:calories, 
+              eatenTime: formattedTime,
+            );
+          }
+        )
       ],
     );
   }

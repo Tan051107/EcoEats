@@ -7,7 +7,7 @@ const TextStyle headerText = TextStyle(
 );
 
 const TextStyle subtitleText = TextStyle(
-fontSize: 18,
+fontSize: 15,
 color:gray
 );
 
@@ -37,6 +37,10 @@ const Color orange = Color(0xFFEB6B3E);
 
 const Color normalYellow = Color(0xFFF2B80C);
 const Color lightYellow = Color(0x1AEBB517);
+
+const Color normalRed = Color(0xFFEF4444);
+final Color lightRed = normalRed.withValues(alpha: 0.1);
+
 
 const Color normalBlue = Color(0xFF2AAEE6);
 

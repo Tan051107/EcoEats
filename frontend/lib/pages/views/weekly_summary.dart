@@ -133,13 +133,16 @@ class AverageNutritionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return const SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        AverageNutritionCard(name:"Protein" , value: 96 , circleColor: normalYellow),
-        AverageNutritionCard(name:"Carbs" , value: 96 , circleColor: orange,),
-        AverageNutritionCard(name:"Fats" , value: 96, circleColor: normalBlue,)
-      ],
+          AverageNutritionCard(name:"Protein" , value: 96 , circleColor: normalYellow),
+          AverageNutritionCard(name:"Carbs" , value: 96 , circleColor: orange,),
+          AverageNutritionCard(name:"Fats" , value: 96, circleColor: normalBlue,)
+        ],
+      ),
     );
   }
 }

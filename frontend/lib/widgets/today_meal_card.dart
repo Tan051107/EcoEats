@@ -2,7 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 
 class TodayMealCard extends StatelessWidget {
-  const TodayMealCard({super.key});
+  const TodayMealCard(
+    {
+      super.key,
+      required this.mealName,
+      required this.calories,
+      required this.eatenTime,
+    }
+  );
+
+  final String mealName;
+  final int calories;
+  final String eatenTime;
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +45,14 @@ class TodayMealCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Oatmeal with Berries",
+                      mealName,
                       style: TextStyle(
                         fontSize: subtitleText.fontSize,
                         fontWeight: FontWeight.bold
                       ),
                     ),
                     Text(
-                      "8:30 AM",
+                      eatenTime,
                       style:subtitleText
                     )
                   ],
@@ -51,7 +62,7 @@ class TodayMealCard extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  "320",
+                  calories.toString(),
                   style: TextStyle(
                     fontSize: subtitleText.fontSize,
                     fontWeight: FontWeight.bold

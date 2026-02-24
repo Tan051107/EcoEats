@@ -17,7 +17,7 @@ class OverviewNutritionCard extends StatelessWidget {
   final String nutritionName;
   final String icon;
   final Color iconBgColor;
-  final int nutritionValue;
+  final double nutritionValue;
 
   @override
   Widget build(BuildContext context) {

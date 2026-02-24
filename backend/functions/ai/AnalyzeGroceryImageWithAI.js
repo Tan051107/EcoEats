@@ -2,10 +2,13 @@
     import ai from './VertexAIClient.js'
     import { storeNewPackageMaterials } from './StoreNewPackageMaterial.js';
     import admin from '../utils/firebase-admin.cjs'
+    import {format} from 'date-fns'
 
     export async function analyzeGroceryImageWithAI(images){
 
         const bucket = admin.storage().bucket();
+        const today = new Date();
+        const todayDate = format(today,"yyyy-MM-dd");
 
         const schema = {
             type: SchemaType.OBJECT,
@@ -83,7 +86,7 @@
                         Logic Rules
                         For fresh produced:
                         - Set is_packaged=false. 
-                        - Include 'expiry_date' by estimating the expiry date of fresh produce. 
+                        - Include 'expiry_date' by estimating the expiry date of fresh produce based on today's date. Today's date is ${todayDate}
                         - Omit 'packaging'.
                         For packaged food or packaged drinks:
                         - Set is_packaged=true.

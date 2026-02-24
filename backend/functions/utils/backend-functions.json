@@ -69,7 +69,8 @@
                   },
                   "healthy_score":30,
                   "comment": "Too oily",
-                  "created_at": "timestamp"
+                  "created_at": "timestamp",
+                  "name":"pasta"
                 }
               ]
             }

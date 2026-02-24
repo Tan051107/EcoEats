@@ -41,6 +41,7 @@ class RecipeTypeCard extends StatelessWidget {
         child: Padding(
             padding: EdgeInsets.all(12.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   icon,
@@ -57,9 +58,11 @@ class RecipeTypeCard extends StatelessWidget {
                 Text(
                   subtitle,
                   style: TextStyle(
-                    fontSize: 17.0,
-                    color: subtitleText.color
+                    fontSize: subtitleText.fontSize,
+                    color: subtitleText.color,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 )
               ],
             )

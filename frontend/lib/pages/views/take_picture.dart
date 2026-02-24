@@ -363,7 +363,7 @@ class _TakePictureState extends State<TakePicture> {
   }
 
   Future<void> scanImageForDetails()async{
-    if(imageUrls.isEmpty){
+    if(images.isEmpty){
       debugPrint("imageUrls length: ${imageUrls.length}");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -393,9 +393,10 @@ class _TakePictureState extends State<TakePicture> {
         await scanBarCodeInAllImages(); 
         debugPrint("Barcode received: $barCodeValueFound"); 
         debugPrint("Analyzing Gorcery images");
-        // analyzedImageResult = await sendGroceryImagesForAnalysis(barCodeValueFound, imageUrls);   
+        analyzedImageResult = await sendGroceryImagesForAnalysis(barCodeValueFound, imageUrls);
+        print(analyzedImageResult);
       }
-      showAddForm(anaylzedResult: {});
+      showAddForm(anaylzedResult: analyzedImageResult);
     }
     catch(err){
       ScaffoldMessenger.of(context).showSnackBar(

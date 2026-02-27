@@ -3,6 +3,10 @@ import '../services/favourite_service.dart';
 
 
 class FavouriteProvider extends ChangeNotifier{
+
+  FavouriteProvider(){
+    fetchFavourites();
+  }
   List<Map<String,dynamic>> _favourites = [];
   bool _isLoading = false;
 

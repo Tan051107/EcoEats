@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/auth_wrapper.dart';
 import 'package:frontend/providers/daily_meals_provider.dart';
 import 'package:frontend/providers/favourite_provider.dart';
+import 'package:frontend/providers/grocery_provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
@@ -23,6 +24,9 @@ void main()async {
         ),
         ChangeNotifierProvider(
           create: (_)=>DailyMealsProvider()
+        ),
+        ChangeNotifierProvider(
+          create: (_)=>GroceryProvider()
         )
       ],
       child: const MyApp(),

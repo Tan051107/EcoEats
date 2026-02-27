@@ -10,6 +10,7 @@ export * from './shelf/RemoveShelfItem.js'
 
 export * from './meals/GetDailyEatenMeals.js'
 export * from './meals/LogMeal.js'
+export * from './meals/RemoveMeal.js'
 
 export * from './meals/GetDailySummary.js'
 

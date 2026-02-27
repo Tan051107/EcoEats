@@ -8,15 +8,22 @@ Future<T?>showFormDialog<T>({
     barrierColor: Colors.black54,
     barrierDismissible: true,
     context: context, 
-    builder: (_){
+    builder: (BuildContext dialogContext){
       return Center(
         child: Material(
           borderRadius: BorderRadius.circular(16),
-          child: Container(
-            width: 350,
-            padding: EdgeInsets.all(20.0),
-            child: child,
-          ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(dialogContext).size.width * 0.9,
+              maxHeight: MediaQuery.of(dialogContext).size.height * 0.8,
+            ),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: child,
+              ),
+            ),
+          )
         ),
       );
     }

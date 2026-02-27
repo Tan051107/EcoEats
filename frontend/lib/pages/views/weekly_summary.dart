@@ -138,9 +138,9 @@ class AverageNutritionSection extends StatelessWidget {
       child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-          AverageNutritionCard(name:"Protein" , value: 96 , circleColor: normalYellow),
-          AverageNutritionCard(name:"Carbs" , value: 96 , circleColor: orange,),
-          AverageNutritionCard(name:"Fats" , value: 96, circleColor: normalBlue,)
+          AverageNutritionCard(name:"Avg Protein" , value: 96 , circleColor: normalYellow , unit: "g",),
+          AverageNutritionCard(name:"Avg Carbs" , value: 96 , circleColor: orange,unit: "g"),
+          AverageNutritionCard(name:"Avg Fats" , value: 96, circleColor: normalBlue,unit: "g")
         ],
       ),
     );

@@ -1,19 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-class TodayMealCard extends StatelessWidget {
+class TodayMealCard extends StatefulWidget {
   const TodayMealCard(
     {
       super.key,
       required this.mealName,
       required this.calories,
       required this.eatenTime,
+      required this.images
     }
   );
 
   final String mealName;
   final int calories;
   final String eatenTime;
+  final List<String> images;
+
+  @override
+  State<TodayMealCard> createState() => _TodayMealCardState();
+}
+
+class _TodayMealCardState extends State<TodayMealCard> {
+  late String imageUrl = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadImageUrl();
+  }
+
+  Future<void> _loadImageUrl() async {
+    if (widget.images.isNotEmpty && widget.images[0].isNotEmpty) {
+      try {
+        final storageRef = FirebaseStorage.instance.refFromURL(widget.images[0]);
+        final downloadUrl = await storageRef.getDownloadURL();
+        setState(() {
+          imageUrl = downloadUrl;
+        });
+      } catch (e) {
+        print("Error loading image: $e");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +64,16 @@ class TodayMealCard extends StatelessWidget {
                   ),
                   child:Padding(
                     padding: EdgeInsets.all(10.0),
-                    child: Icon(
-                        Icons.fastfood,
-                        size: 40,
-                      ),
+                    child: imageUrl.isNotEmpty
+                          ?Image.network(
+                            imageUrl,
+                            height: 40,
+                            width: 40,
+                          )
+                          :Icon(
+                            Icons.fastfood,
+                            size: 40,
+                          ),
                   )
                 ),
                 SizedBox(width: 10.0),
@@ -45,14 +81,14 @@ class TodayMealCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      mealName,
+                      widget.mealName,
                       style: TextStyle(
                         fontSize: subtitleText.fontSize,
                         fontWeight: FontWeight.bold
                       ),
                     ),
                     Text(
-                      eatenTime,
+                      widget.eatenTime,
                       style:subtitleText
                     )
                   ],
@@ -62,7 +98,7 @@ class TodayMealCard extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  calories.toString(),
+                  widget.calories.toString(),
                   style: TextStyle(
                     fontSize: subtitleText.fontSize,
                     fontWeight: FontWeight.bold

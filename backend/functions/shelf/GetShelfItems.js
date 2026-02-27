@@ -29,10 +29,16 @@ export const getShelfItems = functions.https.onCall(async(request)=>{
 
         const shelfSnapshot = await query.get()
 
-        const shelfItems = shelfSnapshot.docs.map(doc=>({
-            shelfItemId:doc.id,
-            ...doc.data()
-        })) 
+        const shelfItems = shelfSnapshot.docs.map(doc=>{
+            const expiryTimeStamp = doc.data().expiry_date;
+            const expiryDate = expiryTimeStamp.toDate();
+            const formattedExpiryDate = expiryDate.toISOString().split('T')[0];
+            return({
+               item_id:doc.id,
+                ...doc.data(),
+                expiry_date:formattedExpiryDate
+            })
+        })
 
         return{
             success:true,

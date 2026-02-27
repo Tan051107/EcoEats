@@ -44,17 +44,17 @@ export const getDailyRecommendedMeals = functions.https.onCall(async(request)=>{
         }
 
         const breakfast = {
-            mealId:breakfastSnapshot.id,
+            recipeId:breakfastSnapshot.id,
             ...breakfastSnapshot.data()
         }
 
         const lunch = {
-            mealId:lunchSnapshot.id,
+            recipeId:lunchSnapshot.id,
             ...lunchSnapshot.data()
         }
 
         const dinner = {
-            mealId:dinnerSnapshot.id,
+            recipeId:dinnerSnapshot.id,
             ...dinnerSnapshot.data()
         }
 

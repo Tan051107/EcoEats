@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
-import 'package:frontend/services/shelf_item_service.dart';
+import 'package:frontend/providers/grocery_provider.dart';
 import 'package:frontend/widgets/add_grocery_form.dart';
 import 'package:frontend/widgets/form_dialog.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/shelf_item_card.dart';
+import 'package:frontend/widgets/shelf_item_details.dart';
+import 'package:provider/provider.dart';
 
 class Pantry extends StatefulWidget {
   const Pantry(
@@ -20,47 +22,13 @@ class Pantry extends StatefulWidget {
 }
 
 class _PantryState extends State<Pantry> {
-  late String category = "";
-  List<Map<String,dynamic>> shelfItemsRetrieved = [];
-  bool isLoadingShelfItem = false;
 
-  Future<void> getShelfItems(String categorySelected)async{
-    if(category == categorySelected){
-      return;
-    }
-    setState(() {
-      isLoadingShelfItem = true;
-    });
-    try{
-      setState(() {
-        category =categorySelected;
-      });
-      List<Map<String,dynamic>> shelfItems = await ShelfItemService.getShelfItems(category);
-      setState(() {
-        shelfItemsRetrieved = shelfItems;
-        isLoadingShelfItem = false;
-      });
-      print("Shelf Items:$shelfItems");
-      print ("Category: $categorySelected");
-    }
-    catch(err){
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Failed to fetch shelf items: $err ")
-        )
-      );
-    }
-  }
-
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    getShelfItems("packaged food");
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
+    final GroceryProvider groceryProvider = context.watch<GroceryProvider>();
+    final List<Map<String,dynamic>> shelfItemsRetrieved = groceryProvider.groceries;
+    final int totalShelfItems = shelfItemsRetrieved.length; 
+    bool isLoadingShelfItem = groceryProvider.isLoading;
     return Scaffold(
       body:Padding(
         padding: EdgeInsets.all(10.0),
@@ -72,14 +40,11 @@ class _PantryState extends State<Pantry> {
                 child: Column(
                   children: [
                     HeaderSection(
-                      itemCount: shelfItemsRetrieved.length,
+                      itemCount: totalShelfItems,
                       isLoading: isLoadingShelfItem,
                     ),
                     SizedBox(height: 20.0),
-                    CategorySelectionSection(
-                      getShelfItems: getShelfItems,
-                      category: category
-                    ),
+                    CategorySelectionSection(),
                     isLoadingShelfItem
                     ?Center(
                       child: Column(
@@ -99,19 +64,29 @@ class _PantryState extends State<Pantry> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        childAspectRatio: 200/150,
+                        childAspectRatio: 200/160,
                         maxCrossAxisExtent: 200,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10
                       ), 
                       itemBuilder: (context,index){
-                        final shelfItemRetrieved = shelfItemsRetrieved[index];
-                        return ShelfItemCard(
-                          context: context,
-                          estimatedShelfLife: shelfItemRetrieved["estimated_shelf_life"] ?? 0, 
-                          groceryName: shelfItemRetrieved["name"] ?? "", 
-                          category: shelfItemRetrieved["category"] ?? "", 
-                          quantity: shelfItemRetrieved["quantity"] ?? 0
+                        final Map<String,dynamic>shelfItemRetrieved = shelfItemsRetrieved[index];
+                        final List<String> images = (shelfItemRetrieved["image_urls"] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [];
+                        return GestureDetector(
+                          onTap: () async{
+                            await showFormDialog(
+                              context: context, 
+                              child: ShelfItemDetails(groceryDetails: shelfItemRetrieved)
+                            );
+                          },
+                          child: ShelfItemCard(
+                            context: context,
+                            estimatedShelfLife: shelfItemRetrieved["estimated_shelf_life"] ?? 0, 
+                            groceryName: shelfItemRetrieved["name"] ?? "", 
+                            category: shelfItemRetrieved["category"] ?? "", 
+                            quantity: shelfItemRetrieved["quantity"] ?? 0,
+                            image: images.isNotEmpty ? images[0] : ""
+                        )
                         );
                       }
                     )
@@ -189,20 +164,18 @@ class CategorySelectionSection extends StatefulWidget {
   const CategorySelectionSection(
     {
       super.key,
-      required this.getShelfItems,
-      required this.category
     }
   );
-  final Future<void> Function(String) getShelfItems;
-  final String category;
 
   @override
   State<CategorySelectionSection> createState() => _CategorySelectionSectionState();
 }
 
 class _CategorySelectionSectionState extends State<CategorySelectionSection> {
+
   @override
   Widget build(BuildContext context) {
+    final GroceryProvider groceryProvider = context.watch<GroceryProvider>();
     List<String> groceryCategory = ["Packaged Food" , "Packaged Beverage" , "Fresh Produce"];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -214,13 +187,13 @@ class _CategorySelectionSectionState extends State<CategorySelectionSection> {
               final String categoryName = groceryCategory[index];
               return GestureDetector(
                 onTap: ()async {
-                  await widget.getShelfItems(categoryName.toLowerCase());
+                  groceryProvider.setCategorySelected(categoryName.toLowerCase());
                 },
                 child: Row(
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color:widget.category == categoryName.toLowerCase() ? normalGreen : lightGreen,
+                        color:groceryProvider.categorySelected == categoryName.toLowerCase() ? normalGreen : lightGreen,
                         borderRadius: BorderRadius.circular(12.0)
                       ),
                       child: Padding(
@@ -228,7 +201,7 @@ class _CategorySelectionSectionState extends State<CategorySelectionSection> {
                         child: Text(
                           categoryName,
                           style: TextStyle(
-                            color:widget.category == categoryName.toLowerCase() ? Colors.white : darkGreen,
+                            color:groceryProvider.categorySelected == categoryName.toLowerCase() ? Colors.white : darkGreen,
                             fontSize:15,
                             fontWeight: FontWeight.bold
                           ),

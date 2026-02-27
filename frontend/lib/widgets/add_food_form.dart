@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 import 'package:frontend/providers/daily_meals_provider.dart';
 import 'package:frontend/widgets/decimal_text_field.dart';
+import 'package:frontend/widgets/disposal_recommendation.dart';
 import 'package:frontend/widgets/shrink_button.dart';
 import 'package:provider/provider.dart';
 
@@ -26,23 +27,31 @@ class _AddFoodFormState extends State<AddFoodForm> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController foodNameController;
   late TextEditingController foodCarbsController;
-  late TextEditingController foodProteinController ;
+  late TextEditingController foodProteinController;
   late TextEditingController foodFatController;
   late TextEditingController foodCaloriesController;
+  late Map<String,dynamic>  mealNutritions;
   bool enableSubmitButton = false;
+  late List<Map<String,dynamic>> packagingMaterials;
+
 
   Future<void> addMeal()async{
     Map<String,dynamic> payLoad = {
-      "name":foodNameController.text,
+      ...?widget.returnedAnalyzedResult,
+      "name":foodNameController.text.trim(),
       "carbs":double.tryParse(foodCarbsController.text) ?? 0.0,
       "protein":double.tryParse(foodProteinController.text) ?? 0.0,
       "fat":double.tryParse(foodFatController.text) ?? 0.0,
       "calories":double.tryParse(foodCaloriesController.text) ?? 0.0,
     };
 
+
     try{ 
       final DailyMealsProvider dailyMealsProvider = Provider.of<DailyMealsProvider>(context,listen:false);
       String logMealResult = await dailyMealsProvider.addDailyMeals(payLoad);
+      if(!mounted){
+        return;
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(logMealResult)
@@ -62,17 +71,22 @@ class _AddFoodFormState extends State<AddFoodForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    mealNutritions = Map<String,dynamic>.from(widget.returnedAnalyzedResult?["nutrition"] ?? {});
+    List<dynamic> packagingMaterialsList = widget.returnedAnalyzedResult?["packaging_materials"] ?? [];
+    packagingMaterials = packagingMaterialsList.map((packagingMaterial)=>Map<String,dynamic>.from(packagingMaterial)).toList();
     foodNameController = TextEditingController(text: widget.returnedAnalyzedResult?["name"] ?? "");
-    foodCaloriesController = TextEditingController(text: widget.returnedAnalyzedResult?["calories_kcal"] ?? "");
-    foodProteinController = TextEditingController(text: widget.returnedAnalyzedResult?["protein_g"] ?? "");
-    foodCarbsController = TextEditingController(text: widget.returnedAnalyzedResult?["carbs_g"] ?? "");
-    foodFatController = TextEditingController(text: widget.returnedAnalyzedResult?["fat_g"] ?? "");
+    foodCaloriesController = TextEditingController(text: mealNutritions["calories_kcal"]?.toString() ?? "");
+    foodProteinController = TextEditingController(text: mealNutritions["protein_g"]?.toString() ?? "");
+    foodCarbsController = TextEditingController(text:mealNutritions["carbs_g"]?.toString() ?? "");
+    foodFatController = TextEditingController(text:mealNutritions["fat_g"]?.toString() ?? "");
 
     foodNameController.addListener(updateSubmitButtonState);
     foodCaloriesController.addListener(updateSubmitButtonState);
     foodProteinController.addListener(updateSubmitButtonState);
     foodCarbsController.addListener(updateSubmitButtonState);
     foodFatController.addListener(updateSubmitButtonState);
+
+    updateSubmitButtonState();
   }
 
   void updateSubmitButtonState(){
@@ -102,6 +116,13 @@ class _AddFoodFormState extends State<AddFoodForm> {
   
   @override
   Widget build(BuildContext context) {
+    final DailyMealsProvider dailyMealsProvider = context.watch<DailyMealsProvider>();
+    String submiButtonText;
+    if (dailyMealsProvider.isEditing) {
+      submiButtonText = widget.returnedAnalyzedResult != null ? "Updating..." : "Adding...";
+    } else {
+      submiButtonText = widget.returnedAnalyzedResult != null ? "Update Meal" : "Add Meal";
+    }
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -194,7 +215,7 @@ class _AddFoodFormState extends State<AddFoodForm> {
             ShrinkButton(
             onPressed: ()async {
               if(enableSubmitButton){
-                if(_formKey.currentState!.validate()){
+                if(_formKey.currentState!.validate() && !dailyMealsProvider.isEditing){
                   await addMeal();
                   Navigator.pop(context);
                 }
@@ -204,12 +225,12 @@ class _AddFoodFormState extends State<AddFoodForm> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
-                color: enableSubmitButton ? normalGreen : normalGreen.withValues(alpha:0.5)
+                color: enableSubmitButton && !dailyMealsProvider.isEditing ? normalGreen : normalGreen.withValues(alpha:0.5)
               ),
               child: Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Text(
-                  "Add Food",
+                  submiButtonText,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: subtitleText.fontSize,
@@ -222,7 +243,32 @@ class _AddFoodFormState extends State<AddFoodForm> {
           )
           ],
           )
-        )
+        ),
+        if(packagingMaterials.isNotEmpty)...[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              Text(
+                "Packaging Found",
+                style:TextStyle(
+                  fontSize: 18
+                )
+              ),
+              SizedBox(height:10.0),
+              ...List.generate(
+                packagingMaterials.length, 
+                (index){
+                  final packagingMaterial = packagingMaterials[index];
+                    return DisposalRecommendation(
+                      material: packagingMaterial["name"], 
+                      disposalWay: packagingMaterial["recommendedDisposalWay"]
+                    );
+                }
+              )
+            ],
+          )
+        ]
       ],
     );
   }

@@ -26,9 +26,10 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_)async{
       final DailyMealsProvider dailyMealsProvider = Provider.of<DailyMealsProvider>(context,listen:false);
-      dailyMealsProvider.fetchDailyMeals();
+      await dailyMealsProvider.fetchDailyMeals();
+      print("Daily Meals: ${dailyMealsProvider.dailyMeals}");
     });
   }
 
@@ -404,13 +405,18 @@ class TodayMealSection extends StatelessWidget {
                 fontWeight: headingTwoText.fontWeight
               ),
             ),
-            Text(
-              "See All  >",
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
-                color: normalGreen
-              ),
+            TextButton(
+              onPressed: ()=>{
+                selectedPageNotifier.value = 7
+              }, 
+              child: Text(
+                "See All  >",
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: normalGreen
+                ),
+              )
             )
           ],
         ),
@@ -419,6 +425,7 @@ class TodayMealSection extends StatelessWidget {
           dailyMeals.length, 
           (index){
             final meal = dailyMeals[index];
+            final List<String> images = (meal["image_urls"] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [];
             final nutrition = Map<String,dynamic>.from(meal["nutrition"] as Map);
             final createdAtTime = Map<String,dynamic>.from(meal["created_at"] as Map);
             final int calories = nutrition["calories_kcal"];
@@ -434,6 +441,7 @@ class TodayMealSection extends StatelessWidget {
               mealName: meal["name"], 
               calories:calories, 
               eatenTime: formattedTime,
+              images: images,
             );
           }
         )

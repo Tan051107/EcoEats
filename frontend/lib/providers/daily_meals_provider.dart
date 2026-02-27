@@ -6,10 +6,12 @@ class DailyMealsProvider extends ChangeNotifier{
   List<Map<String,dynamic>> _dailyMeals = [];
   Map<String,dynamic> _dailySummary = {};
   bool _isLoading = false;
+  bool _isEditing = false;
 
   List<Map<String,dynamic>> get dailyMeals => _dailyMeals;
   Map<String,dynamic> get dailySummary => _dailySummary;
   bool get isLoading => _isLoading;
+  bool get isEditing => _isEditing;
 
   Future<void> fetchDailyMeals()async{
     if(_isLoading){
@@ -34,13 +36,44 @@ class DailyMealsProvider extends ChangeNotifier{
 
 
   Future<String> addDailyMeals(Map<String,dynamic>mealData)async{
+    _isEditing = true;
+    notifyListeners();
     try{
-      String result = await MealService.addDailyMeals(mealData);
-      notifyListeners();
-      return result;
+      Map<String,dynamic> result = await MealService.addDailyMeals(mealData);
+      final String? mealIdToUpdate = mealData["meal_id"];
+      if(mealIdToUpdate !=null){
+        int index = _dailyMeals.indexWhere((dailyMeal)=>dailyMeal["meal_id"] == mealIdToUpdate);
+        _dailyMeals[index] = result;
+      }
+      else{
+        _dailyMeals.add(result);
+      }
+      return "Successfully ${mealIdToUpdate == null ? "added" : "updated"} meals.";
     }
     catch(err){
       throw Exception(err);
+    }
+    finally{
+      _isEditing = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> removeDailyMeals(String mealId)async{
+    _isEditing = true;
+    try{
+      await MealService.removeMeal(mealId);
+      int index =_dailyMeals.indexWhere((dailyMeal)=>dailyMeal["meal_id"] == mealId);
+      if(index != -1){
+        _dailyMeals.removeAt(index);
+      }
+    }
+    catch(err){
+      throw Exception(err);   
+    }
+    finally{
+      _isEditing = false;
+      notifyListeners();
     }
   }
 }

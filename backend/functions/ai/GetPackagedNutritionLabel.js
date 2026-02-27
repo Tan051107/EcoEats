@@ -55,10 +55,12 @@ export async function getPackagedNutritionLabel(barcode){
             data:{
                     name:product?.product_name || "",
                     per:"100g",
-                    calories_kcal:calories? `${Math.round(calories)}kcal` : "",
-                    fat_g:Math.round(productNutriments?.["fat_100g"]) || "",
-                    carbs_g:Math.round(productNutriments?.["carbohydrates_100g"]) || "",
-                    protein_g:Math.round(productNutriments?.["proteins_100g"]) || "",
+                    nutrition:{
+                        calories_kcal:calories? `${Math.round(calories)}kcal` : "",
+                        fat_g:Math.round(productNutriments?.["fat_100g"]) || "",
+                        carbs_g:Math.round(productNutriments?.["carbohydrates_100g"]) || "",
+                        protein_g:Math.round(productNutriments?.["proteins_100g"]) || "",
+                    },
                     packaging_materials:materials.data,
                     category:`packaged ${product?.product_type || ""}`,
                     is_packaged:true

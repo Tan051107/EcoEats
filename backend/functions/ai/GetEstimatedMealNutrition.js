@@ -23,21 +23,28 @@ export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>
                 type:SchemaType.STRING,
                 description: 'The name of the food or beverage'
             },
-            calories_kcal: { 
-                type: SchemaType.NUMBER,
-                description:'The calories estimated in kcal. Set to 0 if not visible.'
-            },
-            fat_g: { 
-                type: SchemaType.NUMBER,
-                description:'The fats estimated. Unit in gram. Set to 0 if could not be identified.'
-            },
-            carbs_g: { 
-                type: SchemaType.NUMBER,
-                description:'The carbohydrates estimated. Unit in gram. Set to 0 if could not be identified.'
-            },
-            protein_g: { 
-                type: SchemaType.NUMBER,
-                description:'The protein estimated. Unit in gram. Set to 0 if could not be identified.'
+            nutrition:{
+                type:SchemaType.OBJECT,
+                description:"The nutrition values of the meal",
+                properties:{
+                    calories_kcal: { 
+                        type: SchemaType.NUMBER,
+                        description:'The calories estimated in kcal. Set to 0 if not visible.'
+                    },
+                    fat_g: { 
+                        type: SchemaType.NUMBER,
+                        description:'The fats estimated. Unit in gram. Set to 0 if could not be identified.'
+                    },
+                    carbs_g: { 
+                        type: SchemaType.NUMBER,
+                        description:'The carbohydrates estimated. Unit in gram. Set to 0 if could not be identified.'
+                    },
+                    protein_g: { 
+                        type: SchemaType.NUMBER,
+                        description:'The protein estimated. Unit in gram. Set to 0 if could not be identified.'
+                    },
+                },
+                required:["calories_kcal" , "fat_g" , "carbs_g" , "protein_g"]   
             },
             serving_size:{
                 type:SchemaType.STRING,
@@ -61,7 +68,7 @@ export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>
                 },
                 description: 'The list of materials used to form the package to package the food or beverage. Set to [] if no packaging.'
             },
-            health_rating:{
+            healthy_score:{
                 type:SchemaType.STRING,
                 enum:["High" , "Medium" , "Low"],
                 description:'Health rating on the food or beverage. Set to "" if could not identify the food/beverage.'
@@ -74,7 +81,7 @@ export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>
                 type:SchemaType.NUMBER
             }
         },
-        required:["name","calories_kcal", "fat_g", "carbs_g", "protein_g", "serving_size", "health_rating" , "comment" , "confidence"]
+        required:["name","nutrition", "serving_size", "healthy_score" , "comment" , "confidence"]
     }
     
     const prompt = `
@@ -99,14 +106,16 @@ export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>
                         5. Include confidence (0-100) for the result given.
                    `
     
+    let imagesToUri = [];
     const imagesWithMimeType = await Promise.all(
     images.map(async (image) => {
         try {
         const file = bucket.file(image);
         const [metadata] = await file.getMetadata();
-
+        const imageUri = `gs://${bucket.name}/${image}`
+        imagesToUri.push(imageUri);
         return {
-            imageUri: `gs://${bucket.name}/${image}`,
+            imageUri: imageUri,
             mimeType: metadata?.contentType || ""
         };
         } catch (err) {
@@ -115,6 +124,7 @@ export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>
         }
     })
     );
+    
     
     const validImages = imagesWithMimeType.filter(Boolean);
 
@@ -160,7 +170,10 @@ export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>
             success:true,
             storeNewPackagingResponse: storeNewPackagingResponse.message,
             message:"Successfully received estimated meal nutrition from Gemini.",
-            data:finalResult
+            data:{
+                ...finalResult,
+                images:imagesToUri
+            }
         }
     }
     catch(err){

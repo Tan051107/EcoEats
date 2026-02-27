@@ -7,13 +7,15 @@ class AverageNutritionCard extends StatelessWidget {
       super.key,
       required this.name,
       required this.value,
-      required this.circleColor
+      required this.circleColor,
+      required this.unit
     }
   );
 
   final String name;
-  final int value;
+  final double value;
   final Color circleColor;
+  final String unit;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +27,6 @@ class AverageNutritionCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
-          width: 100,
-          height: 100,
           child: Column(
             mainAxisSize: MainAxisSize.max, 
             mainAxisAlignment: MainAxisAlignment.center, 
@@ -41,11 +41,11 @@ class AverageNutritionCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "${value.toString()} g",
+                "${value.toString()}$unit",
                 style: headingTwoText,
               ),
               Text(
-                "Avg ${name}",
+                name,
                 style: subtitleText,
               )
             ],

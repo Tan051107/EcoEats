@@ -1,9 +1,11 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
+import 'package:frontend/providers/grocery_provider.dart';
 import 'package:frontend/widgets/decimal_text_field.dart';
+import 'package:frontend/widgets/disposal_recommendation.dart';
 import 'package:frontend/widgets/int_text_field.dart';
 import 'package:frontend/widgets/shrink_button.dart';
+import 'package:provider/provider.dart';
 
 class AddGroceryForm extends StatefulWidget {
   const AddGroceryForm(
@@ -32,39 +34,39 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
   late TextEditingController groceryFatController;
   late TextEditingController groceryCaloriesController;
   late String groceryCategory;
+  late String groceryUnit;
   bool enableSubmitButton = false;
+  late Map<String,dynamic>  groceryNutritions;
+  late List<Map<String,dynamic>> packagingMaterials;
 
   Future <void> addGrocery()async{
     Map<String,dynamic> payLoad = {
+      ...?widget.returnedAnalyzedResult,
       "name":groceryNameController.text,
+      "category":groceryCategory.toLowerCase(),
       "quantity":int.tryParse(groceryQuantityController.text) ?? 0,
-      "carbs_g":double.tryParse(groceryCarbsController.text) ?? 0.0,
+      "expiry_date":groceryExpiryDateController.text,
+      "calories_kcal":double.tryParse(groceryCaloriesController.text) ?? 0.0,
       "protein_g":double.tryParse(groceryProteinController.text) ?? 0.0,
       "fat_g":double.tryParse(groceryFatController.text) ?? 0.0,
-      "calories_kcal":double.tryParse(groceryCaloriesController.text) ?? 0.0,
-      "category":groceryCategory.toLowerCase(),
-      "expiry_date":groceryExpiryDateController.text
+      "carbs_g":double.tryParse(groceryCarbsController.text) ?? 0.0,
+      "per": widget.returnedAnalyzedResult?["per"] ?? "100g",
+      "unit":groceryUnit.toLowerCase(),
     };
 
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
-    final addShelfItem = functions.httpsCallable("addShelfItem");
     try{
-      final response = await addShelfItem.call(payLoad);
-      final Map<String,dynamic> responseResult = response.data;
+      final GroceryProvider groceryProvider = Provider.of(context , listen: false);
+      await groceryProvider.addGroceries(payLoad);
+      if (!mounted) return;
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(responseResult["message"])
+          content: Text("Successfully ${widget.returnedAnalyzedResult == null ? "added" : "updated"} groceries")
         )
       ); 
     }
-    on FirebaseFunctionsException catch (e){
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message.toString())
-        )
-      );
-    }
     catch(err){
+      print(err);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(err.toString())
@@ -76,15 +78,23 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    super.initState(); 
     groceryNameController = TextEditingController(text: widget.returnedAnalyzedResult?["name"] ?? "");
-    groceryQuantityController = TextEditingController(text: "");
-    groceryCaloriesController = TextEditingController(text: widget.returnedAnalyzedResult?["calories_kcal"]?.toString() ?? "");
-    groceryProteinController = TextEditingController(text: widget.returnedAnalyzedResult?["protein_g"]?.toString() ?? "");
-    groceryCarbsController = TextEditingController(text: widget.returnedAnalyzedResult?["carbs_g"]?.toString() ?? "");
-    groceryFatController = TextEditingController(text: widget.returnedAnalyzedResult?["fat_g"]?.toString() ?? "");
-    groceryExpiryDateController = TextEditingController(text: widget.returnedAnalyzedResult?["expiry_date"]?.toString() ?? "" );
+    groceryQuantityController = TextEditingController(text: widget.returnedAnalyzedResult?["quantity"]?.toString() ?? "");
+    Map<String,dynamic> groceryNutritions = Map<String,dynamic>.from(widget.returnedAnalyzedResult?["nutrition"] ?? {});
+    groceryCaloriesController = TextEditingController(text: groceryNutritions["calories_kcal"]?.toString() ?? "");
+    groceryProteinController = TextEditingController(text: groceryNutritions["protein_g"]?.toString() ?? "");
+    groceryCarbsController = TextEditingController(text: groceryNutritions["carbs_g"]?.toString() ?? "");
+    groceryFatController = TextEditingController(text: groceryNutritions["fat_g"]?.toString() ?? "");
+    groceryExpiryDateController = TextEditingController(text: widget.returnedAnalyzedResult?["expiry_date"] ?? "");
     groceryCategory = widget.returnedAnalyzedResult?["category"]?.toString().toLowerCase() ?? "";
+    groceryUnit = widget.returnedAnalyzedResult?["unit"]?.toString().toLowerCase() ?? "";
+    List<dynamic> packagingMaterialsList = widget.returnedAnalyzedResult?["packaging_materials"] ?? [];
+    packagingMaterials = packagingMaterialsList.map((packagingMaterial)=>Map<String,dynamic>.from(packagingMaterial)).toList();
+
+    print("Analyzed Result:${widget.returnedAnalyzedResult}");
+    print("Category:$groceryCategory");
+    updateSubmitButtonState();
 
     groceryNameController.addListener(updateSubmitButtonState);
     groceryQuantityController.addListener(updateSubmitButtonState);
@@ -92,7 +102,7 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
     groceryProteinController.addListener(updateSubmitButtonState);
     groceryCarbsController.addListener(updateSubmitButtonState);
     groceryFatController.addListener(updateSubmitButtonState);
-   groceryExpiryDateController.addListener(updateSubmitButtonState);
+    groceryExpiryDateController.addListener(updateSubmitButtonState);
   }
 
   void updateSubmitButtonState(){
@@ -143,6 +153,14 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
   
   @override
   Widget build(BuildContext context) {
+    final GroceryProvider groceryProvider = context.watch<GroceryProvider>();
+    String buttonText;
+    if(groceryProvider.isEditing){
+      buttonText = widget.returnedAnalyzedResult != null ? "Updating..." : "Adding...";
+    }
+    else{
+      buttonText = widget.returnedAnalyzedResult != null ? "Update Grocery" : "Add Grocery";
+    }
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -209,10 +227,12 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
             SizedBox(height: 10),
             DropdownButtonFormField<String>
             (
+              initialValue:groceryCategory.isNotEmpty ? groceryCategory : null,
+              hint: Text("Select a grocery category"),
               decoration: fieldDecoration,
               items:['Fresh Produce' , 'Packaged Food' , 'Packaged Beverage']
-                .map((e)=>DropdownMenuItem(
-                  value: e,
+                .map((e)=>DropdownMenuItem(               
+                  value: e.toLowerCase(),
                   child: Text(e)
                 )
               ).toList(),
@@ -231,6 +251,23 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
               },
             ),
             SizedBox(height: 20.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Expiry Date",
+                  style: subtitleText,
+                ),
+                SizedBox(height:10.0),
+                TextField(
+                  controller: groceryExpiryDateController,
+                  readOnly: true,
+                  onTap: () => selectExpiryDate(context),
+                  decoration: fieldDecoration,
+                )
+              ],
+            ),
+            SizedBox(height: 10.0),
             Row(
               children: [
                 Expanded(
@@ -245,15 +282,33 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Expiry Date",
+                        "Unit",
                         style: subtitleText,
                       ),
-                      SizedBox(height:10.0),
-                      TextField(
-                        controller: groceryExpiryDateController,
-                        readOnly: true,
-                        onTap: () => selectExpiryDate(context),
+                      SizedBox(height: 10),
+                      DropdownButtonFormField<String>
+                      (
                         decoration: fieldDecoration,
+                        initialValue: groceryUnit.isNotEmpty ? groceryUnit : null,
+                        hint: Text('Select a unit'),
+                        items:["g","unit" , "m3"]
+                          .map((e)=>DropdownMenuItem(
+                            value: e ,
+                            child: Text(e)
+                          )
+                        ).toList(),
+                        onChanged:(value){
+                          setState(() {
+                            groceryUnit = value!;
+                          });
+                          updateSubmitButtonState();
+                        },
+                        validator: (value) {
+                          if(value == null || value.isEmpty){
+                            return "Required.";
+                          }
+                          return null;
+                        },
                       )
                     ],
                   )
@@ -293,10 +348,9 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
             SizedBox(height: 20.0,),
             ShrinkButton(
             onPressed: () async{
-              if(enableSubmitButton){
+              if(enableSubmitButton && !groceryProvider.isEditing){
                 if(_formKey.currentState!.validate()){
                   await addGrocery();
-                  Navigator.pop(context);
                 }
               }
             },
@@ -304,12 +358,12 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
-                color: enableSubmitButton ? normalGreen : normalGreen.withValues(alpha:0.5)
+                color: enableSubmitButton && !groceryProvider.isEditing ? normalGreen : normalGreen.withValues(alpha:0.5)
               ),
               child: Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Text(
-                  "Add Grocery",
+                  buttonText ,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: subtitleText.fontSize,
@@ -322,7 +376,32 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
           )
           ],
           )
-        )
+        ),
+        if(packagingMaterials.isNotEmpty)...[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              Text(
+                "Packaging Found",
+                style:TextStyle(
+                  fontSize: 18
+                )
+              ),
+              SizedBox(height:10.0),
+              ...List.generate(
+                packagingMaterials.length, 
+                (index){
+                  final packagingMaterial = packagingMaterials[index];
+                    return DisposalRecommendation(
+                      material: packagingMaterial["name"], 
+                      disposalWay: packagingMaterial["recommendedDisposalWay"]
+                    );
+                }
+              )
+            ],
+          )
+        ]
       ],
     );
   }

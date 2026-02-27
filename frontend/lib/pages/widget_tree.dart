@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend/data/notifiers.dart';
+import 'package:frontend/pages/views/daily_meals.dart';
 import 'package:frontend/pages/views/dashboard.dart';
 import 'package:frontend/pages/views/favourites.dart';
 import 'package:frontend/pages/views/notifications.dart';
@@ -19,6 +20,7 @@ List<Widget> pages = [
   Notifications(),
   ProfilePage(),
   Favourites(),
+  DailyMeals()
 ];
 
 class WidgetTree extends StatelessWidget {

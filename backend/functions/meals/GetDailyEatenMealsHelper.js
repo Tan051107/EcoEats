@@ -10,10 +10,16 @@ export async function getDailyEatenMealsHelper(userId , date){
                                                                .orderBy('created_at' ,'asc')
                                                                .get()
 
-        const userDailyEatenMealsData = mealsSnapshot.docs.map(doc=>({
-            mealId:doc.id,
-            ...doc.data()
-        }))
+        const userDailyEatenMealsData = mealsSnapshot.docs.map(doc=>{
+            const createdAtTimestamp = doc.createTime;
+            const eatenAtTime = createdAtTimestamp.toDate;
+            const formattedEatenAtTime = format(eatenAtTime,'hh:mm a');
+            return ({
+                meal_id:doc.id,
+                ...doc.data(),
+                eaten_at:formattedEatenAtTime
+            })
+        })
 
         return{
             userId:userId,

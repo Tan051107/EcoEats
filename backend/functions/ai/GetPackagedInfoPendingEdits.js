@@ -26,7 +26,7 @@ export function getPackagedInfoPendingEdits(newRecordedData ,existingData,pendin
         "calories_kcal",
         "protein_g",
         "fat_g",
-        "carbs_g"
+        "carbs_g",
     ];
 
     const difference ={}

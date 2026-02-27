@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/data/constants.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 Widget ShelfItemCard(
   {
@@ -12,11 +13,47 @@ Widget ShelfItemCard(
     final String? image
   }
 ){
+  return FutureBuilder<String>(
+    future: _getImageUrl(image),
+    builder: (context, snapshot) {
+      return _buildCard(
+        context: context,
+        estimatedShelfLife: estimatedShelfLife,
+        groceryName: groceryName,
+        category: category,
+        quantity: quantity,
+        imageUrl: snapshot.data ?? "",
+        image: image,
+      );
+    },
+  );
+}
+
+Future<String> _getImageUrl(String? image) async {
+  if (image != null && image.isNotEmpty) {
+    try {
+      final storageRef = FirebaseStorage.instance.refFromURL(image);
+      return await storageRef.getDownloadURL();
+    } catch (e) {
+      return "";
+    }
+  }
+  return "";
+}
+
+Widget _buildCard({
+  required BuildContext context,
+  required final int estimatedShelfLife,
+  required final String groceryName,
+  required final String category,
+  required final int quantity,
+  required final String imageUrl,
+  final String? image
+}){
   Color frameColor = gray;
   Color bgColor = Colors.transparent;
   late String icon;
   double iconSize = (MediaQuery.of(context).size.width * 0.08).clamp(24, 30);
-  
 
   switch(estimatedShelfLife){
     case < 3:
@@ -71,17 +108,17 @@ Widget ShelfItemCard(
                     children: [
                       Row(
                         children: [
-                          (image != null && image.isNotEmpty)
-                          ?Image.network(
-                            image,
+                          (imageUrl.isNotEmpty)
+                          ? Image.network(
+                            imageUrl,
                             width: iconSize,
                             height: iconSize,
-                            fit: BoxFit.contain,
+                            fit: BoxFit.cover
                           )
-                          :SvgPicture.asset(
+                          : SvgPicture.asset(
                             icon,
                             width: iconSize,
-                            height:iconSize,
+                            height: iconSize,
                           ),
                         ],
                       )
@@ -121,14 +158,25 @@ Widget ShelfItemCard(
           SizedBox(height:3.0),
           Flexible(
             child:Text(
-              "$quantity g · $category",
+              "${quantity.toString()}g",
               style: TextStyle(
                 color: gray
               ),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             )
-          )
+          ),
+          SizedBox(height:3.0),
+          Flexible(
+            child:Text(
+              category.toString(),
+              style: TextStyle(
+                color: gray
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            )
+          ),
         ],
       ),
     )

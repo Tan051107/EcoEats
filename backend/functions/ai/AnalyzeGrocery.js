@@ -6,6 +6,7 @@ import { getPackagedMaterialsResult } from "./GetPackagedMaterialsResult.js";
 import * as functions from 'firebase-functions'
 import Joi from 'joi'
 import {storePackagedFoodNutrition } from './StorePackagedFoodNutrition.js';
+import admin from '../utils/firebase-admin.cjs'
 
 export const analyzeGroceryImage =functions.https.onCall(async(request)=>{
   const receivedData = request.data
@@ -21,6 +22,12 @@ export const analyzeGroceryImage =functions.https.onCall(async(request)=>{
 
     const {barcodeValue , images} = value
 
+    const bucket = admin.storage().bucket();
+    let imagesToUri = [];
+    if(images){
+      imagesToUri = images.map(image=>`gs://${bucket.name}/${image}`)
+    }
+
     let result ={};
     if(barcodeValue){
       console.log("GETTING PACKAGED NUTRITION LABEL FROM API")
@@ -35,7 +42,7 @@ export const analyzeGroceryImage =functions.https.onCall(async(request)=>{
         console.log("GETTING PACKAGED NUTRITION LABEL FROM DATABASE")
         nutritionValueFromDatabase = await getPackagedNutritionFromDatabase(barcodeValue)
         if(nutritionValueFromDatabase.success){
-           console.log("RECEIVED NUTRITION LABEL FROM DATABASE")
+          console.log("RECEIVED NUTRITION LABEL FROM DATABASE")
           result = nutritionValueFromDatabase.data
         }
       }
@@ -48,8 +55,12 @@ export const analyzeGroceryImage =functions.https.onCall(async(request)=>{
           await storePackagedFoodWithBarcode(barcodeValue,result)
           return{
             success:true,
-            message:"Successfully retrived data from grocery image through barcode.",
-            data:result
+            message:"Successfully retrieved data from grocery image through barcode.",
+            data:{
+              ...result,
+              barcode: barcodeValue || "",
+              image_urls: imagesToUri || []
+            }
           }
       }
     }
@@ -61,7 +72,15 @@ export const analyzeGroceryImage =functions.https.onCall(async(request)=>{
       await storePackagedFoodWithBarcode(barcodeValue,analyzedGroceryImageResultData)
     }
     console.log("Gemini Result:", JSON.stringify(analyzedGroceryImageResult, null, 2))
-    return analyzedGroceryImageResult
+    const analyzedGroceryImageResultData = {
+      ...analyzedGroceryImageResult.data,
+      barcode:barcodeValue || "",
+      image_urls: imagesToUri || []
+    }
+    return{
+      ...analyzedGroceryImageResult,
+      data:analyzedGroceryImageResultData
+    }
   }
   catch(err){
     throw new functions.https.HttpsError("internal" , err.message)
@@ -70,17 +89,12 @@ export const analyzeGroceryImage =functions.https.onCall(async(request)=>{
 
 
 async function storePackagedFoodWithBarcode(barcode,packagedFoodData){
-    const nutrition = {
-          calories_kcal:packagedFoodData?.calories_kcal || 0,
-          protein_g:packagedFoodData?.protein_g || 0,
-          carbs_g:packagedFoodData?.carbs_g || 0,
-          fat_g:packagedFoodData?.fat_g || 0
-    }
-
+  
     const storePackagedFoodNutritionData={
+      per:packagedFoodData?.per || "",
       name:packagedFoodData?.name || "",
       category:packagedFoodData?.category || "",
-      nutrition:nutrition
+      nutrition:packagedFoodData?.nutrition || {}
     }
     await storePackagedFoodNutrition(barcode,storePackagedFoodNutritionData)
 }

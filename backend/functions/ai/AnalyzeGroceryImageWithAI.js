@@ -8,7 +8,7 @@
 
         const bucket = admin.storage().bucket();
         const today = new Date();
-        const todayDate = format(today,"yyyy-MM-dd");
+        const todayDate = format(today , "yyyy-MMMM-dd")
 
         const schema = {
             type: SchemaType.OBJECT,
@@ -17,21 +17,28 @@
                     type:SchemaType.STRING,
                     description:'The product name. Set to "" if not visible.'
                 },
-                calories_kcal: { 
-                    type: SchemaType.NUMBER,
-                    description:'The calories labelled or estimated in kcal. Set to 0 if not visible.'
-                },
-                fat_g: { 
-                    type: SchemaType.NUMBER,
-                    description:'The fats labelled or estimated. Unit in gram. Set to 0 if could not be identified.'
-                },
-                carbs_g: {
-                    type: SchemaType.NUMBER,
-                    description:'The fats labelled or estimated. Unit in gram. Set to 0 if could not be identified.'
-                },
-                protein_g: { 
-                    type: SchemaType.NUMBER,
-                    description:'The protein labelled or estimated. Unit in gram. Set to 0 if could not be identified.'
+                nutrition:{
+                    type:SchemaType.OBJECT,
+                    description:"The nutritions of the grocery",
+                    properties:{
+                        calories_kcal: { 
+                            type: SchemaType.NUMBER,
+                            description:'The calories labelled or estimated in kcal. Set to 0 if not visible.'
+                        },
+                        fat_g: { 
+                            type: SchemaType.NUMBER,
+                            description:'The fats labelled or estimated. Unit in gram. Set to 0 if could not be identified.'
+                        },
+                        carbs_g: {
+                            type: SchemaType.NUMBER,
+                            description:'The fats labelled or estimated. Unit in gram. Set to 0 if could not be identified.'
+                        },
+                        protein_g: { 
+                            type: SchemaType.NUMBER,
+                            description:'The protein labelled or estimated. Unit in gram. Set to 0 if could not be identified.'
+                        },
+                    },
+                    required:["calories_kcal" , "fat_g" , "carbs_g" , "protein_g"]
                 },
                 per: { 
                     type: SchemaType.STRING, 
@@ -70,7 +77,7 @@
                 },
                 confidence: { type: SchemaType.NUMBER }
             },
-            required: ["per" , "name","calories_kcal", "fat_g", "carbs_g", "protein_g", "category", "confidence" , "is_packaged","expiry_date"]
+            required: ["per" , "name","nutrition", "category", "confidence" , "is_packaged","expiry_date"]
         };
 
         const prompt = `
@@ -79,9 +86,10 @@
                         Task
                         1. Identify the item and classify it as "fresh produce", "packaged food", or "packaged beverage".
                         2. EXTRACT visible nutrition/expiry date from packaged food or packaged beverage.
-                        3. ESTIMATE the expiry date for fresh produce
-                        4. ESTIMATE standard nutritional values for fresh produce or unlabeled items based on a common serving size (set in 'per').
-                        5. Include confidence (0-100) for the result given.
+                        3. ESTIMATE the expiry date for fresh produce.
+                        4. Expiry date format must be in "yyyy-MM-dd".
+                        5. ESTIMATE standard nutritional values for fresh produce or unlabeled items based on a common serving size (set in 'per').
+                        6. Include confidence (0-100) for the result given.
 
                         Logic Rules
                         For fresh produced:

@@ -1,7 +1,6 @@
 import Joi from 'joi'
-// import adminModule from '../utils/firebase-admin.cjs';
-// const admin = adminModule.default ?? adminModule; 
-import admin from '../utils/firebase-admin.cjs'
+import adminModule from '../utils/firebase-admin.cjs';
+const admin = adminModule.default ?? adminModule; 
 import * as functions from 'firebase-functions'
 import { toFirestoreTimestamp } from '../utils/ToFirestoreTimestamp.js';
 import { storePackagedFoodNutrition } from '../ai/StorePackagedFoodNutrition.js';
@@ -20,9 +19,12 @@ const shelfItemSchema =Joi.object({
     protein_g:Joi.number().required(),
     fat_g:Joi.number().required(),
     carbs_g:Joi.number().required(),
+    per:Joi.string().required(),
     image_urls:Joi.array().items(Joi.string()).invalid(null),
-    barcode:Joi.string(),
-    item_id: Joi.string()
+    unit:Joi.string().required(),
+    barcode:Joi.string().allow(""),
+    item_id: Joi.string(),
+    packaging_materials:Joi.array().items(Joi.object())
 })
 
 export const addShelfItem = functions.https.onCall(async(request)=>{
@@ -39,7 +41,7 @@ export const addShelfItem = functions.https.onCall(async(request)=>{
         throw new functions.https.HttpsError('invalid-argument' , `Validation failed: ${error.details.map(d => `${d.path.join(".")}: ${d.message}`).join(", ")}`)       
     }
 
-    let {item_id,name,category,barcode,calories_kcal,protein_g,carbs_g,fat_g ,expiry_date,quantity, ...itemData} = value
+    let {item_id,name,category,barcode,calories_kcal,protein_g,carbs_g,fat_g ,expiry_date,quantity,per, ...itemData} = value
 
     const [expiryYear,expiryMonth,expiryDay] = expiry_date.split("-").map(Number);
     const today = new Date()
@@ -49,6 +51,27 @@ export const addShelfItem = functions.https.onCall(async(request)=>{
 
     if(estimated_shelf_life < 1){
         throw new functions.https.HttpsError('invalid-argument' , "Item has expired.")
+    }
+
+    const nutrition = {
+        calories_kcal:calories_kcal,
+        protein_g:protein_g,
+        carbs_g:carbs_g,
+        fat_g:fat_g
+    }
+
+    const formattedData = {
+        ...itemData,
+        name:name,
+        category:category,
+        barcode:barcode,
+        quantity:quantity,
+        per:per,
+        expiry_date:toFirestoreTimestamp(expiry_date),
+        nutrition:nutrition,
+        is_packaged:category !== "fresh produce",
+        updated_at: admin.firestore.FieldValue.serverTimestamp(),
+        estimated_shelf_life:estimated_shelf_life,
     }
 
     try{
@@ -62,40 +85,29 @@ export const addShelfItem = functions.https.onCall(async(request)=>{
             }
             if(quantity <=0){
                 await itemRef.delete()
+                return{
+                    success:true,
+                    message:"Quantity less than 0. Item is removed from shelf."
+                }
             }
             
         }
         else{
             itemRef = itemRef.doc();
-            if(quantity < 0){
+            if(quantity <= 0){
                 throw new functions.https.HttpsError('invalid-argument' , "Item quantity must be more than 0")
             }
+            formattedData.created_at = admin.firestore.FieldValue.serverTimestamp()
         }
 
-        const nutrition = {
-            calories_kcal:calories_kcal,
-            protein_g:protein_g,
-            carbs_g:carbs_g,
-            fat_g:fat_g
-        }
+        await itemRef.set(formattedData,{merge:true})
 
-        await itemRef.set({
-            ...itemData,
-            name:name,
-            category:category,
-            expiry_date:toFirestoreTimestamp(expiry_date),
-            nutrition:nutrition,
-            is_packaged:category !== "fresh produce",
-            created_at: admin.firestore.FieldValue.serverTimestamp(),
-            updated_at: admin.firestore.FieldValue.serverTimestamp(),
-            estimated_shelf_life:estimated_shelf_life
-        })
-
-        if(barcode!== undefined){
+        if(barcode){
             const itemData = {
                 name:name,
                 category:category,
-                nutrition:nutrition
+                nutrition:nutrition,
+                per:per
             }
             await storePackagedFoodNutrition(barcode,itemData)
         }
@@ -104,8 +116,8 @@ export const addShelfItem = functions.https.onCall(async(request)=>{
 
         return{
             success:true,
-            message:`Successfully added a new grocery item in user ${userId} shelf.`,
-            itemAdded:{itemId:itemRef.id , ...snap.data()}
+            message:`Successfully ${item_id ? "updated" : "added"} a new grocery item in user ${userId} shelf.`,
+            item_added:{item_id:itemRef.id , ...snap.data()}
         }
     }
     catch(err){

@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -67,4 +58,36 @@ class DefaultFirebaseOptions {
     iosClientId: '496726740044-9sqprlcdm5tic0knnj8sncfkb27pfgh7.apps.googleusercontent.com',
     iosBundleId: 'com.example.frontend',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBkNjW0aU-I-8iuH1OZOxbj0Cl-D0uvs_Y',
+    appId: '1:496726740044:web:2ac00a0ffaba00de6fb8e9',
+    messagingSenderId: '496726740044',
+    projectId: 'ecoeats-4f19c',
+    authDomain: 'ecoeats-4f19c.firebaseapp.com',
+    storageBucket: 'ecoeats-4f19c.firebasestorage.app',
+    measurementId: 'G-8E1V910Q03',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBGaCKJviRURoQR0bj0b_SG4h-CrAcM4Rc',
+    appId: '1:496726740044:ios:a696017f72aee38c6fb8e9',
+    messagingSenderId: '496726740044',
+    projectId: 'ecoeats-4f19c',
+    storageBucket: 'ecoeats-4f19c.firebasestorage.app',
+    androidClientId: '496726740044-cplk2rf6jk6ct9n37v6brppk3jkucu00.apps.googleusercontent.com',
+    iosClientId: '496726740044-9sqprlcdm5tic0knnj8sncfkb27pfgh7.apps.googleusercontent.com',
+    iosBundleId: 'com.example.frontend',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBkNjW0aU-I-8iuH1OZOxbj0Cl-D0uvs_Y',
+    appId: '1:496726740044:web:2ac00a0ffaba00de6fb8e9',
+    messagingSenderId: '496726740044',
+    projectId: 'ecoeats-4f19c',
+    authDomain: 'ecoeats-4f19c.firebaseapp.com',
+    storageBucket: 'ecoeats-4f19c.firebasestorage.app',
+    measurementId: 'G-8E1V910Q03',
+  );
+
 }

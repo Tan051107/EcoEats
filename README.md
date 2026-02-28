@@ -1,209 +1,212 @@
 # EcoEats  
-### AI-Powered Smart Food Management System  
-Supporting SDG 12 (Responsible Consumption and Production) & SDG 3 (Good Health and Well-being)
+## Intelligent Food Inventory & Sustainability Management System  
+
+**Aligned with SDG 12 (Responsible Consumption and Production) and SDG 3 (Good Health and Well-being)**
 
 ---
 
 ## 1. Project Overview
 
-EcoEats is a cloud-based smart food management application designed to reduce household food waste while promoting healthier eating habits. The system enables users to digitally manage groceries, receive expiry notifications, and generate recipe recommendations based on available ingredients and dietary goals.
+EcoEats is a cloud-based intelligent food management system designed to reduce household food waste while promoting balanced and mindful consumption habits. The application enables users to digitally manage groceries, track expiration dates, and receive recipe recommendations that prioritize ingredients nearing expiry.
 
-Food waste remains a global sustainability challenge. At the same time, individuals struggle with managing groceries efficiently and making informed dietary decisions. EcoEats addresses both problems through intelligent inventory tracking and algorithm-based recommendations.
+Food waste is a major contributor to environmental degradation and inefficient resource consumption. Simultaneously, individuals often struggle with organizing groceries and planning meals efficiently. EcoEats addresses these issues by integrating real-time inventory tracking with algorithm-driven recommendation logic.
 
-This project aligns with:
+### SDG Alignment
 
-- **SDG 12** – Responsible Consumption and Production  
-- **SDG 3** – Good Health and Well-being (through nutritional awareness and balanced meal planning; no medical or pharmaceutical functions are included)
+- **SDG 12 – Responsible Consumption and Production**  
+  Reduces avoidable household food waste through proactive expiry tracking.
+
+- **SDG 3 – Good Health and Well-being**  
+  Supports balanced meal planning and dietary awareness.  
+  **Important:** EcoEats does not provide medical advice, pharmaceutical reminders, or any form of medical notification system.
 
 ---
 
 ## 2. Technical Implementation Overview
 
-EcoEats is built using a scalable, serverless cloud architecture powered by Google technologies.
+EcoEats is developed using a modern, scalable, serverless architecture powered primarily by Google Cloud technologies.
 
-### 2.1 Core Technologies
+### 2.1 Technology Stack
 
-- **Frontend:** Web-based application (React / modern JavaScript framework)
-- **Backend:** Firebase (Serverless Architecture)
-- **Database:** Cloud Firestore (NoSQL, real-time database)
-- **Backend Logic:** Firebase Cloud Functions
-- **Authentication:** Firebase Authentication
-- **Hosting:** Firebase Hosting
-- **Storage:** Cloud-based (no local dependency)
+#### Frontend
+- Web-based user interface (modern JavaScript framework)
+- Responsive design for cross-device usability
 
-### 2.2 Google Tools Utilized
-
-- Firebase Authentication  
-- Cloud Firestore  
-- Firebase Cloud Functions  
-- Firebase Hosting  
-- Firebase Cloud Messaging (for notifications)  
-
-These tools ensure high availability, scalability, and real-time synchronization across devices.
+#### Backend (Google Technologies)
+- **Firebase Authentication** – Secure user login and identity management  
+- **Cloud Firestore** – Real-time NoSQL cloud database  
+- **Firebase Cloud Functions** – Event-driven backend logic  
+- **Firebase Hosting** – Secure and scalable web hosting  
+- **Firebase Cloud Messaging** – Expiry notification system  
 
 ---
 
-## 3. System Architecture
+### 2.2 Architecture Design
 
-EcoEats follows a modular and event-driven design:
+EcoEats follows a serverless, event-driven architecture:
 
-1. User inputs grocery data (manual entry or barcode scan).
+1. Users input grocery items (manual entry or barcode scanning).
 2. Data is stored in Cloud Firestore.
-3. Cloud Functions trigger:
-   - Expiry tracking logic
+3. Cloud Functions trigger automated processes:
+   - Expiry date monitoring
    - Notification scheduling
-   - Recipe ranking algorithm
-4. The frontend retrieves real-time updates from Firestore.
-5. Users receive prioritized recipe recommendations.
+   - Recipe recommendation ranking
+4. The frontend retrieves updated data in real time.
+5. Users receive prioritized suggestions and alerts.
 
-Because the system avoids local storage dependency and relies entirely on cloud-based infrastructure, it supports:
+Because the system operates fully in the cloud and avoids local device storage dependency, it supports:
 
-- Real-time synchronization
-- Cross-device access
-- Secure data backup
-- Horizontal scaling
-
----
-
-## 4. Core Features
-
-### 4.1 Smart Grocery Inventory
-- Manual item entry
-- Barcode scanning
-- Auto-fill item database
-- Expiry date tracking
-
-### 4.2 Expiry Priority Color System
-- Red: Expires within 2 days  
-- Yellow: Expires within 5 days  
-- Green: Fresh  
-
-This visual system improves urgency recognition and decision efficiency.
-
-### 4.3 Expiry-Based Recipe Recommendation Algorithm
-The algorithm:
-- Ranks ingredients by expiry proximity
-- Prioritizes recipes using soon-to-expire items
-- Aligns suggestions with user dietary goals
-
-This ensures sustainability and nutritional awareness work simultaneously.
-
-### 4.4 Personalized Dietary Goal Setting
-Users may define:
-- Calorie targets
-- Balanced meal preferences
-- Ingredient exclusions
-
-Note: The system does not provide medical advice, medical reminders, or pharmaceutical notifications.
+- Real-time synchronization  
+- Cross-device access  
+- Secure centralized data management  
+- Automatic scaling with increased traffic  
 
 ---
 
-## 5. Innovation
+## 3. Implementation Details
 
-EcoEats integrates sustainability and health awareness within a single intelligent framework.
+### 3.1 Grocery Input System
 
-Key innovations include:
+Users can:
 
-- Expiry-driven recommendation logic (waste-first prioritization)
-- Real-time cloud-based food lifecycle tracking
-- Serverless architecture for cost-efficient scaling
-- User-centered iteration based on structured testing
+- Manually enter grocery items  
+- Use barcode scanning for faster data entry  
+- Automatically populate item names through database lookup  
 
-Unlike traditional recipe apps, EcoEats does not simply suggest meals—it dynamically adapts recommendations to reduce waste first.
-
----
-
-## 6. User Testing and Iteration
-
-### Testing Overview
-
-- 12 real external users
-  - 5 university students
-  - 4 working adults
-  - 3 family household users
-- Duration: 7 days
-- Tasks:
-  - Input real groceries
-  - Track expiry notifications
-  - Use recipe suggestions
-
-### Key Feedback & Improvements
-
-1. Manual input was time-consuming  
-   → Implemented barcode scanning & auto-fill  
-   → Reduced input time by approximately 40%
-
-2. Urgency was not visually clear  
-   → Introduced color-coded expiry priority system  
-
-3. Recipes did not strongly prioritize expiring items  
-   → Updated algorithm to rank by expiry proximity  
-
-This structured iteration significantly improved usability and user satisfaction.
+This design reduces user friction and improves usability efficiency.
 
 ---
 
-## 7. Scalability
+### 3.2 Expiry Priority Logic
 
-EcoEats is built on a serverless cloud architecture designed for growth.
+To enhance clarity and urgency recognition, EcoEats implements a color-coded priority system:
 
-### Why It Scales:
+- 🔴 **Red** – Expires within 2 days  
+- 🟡 **Yellow** – Expires within 5 days  
+- 🟢 **Green** – Fresh items  
 
-- Firebase automatically adjusts infrastructure
-- Cloud Functions scale with event triggers
-- Firestore supports horizontal data expansion
-- No dependency on local storage
-
-### Ready for Expansion:
-
-- Multi-country deployment
-- Multilingual support
-- Retailer API integration
-- AI-based image recognition
-- Carbon footprint dashboard
-
-The modular design allows new features to be added without restructuring the core system.
+This visual classification simplifies decision-making and encourages timely consumption.
 
 ---
 
-## 8. Challenges Faced
+### 3.3 Expiry-Based Recommendation Algorithm
 
-### 8.1 Balancing Sustainability and Usability
-Early versions focused heavily on data accuracy but increased user friction. Iterative testing helped simplify workflows while maintaining system intelligence.
+The core innovation lies in the recommendation engine. Unlike conventional recipe platforms, EcoEats ranks recipes based on:
 
-### 8.2 Algorithm Optimization
-Prioritizing expiry proximity while maintaining dietary balance required ranking logic refinement and performance testing.
+- Expiry proximity of ingredients  
+- Ingredient availability  
+- User-defined dietary preferences  
 
-### 8.3 Real-Time Notification Efficiency
-Ensuring timely expiry alerts without excessive triggering required careful event-based function design.
-
-These challenges strengthened the architectural and logical robustness of the system.
+The algorithm prioritizes recipes that maximize the usage of soon-to-expire items while maintaining balanced meal composition. This approach integrates sustainability logic directly into the food selection process.
 
 ---
 
-## 9. Future Development
+## 4. Innovation
 
-Planned enhancements include:
+EcoEats introduces several innovative elements:
 
-- AI image recognition for grocery identification
-- Retailer integration via digital receipt syncing
-- Community food-sharing network
-- Smart auto-generated shopping lists
-- Carbon footprint impact dashboard
+### 4.1 Sustainability-First Recommendation Model
+Rather than focusing solely on taste preference, the system prioritizes waste reduction through expiry-driven ranking logic.
 
-These features will transform EcoEats from a food management tool into a broader sustainability intelligence platform.
+### 4.2 Real-Time Cloud Lifecycle Tracking
+Using Firestore and Cloud Functions, food lifecycle events are monitored dynamically without requiring manual updates.
 
----
+### 4.3 Serverless Scalable Design
+Firebase services eliminate infrastructure management overhead while ensuring reliability and elasticity.
 
-## 10. Conclusion
-
-EcoEats demonstrates how cloud-native technologies and intelligent algorithms can address real-world sustainability challenges. By combining expiry tracking, dietary personalization, and scalable infrastructure, the system provides a practical solution to reduce household food waste while encouraging healthier consumption patterns.
-
-The project reflects strong alignment between technical implementation, user-centered design, and Sustainable Development Goals.
+### 4.4 User-Centered Iterative Refinement
+The system was refined through structured user testing and measurable improvements based on feedback.
 
 ---
 
-## License
+## 5. User Testing and Iteration
 
-This project is developed for academic and sustainability innovation purposes.
+### 5.1 Testing Overview
 
+- **12 external users** (outside the development team)  
+  - 5 university students  
+  - 4 working adults  
+  - 3 household family users  
+- Testing duration: **7 days**
+
+Users were instructed to:
+
+- Input real groceries  
+- Monitor expiry notifications  
+- Use recipe suggestions  
+
+---
+
+### 5.2 Key Feedback and Improvements
+
+**Feedback 1:** Manual entry required too much time.  
+→ Implemented barcode scanning and auto-fill database.  
+→ Achieved approximately **40% reduction in input time**.
+
+**Feedback 2:** Expiry urgency was not visually clear.  
+→ Introduced color-coded priority system.  
+→ Improved clarity and faster decision-making.
+
+**Feedback 3:** Recipes should prioritize expiring ingredients.  
+→ Refined ranking algorithm to emphasize expiry proximity.  
+→ Increased user satisfaction and perceived usefulness.
+
+This structured iteration demonstrates systematic improvement based on real user behavior.
+
+---
+
+## 6. Scalability and Future Expansion
+
+### 6.1 Scalability
+
+EcoEats is built on a serverless architecture:
+
+- Firebase automatically scales infrastructure  
+- Cloud Functions expand with user-triggered events  
+- Firestore supports horizontal data scaling  
+
+With minimal modification, the system can:
+
+- Support multi-country deployment  
+- Enable multilingual interfaces  
+- Handle thousands of concurrent users  
+- Integrate external APIs (e.g., retailers)  
+
+---
+
+### 6.2 Planned Future Features
+
+- AI-based grocery image recognition  
+- Integration with grocery retailers (digital receipt sync)  
+- Community food-sharing network  
+- Smart auto-generated shopping lists  
+- Carbon footprint impact dashboard  
+
+These enhancements aim to expand EcoEats into a comprehensive sustainability intelligence platform.
+
+---
+
+## 7. Challenges Faced
+
+### 7.1 Usability vs. Data Accuracy
+Balancing detailed tracking with user convenience required iterative interface simplification.
+
+### 7.2 Algorithm Optimization
+Designing a ranking system that balances expiry urgency and dietary preferences required logical refinement and performance testing.
+
+### 7.3 Real-Time Event Management
+Efficient notification scheduling without excessive triggers required careful Cloud Function configuration.
+
+These challenges strengthened the system’s robustness and scalability.
+
+---
+
+## 8. Conclusion
+
+EcoEats demonstrates how cloud-native technologies and intelligent algorithm design can address real-world sustainability challenges. By combining food lifecycle tracking, expiry-driven recommendations, and scalable Google Cloud infrastructure, the system provides a practical and measurable solution for reducing household food waste.
+
+The project reflects strong integration between technical implementation, innovation, user-centered design, and global sustainability objectives.
+
+---
+
+**Academic Sustainability & Technology Innovation Project**

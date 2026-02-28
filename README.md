@@ -122,8 +122,7 @@ This creates a sustainability-first recommendation model.
 ## 3.4 AI & Machine Learning Integration
 EcoEats incorporates Google AI technologies to enhance automation, intelligence, and scalability.
 
-### Google ML Kit 
-– Barcode Scanning
+### Google ML Kit – Barcode Scanning
 
 The grocery input system integrates Google ML Kit for real-time barcode scanning.  
 This allows:

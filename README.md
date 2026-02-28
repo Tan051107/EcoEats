@@ -36,7 +36,7 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 ## 2.1 Technology Stack
 
 ### Frontend
-- Web-based interface (modern JavaScript framework)
+- Mobile interface (Flutter)
 - Responsive cross-device design
 
 ### Backend (Google Cloud & AI Ecosystem)
@@ -50,7 +50,7 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 | Firebase Cloud Messaging | Expiry notification delivery |
 | Google ML Kit (Barcode Scanning) | Real-time grocery barcode recognition |
 | Vertex AI | Scalable AI model integration |
-| Gemini API | Intelligent recipe ranking & recommendation reasoning |
+| Gemini API | Intelligent recommendation reasoning |
 
 The system leverages a fully serverless architecture, eliminating manual infrastructure management while ensuring automatic scalability.
 
@@ -64,7 +64,6 @@ The system leverages a fully serverless architecture, eliminating manual infrast
 3. Cloud Functions automatically trigger:
    - Expiry monitoring
    - Notification scheduling
-   - Recipe ranking updates
 4. Frontend synchronizes in real time.
 5. Users receive prioritized suggestions.
 
@@ -84,8 +83,9 @@ The system leverages a fully serverless architecture, eliminating manual infrast
 **Input Methods:**
 
 - Manual entry  
-- Barcode scanning  
-- Auto-filled item database  
+- Item scanning  
+- Auto-filled item database
+- Item image upload  
 
 Result: Reduced input friction and improved efficiency.
 
@@ -218,7 +218,7 @@ Testing Duration: **7 days**
 ## 5.2 Feedback → Improvement Mapping
 | Feedback | Improvement | Result |
 |-----------|-------------|--------|
-| Manual entry too slow | Barcode scanning + auto-fill | 40% faster input |
+| Manual entry too slow | Image scanning + auto-fill | 40% faster input |
 | Expiry urgency unclear | Priority visualization system | Faster recognition |
 | Recipes not prioritizing expiry | Algorithm refinement | Higher satisfaction |
 
@@ -289,7 +289,7 @@ The project effectively aligns technological implementation with measurable sust
 <br>
 
 ### Teammembers:
-TAN YI YANG <br>
+TAN YIK YANG <br>
 TAN YI WEN <br>
 FOO TUN FENG <br>
 

@@ -1,7 +1,6 @@
 # EcoEats  
 ## Intelligent Food Inventory & Sustainability Management System  
 <br>
-<br>
 
 ### Project Alignment
 | Sustainable Development Goals |
@@ -15,6 +14,7 @@
 ---
 
 <br>
+
 # 1. Project Overview
 EcoEats is a cloud-based intelligent food management system designed to reduce household food waste while promoting mindful consumption habits.
 
@@ -30,6 +30,7 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 ---
 
 <br>
+
 # 2. Technical Implementation Overview
 
 ## 2.1 Technology Stack
@@ -53,7 +54,7 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 
 The system leverages a fully serverless architecture, eliminating manual infrastructure management while ensuring automatic scalability.
 
----
+
 
 ## 2.2 System Architecture
 ### Workflow Logic
@@ -76,6 +77,8 @@ The system leverages a fully serverless architecture, eliminating manual infrast
 
 ---
 
+<br>
+
 # 3. Implementation Details
 ## 3.1 Grocery Input System
 **Input Methods:**
@@ -86,7 +89,7 @@ The system leverages a fully serverless architecture, eliminating manual infrast
 
 Result: Reduced input friction and improved efficiency.
 
----
+<br>
 
 ## 3.2 Expiry Priority Visualization
 To enhance clarity, EcoEats applies a structured priority logic:
@@ -99,7 +102,7 @@ To enhance clarity, EcoEats applies a structured priority logic:
 
 This visual classification simplifies urgency recognition and improves decision-making speed.
 
----
+<br>
 
 ## 3.3 Expiry-Based Recommendation Engine
 Unlike conventional recipe platforms, EcoEats applies a multi-factor ranking model:
@@ -114,7 +117,7 @@ The algorithm ensures that soon-to-expire ingredients are prioritized without co
 
 This creates a sustainability-first recommendation model.
 
----
+<br>
 
 ## 3.4 AI & Machine Learning Integration
 EcoEats incorporates Google AI technologies to enhance automation, intelligence, and scalability.
@@ -131,7 +134,7 @@ This allows:
 
 Barcode recognition significantly reduced input time during testing.
 
----
+<br>
 
 ### Vertex AI – Scalable AI Infrastructure
 
@@ -144,7 +147,7 @@ It enables:
 
 The architecture allows AI capabilities to scale with increasing user data.
 
----
+<br>
 
 ### Gemini API – Intelligent Recommendation Enhancement
 
@@ -159,11 +162,13 @@ The system uses Gemini to:
 
 Gemini strengthens the algorithm’s ability to generate relevant, expiry-aware, and balanced suggestions.
 
----
+<br>
 
 These AI integrations transform EcoEats from a simple tracking tool into an intelligent food sustainability platform.
 
 ---
+
+<br>
 
 # 4. Innovation Highlights
 ## Sustainability-Driven Logic
@@ -190,6 +195,8 @@ Structured testing resulted in measurable performance improvements.
 
 ---
 
+<br>
+
 # 5. User Testing & Iteration
 ## 5.1 Testing Overview
 | Participant Type | Count |
@@ -204,9 +211,9 @@ Testing Duration: **7 days**
 ### User Tasks
 - Input real groceries  
 - Track expiry notifications  
-- Use recipe recommendations  
+- Use recipe recommendations
 
----
+<br>
 
 ## 5.2 Feedback → Improvement Mapping
 | Feedback | Improvement | Result |
@@ -218,6 +225,8 @@ Testing Duration: **7 days**
 This iterative refinement demonstrates structured, data-driven improvement.
 
 ---
+
+<br>
 
 # 6. Scalability & Future Expansion
 ## 6.1 Scalability
@@ -234,7 +243,6 @@ Ready for:
 - Thousands of concurrent users  
 - Third-party API integrations  
 
----
 
 ## 6.2 Planned Future Enhancements
 - AI-based grocery image recognition  
@@ -246,6 +254,8 @@ Ready for:
 These features aim to extend EcoEats into a comprehensive sustainability intelligence platform.
 
 ---
+
+<br>
 
 # 7. Challenges Faced
 ## Usability vs Data Precision
@@ -261,6 +271,8 @@ These challenges strengthened architectural robustness.
 
 ---
 
+<br>
+
 # 8. Conclusion
 EcoEats demonstrates how cloud-native Google technologies and intelligent algorithm design can deliver a practical solution to household food waste.
 
@@ -274,7 +286,9 @@ The project effectively aligns technological implementation with measurable sust
 
 ---
 
-Teammembers:
+<br>
+
+## Teammembers:
 TAN YI YANG
 TAN YI WEN
 FOO TUN FENG

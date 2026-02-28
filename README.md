@@ -206,3 +206,4 @@ The project reflects strong alignment between technical implementation, user-cen
 ## License
 
 This project is developed for academic and sustainability innovation purposes.
+

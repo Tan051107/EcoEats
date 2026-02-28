@@ -37,7 +37,7 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 - Web-based interface (modern JavaScript framework)
 - Responsive cross-device design
 
-### Backend (Google Cloud Ecosystem)
+### Backend (Google Cloud & AI Ecosystem)
 
 | Service | Purpose |
 |----------|----------|
@@ -46,6 +46,9 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 | Firebase Cloud Functions | Event-driven backend logic |
 | Firebase Hosting | Scalable web deployment |
 | Firebase Cloud Messaging | Expiry notification delivery |
+| Google ML Kit (Barcode Scanning) | Real-time grocery barcode recognition |
+| Vertex AI | Scalable AI model integration |
+| Gemini API | Intelligent recipe ranking & recommendation reasoning |
 
 The system leverages a fully serverless architecture, eliminating manual infrastructure management while ensuring automatic scalability.
 
@@ -111,9 +114,59 @@ Unlike conventional recipe platforms, EcoEats applies a multi-factor ranking mod
 2. Ingredient availability  
 3. User dietary preferences  
 
-The algorithm ensures that soon-to-expire ingredients are prioritized without compromising balanced meal composition.
+The algorithm ensures that soon-to-expire ingredients are prioritized without compromising the balanced composition of meals.
 
 This creates a sustainability-first recommendation model.
+
+---
+
+## 3.4 AI & Machine Learning Integration
+
+EcoEats incorporates Google AI technologies to enhance automation, intelligence, and scalability.
+
+### Google ML Kit – Barcode Scanning
+
+The grocery input system integrates Google ML Kit for real-time barcode scanning.  
+This allows:
+
+- Automatic product identification
+- Faster grocery entry
+- Reduced manual typing
+- Improved user efficiency
+
+Barcode recognition significantly reduced input time during testing.
+
+---
+
+### Vertex AI – Scalable AI Infrastructure
+
+Vertex AI provides the foundation for scalable AI model deployment.  
+It enables:
+
+- Intelligent data processing
+- Model hosting and scalability
+- Future expansion into predictive food waste analytics
+
+The architecture allows AI capabilities to scale with increasing user data.
+
+---
+
+### Gemini API – Intelligent Recommendation Enhancement
+
+Gemini is integrated to enhance contextual reasoning in recipe recommendations.
+
+The system uses Gemini to:
+
+- Interpret ingredient combinations
+- Improve natural language understanding
+- Enhance recommendation diversity
+- Support sustainability-first ranking logic
+
+Gemini strengthens the algorithm’s ability to generate relevant, expiry-aware, and balanced suggestions.
+
+---
+
+These AI integrations transform EcoEats from a simple tracking tool into an intelligent food sustainability platform.
 
 ---
 
@@ -121,6 +174,16 @@ This creates a sustainability-first recommendation model.
 
 ## Sustainability-Driven Logic
 Recommendations are structured to reduce waste before satisfying preference-based ranking.
+
+## AI-Augmented Sustainability Engine
+
+By combining Gemini reasoning capabilities, Vertex AI scalability, and ML Kit automation, EcoEats integrates artificial intelligence directly into sustainability decision-making.
+
+This creates:
+
+- Automated grocery recognition
+- Intelligent recipe ranking
+- Scalable AI-powered optimization
 
 ## Real-Time Lifecycle Monitoring
 Food inventory dynamically updates via Firestore and Cloud Functions without manual recalculation.

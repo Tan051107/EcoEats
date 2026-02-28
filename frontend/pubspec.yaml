@@ -91,6 +91,7 @@ flutter:
     - assets/icons/seafood.svg
     - assets/icons/wheat-with-color.svg
     - assets/icons/canned-food.svg
+  
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

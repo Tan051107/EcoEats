@@ -36,7 +36,7 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 ## 2.1 Technology Stack
 
 ### Frontend
-- Web-based interface (modern JavaScript framework)
+- Mobile interface (Flutter)
 - Responsive cross-device design
 
 ### Backend (Google Cloud & AI Ecosystem)

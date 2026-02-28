@@ -22,6 +22,7 @@ export async function generateWeeklySummary(userId , startOfLastWeek){
         let totalWeeklyProtein =0;
         let totalWeeklyFat = 0;
         let totalWeeklyCarbs =0
+        let hasSummary = false;
 
         const {goal,activity_level, bmr ,weight, height ,age, gender,diet_type} = userData;
 
@@ -33,6 +34,9 @@ export async function generateWeeklySummary(userId , startOfLastWeek){
 
 
         for(const summary of weeklySummary){
+            if(summary.total_calories_kcal > 0){
+                hasSummary = true;
+            }
             totalWeeklyCalories+=summary.total_calories_kcal,
             totalWeeklyFat+=summary.total_fat_g,
             totalWeeklyProtein+=summary.total_protein_g,
@@ -59,7 +63,7 @@ export async function generateWeeklySummary(userId , startOfLastWeek){
             daily_calorie_intake_kcal:Math.round(userDailyCalorieIntake)
         }
 
-        if(weeklySummary.length > 0){
+        if(hasSummary){
             const recommendations = await getWeeklySummaryRecommendations(result,goal,activity_level,weight,height,age,gender,diet_type)
 
             if(!recommendations.success){
@@ -67,6 +71,9 @@ export async function generateWeeklySummary(userId , startOfLastWeek){
             }
 
             result.recommendations = recommendations.data
+        }
+        else{
+            result.recommendations = [];
         }
 
         await addUserWeeklySummary(userId,result,startOfLastWeek)
@@ -78,7 +85,7 @@ export async function generateWeeklySummary(userId , startOfLastWeek){
         }
     }
     catch(err){
-        throw new Error("Failed to retrived user's weekly summary:" ,err.message)
+        throw new Error(`Failed to retrived user's weekly summary:${err.message}`)
     }
 }
 

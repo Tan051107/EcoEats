@@ -50,7 +50,7 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 | Firebase Cloud Messaging | Expiry notification delivery |
 | Google ML Kit (Barcode Scanning) | Real-time grocery barcode recognition |
 | Vertex AI | Scalable AI model integration |
-| Gemini API | Intelligent Recommendation reasoning |
+| Gemini API | Intelligent recommendation reasoning |
 
 The system leverages a fully serverless architecture, eliminating manual infrastructure management while ensuring automatic scalability.
 

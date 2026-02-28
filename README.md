@@ -2,9 +2,8 @@
 ## Intelligent Food Inventory & Sustainability Management System  
 <br>
 <br>
-<br>
-<br>
-<br>
+
+
 ---
 
 ### Project Alignment

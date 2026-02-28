@@ -81,9 +81,9 @@ This design reduces user friction and improves usability efficiency.
 
 To enhance clarity and urgency recognition, EcoEats implements a color-coded priority system:
 
-- 🔴 **Red** – Expires within 2 days  
-- 🟡 **Yellow** – Expires within 5 days  
-- 🟢 **Green** – Fresh items  
+-  **Red** – Expires within 2 days  
+-  **Yellow** – Expires within 5 days  
+-  **Green** – Fresh items  
 
 This visual classification simplifies decision-making and encourages timely consumption.
 
@@ -209,4 +209,3 @@ The project reflects strong integration between technical implementation, innova
 
 ---
 
-**Academic Sustainability & Technology Innovation Project**

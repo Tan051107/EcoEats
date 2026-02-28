@@ -172,7 +172,7 @@ export const getEstimatedMealNutrition = functions.https.onCall(async(request)=>
             message:"Successfully received estimated meal nutrition from Gemini.",
             data:{
                 ...finalResult,
-                images:imagesToUri
+                image_urls:imagesToUri
             }
         }
     }

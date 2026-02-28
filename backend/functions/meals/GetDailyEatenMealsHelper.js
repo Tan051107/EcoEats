@@ -1,8 +1,12 @@
 import admin from '../utils/firebase-admin.cjs'
-import {format} from 'date-fns'
+import { formatInTimeZone } from "date-fns-tz";
 
 export async function getDailyEatenMealsHelper(userId , date){
-    const todayDate = format(date,"yyyy-MM-dd")
+    const todayDate = formatInTimeZone(
+        date,
+        "Asia/Kuala_Lumpur",
+        "yyyy-MM-dd"
+    )
     const database = admin.firestore()
     try{
         const userRef = database.collection('users').doc(userId)
@@ -11,9 +15,13 @@ export async function getDailyEatenMealsHelper(userId , date){
                                                                .get()
 
         const userDailyEatenMealsData = mealsSnapshot.docs.map(doc=>{
-            const createdAtTimestamp = doc.createTime;
-            const eatenAtTime = createdAtTimestamp.toDate;
-            const formattedEatenAtTime = format(eatenAtTime,'hh:mm a');
+            const createdAtTimestamp = doc.data().created_at;
+            const eatenAtTime = createdAtTimestamp.toDate();
+            const formattedEatenAtTime = formatInTimeZone(
+                eatenAtTime,
+                "Asia/Kuala_Lumpur",
+                "hh:mm a"
+            )
             return ({
                 meal_id:doc.id,
                 ...doc.data(),

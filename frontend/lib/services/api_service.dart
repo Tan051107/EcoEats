@@ -1,117 +1,41 @@
 // lib/services/api_service.dart
-
-import 'dart:convert';
-import 'firebase_functions.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import '../data/models/recipe_model.dart';
 import '../data/models/daily_meals.dart';
 
 class ApiService {
-  static Future<Meals> getRecommendedMeals() async {
+  // Helper to recursively convert _Map<Object?, Object?> to Map<String, dynamic>
+  static Map<String, dynamic> _convertToMap(dynamic source) {
+    if (source is! Map) return {};
+    return source.map((key, value) {
+      final stringKey = key.toString();
+      if (value is Map) return MapEntry(stringKey, _convertToMap(value));
+      if (value is List) {
+        return MapEntry(
+          stringKey,
+          value.map((e) => e is Map ? _convertToMap(e) : e).toList(),
+        );
+      }
+      return MapEntry(stringKey, value);
+    });
+  }
+
+  static Future<RecommendedMealsData> getRecommendedMeals() async {
     try {
-      final jsonData = {
-        "date": "2026-01-01",
-        "meals": {
-          "breakfast": {
-            "recipeId": "ABC123",
-            "name": "Spicy Tomato Pasta",
-            "ingredients": [
-              {"name": "tomato", "quantity": "2 pieces"},
-              {"name": "pasta", "quantity": "100g"}
-            ],
-            "steps": [
-              "Boil pasta",
-              "Cook tomato sauce",
-              "Mix and serve"
-            ],
-            "nutrition": {
-              "calories_kcal": 480,
-              "protein_g": 16,
-              "carbs_g": 65,
-              "fat_g": 14
-            },
-            "diet_type": "vegetarian",
-            "chef_name": "Madhur Jaffrey",
-            "allergens": ["gluten"],
-            "meal_type": "dinner",
-            "created_at": "2026-01-01T00:00:00Z"
-          },
-          "lunch": {
-            "recipeId": "ABC124",
-            "name": "Spicy Tomato Pasta",
-            "ingredients": [
-              {"name": "tomato", "quantity": "2 pieces"},
-              {"name": "pasta", "quantity": "100g"}
-            ],
-            "steps": [
-              "Boil pasta",
-              "Cook tomato sauce",
-              "Mix and serve"
-            ],
-            "nutrition": {
-              "calories_kcal": 480,
-              "protein_g": 16,
-              "carbs_g": 65,
-              "fat_g": 14
-            },
-            "diet_type": "vegetarian",
-            "chef_name": "Madhur Jaffrey",
-            "allergens": ["gluten"],
-            "meal_type": "lunch",
-            "created_at": "2026-01-01T00:00:00Z"
-          },
-          "dinner": {
-            "recipeId": "ABC125",
-            "name": "Spicy Tomato Pasta",
-            "ingredients": [
-              {"name": "tomato", "quantity": "2 pieces"},
-              {"name": "pasta", "quantity": "100g"}
-            ],
-            "steps": [
-              "Boil pasta",
-              "Cook tomato sauce",
-              "Mix and serve"
-            ],
-            "nutrition": {
-              "calories_kcal": 480,
-              "protein_g": 16,
-              "carbs_g": 65,
-              "fat_g": 14
-            },
-            "diet_type": "vegetarian",
-            "chef_name": "Madhur Jaffrey",
-            "allergens": ["gluten"],
-            "meal_type": "dinner",
-            "created_at": "2026-01-01T00:00:00Z"
-          }
-        },
-        "total_carbs_g": "117",
-        "total_fat_g": "117",
-        "total_protein_g": "117",
-        "total_calories_kcal": "1410",
-        "missing_ingredients": [
-          {
-            "missing_ingredients": [],
-            "recipe": "Fruit Yogurt Bowl"
-          },
-          {
-            "missing_ingredients": [],
-            "recipe": "Fruit Yogurt Bowl"
-          },
-          {
-            "missing_ingredients": [
-              {
-                "name": "Lemon",
-                "quantity": 12
-              }
-            ],
-            "recipe": "Fruit Yogurt Bowl"
-          }
-        ]
-      };
+      final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+      final getDailyRecommendedMeals = functions.httpsCallable("getDailyRecommendedMeals");
+      final response = await getDailyRecommendedMeals.call({});
       
-      final mealsData = RecommendedMealsData.fromJson(jsonData);
-      return mealsData.meals;
+      final rawData = response.data as Map;
+      final Map<String, dynamic> responseResult = _convertToMap(rawData);
       
+      // The backend returns { success: bool, message: string, data: { ... } }
+      final Map<String, dynamic> dailyRecommendedMeals = responseResult["data"] ?? {};
+      
+      return RecommendedMealsData.fromJson(dailyRecommendedMeals);
+      
+    } on FirebaseFunctionsException catch (err) {
+      throw Exception(err.message);
     } catch (e) {
       print('Error in getRecommendedMeals: $e');
       rethrow;
@@ -120,33 +44,21 @@ class ApiService {
 
   static Future<Recipe> getRecipe(String recipeId) async {
     try {
-      final Map<String, dynamic> recipeJson = {
-        "recipeId": recipeId,
-        "name": "Spicy Tomato Pasta",
-        "ingredients": [
-          {"name": "tomato", "quantity": "2 pieces"},
-          {"name": "pasta", "quantity": "100g"}
-        ],
-        "steps": [
-          "Boil pasta",
-          "Cook tomato sauce",
-          "Mix and serve"
-        ],
-        "nutrition": {
-          "calories_kcal": 480,
-          "protein_g": 16,
-          "carbs_g": 65,
-          "fat_g": 14
-        },
-        "diet_type": "vegetarian",
-        "chef_name": "Madhur Jaffrey",
-        "allergens": ["gluten"],
-        "meal_type": "dinner",
-        "created_at": "2026-01-01T00:00:00Z"
-      };
+      final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+      final getRecipes = functions.httpsCallable("getRecipes");
+      final response = await getRecipes.call({
+        "recipe_id": recipeId
+      });
       
-      return Recipe.fromJson(recipeJson);
+      final rawData = response.data as Map;
+      final Map<String, dynamic> responseResult = _convertToMap(rawData);
       
+      final Map<String, dynamic> recipe = responseResult["data"] ?? {};
+      
+      return Recipe.fromJson(recipe);
+      
+    } on FirebaseFunctionsException catch (err) {
+      throw Exception(err.message);
     } catch (e) {
       print('Error in getRecipe: $e');
       rethrow;

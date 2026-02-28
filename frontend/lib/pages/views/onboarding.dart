@@ -114,7 +114,6 @@ class _IconAnimationState extends State<IconAnimation> with SingleTickerProvider
   
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _animationController = AnimationController(
       vsync: this,
@@ -128,7 +127,6 @@ class _IconAnimationState extends State<IconAnimation> with SingleTickerProvider
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _animationController.dispose();
     super.dispose();
   }

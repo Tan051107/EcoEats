@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions'
 import admin from '../utils/firebase-admin.cjs'
-import { format } from 'date-fns'
+import { formatInTimeZone } from "date-fns-tz";
 
 export const getDailyRecommendedMeals = functions.https.onCall(async(request)=>{
 
@@ -12,7 +12,7 @@ export const getDailyRecommendedMeals = functions.https.onCall(async(request)=>{
 
     const today = new Date();
 
-    const dailyRecommendedMealsDocId = format(today, "yyyy-MM-dd")
+    const dailyRecommendedMealsDocId = formatInTimeZone(today,"Asia/Kuala_Lumpur",'yyyy-MM-dd')
 
     const database = admin.firestore()
 
@@ -28,7 +28,7 @@ export const getDailyRecommendedMeals = functions.https.onCall(async(request)=>{
         const dailyRecommendedMealsData = dailyRecommendedMealsDocSnapshot.data();
 
         const {meals , created_at , ...mealData} = dailyRecommendedMealsData;
-        const mealsId = [meals.breakfast.recipe_id , meals.lunch.recipe_id ,meals.dinner.recipe_id ]
+        const mealsId = [meals.breakfast , meals.lunch ,meals.dinner]
 
         const [breakfastSnapshot,lunchSnapshot,dinnerSnapshot] = await Promise.all(
             mealsId.map(mealId=>

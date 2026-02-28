@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String _dietType = "";
   List<String> _allergies = [];
   String _activityLevel = "";
-  List<String> _healthGoals = [];
+  double _bmr = 0.0;
   
   // UI state
   bool _isLoading = true; 
@@ -72,6 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (userDoc.exists) {
         Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
+        print("User Details:$data");
         
         setState(() {
           _userName = data['name'] ?? 'No Name';
@@ -79,11 +80,11 @@ class _ProfilePageState extends State<ProfilePage> {
           _gender = data['gender'] ?? 'Not specified';
           _height = (data['height'] ?? 0).toDouble();
           _weight = (data['weight'] ?? 0).toDouble();
-          _dietGoal = data['dietGoal'] ?? '';
-          _dietType = data['dietType'] ?? '';
+          _bmr = (data['bmr'] ?? 0).toDouble();
+          _dietGoal = data['goal'] ?? '';
+          _dietType = data['diet_type'] ?? '';
           _allergies = List<String>.from(data['allergies'] ?? []);
-          _activityLevel = data['activityLevel'] ?? '';
-          _healthGoals = List<String>.from(data['healthGoals'] ?? []);
+          _activityLevel = data['activity_level'] ?? '';
         });
       } else {
         setState(() {
@@ -104,25 +105,25 @@ class _ProfilePageState extends State<ProfilePage> {
   //Helper methods to convert data to display text
   String _getDietGoalText() {
     switch (_dietGoal) {
-      case 'weightLoss':
-        return 'Weight Loss';
-      case 'weightGain':
-        return 'Weight Gain';
-      case 'maintenance':
-        return 'Weight Maintenance';
+      case 'lose_weight':
+        return 'Lose Weight';
+      case 'gain_weight':
+        return 'Gain Weight';
+      case 'maintain_weight':
+        return 'Maintain Weight';
       default:
-        return 'Healthy Diet';
+        return 'Eat Healthier';
     }
   }
 
   String _getDietTypeText() {
     switch (_dietType) {
-      case 'vegan':
+      case 'Vegan':
         return 'Vegan';
-      case 'vegetarian':
+      case 'Vegetarian':
         return 'Vegetarian';
-      case 'nonVegan':
-        return 'Non-Vegan';
+      case 'Non-vegetarian':
+        return 'Non-vegetarian';
       default:
         return 'Balanced Diet';
     }
@@ -138,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
         return 'Moderately active (3-5 days/week)';
       case 'active':
         return 'Very active (6-7 days/week)';
-      case 'veryActive':
+      case 'very_active':
         return 'Extremely active (physical job)';
       default:
         return 'Not specified';
@@ -171,7 +172,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     dietType: _dietType,
                     allergies: _allergies,
                     activityLevel: _activityLevel,
-                    healthGoals: _healthGoals,
                   ),
                 ),
               );
@@ -329,7 +329,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // Body Measurement card
   Widget _buildBodyMetricsCard() {
-    double bmi = _height > 0 ? _weight / ((_height/100) * (_height/100)) : 0;
     
     return Card(
       elevation: 2,
@@ -355,8 +354,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 _buildMetricItem(Icons.monitor_weight, 'Weight', '$_weight kg'),
                 _buildMetricItem(
                   Icons.calculate,
-                  'BMI',
-                  bmi > 0 ? bmi.toStringAsFixed(1) : 'N/A',
+                  'BMR',
+                  _bmr > 0 ?_bmr.toStringAsFixed(1) : 'N/A',
                 ),
               ],
             ),
@@ -416,11 +415,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   // Activity and goals card
-  Widget _buildActivityAndGoalsCard() {
-    String healthGoalsText = _healthGoals.isEmpty 
-        ? 'Not specified' 
-        : _healthGoals.join(', ');
-    
+  Widget _buildActivityAndGoalsCard() {  
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -430,7 +425,7 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Activity & Goals',
+              'Activity Level',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -439,8 +434,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 15),
             _buildInfoRow(Icons.directions_run, 'Activity Level', _getActivityLevelText()),
-            const Divider(),
-            _buildInfoRow(Icons.emoji_events, 'Health Goals', healthGoalsText),
           ],
         ),
       ),

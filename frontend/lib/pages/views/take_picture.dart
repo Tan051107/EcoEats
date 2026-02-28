@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 import 'package:frontend/data/notifiers.dart';
-import 'package:frontend/modal/ManualAddGroceryFormData.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:frontend/services/grocery_service.dart';
 import 'package:frontend/services/meal_service.dart';
@@ -338,6 +337,7 @@ class _TakePictureState extends State<TakePicture> {
       showAddForm(anaylzedResult: analyzedImageResult);
     }
     catch(err){
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Failed to analyze images:$err")
@@ -355,16 +355,23 @@ class _TakePictureState extends State<TakePicture> {
   }
 
   void showAddForm({Map<String,dynamic>? anaylzedResult})async{
+    bool updated = false;
     if(!isTakingFoodPictureNotifier.value){
-      await showFormDialog<ManualAddGroceryFormData>(
+      updated = await showFormDialog(
         context: context, child: AddGroceryForm(returnedAnalyzedResult:anaylzedResult)
-      );
+      )?? false;
     }
     else{
-      await showFormDialog(
+      updated = await showFormDialog(
         context: context, 
         child: AddFoodForm(returnedAnalyzedResult:anaylzedResult)
-      );
+      ) ?? false;
+    }
+    if(updated){
+      setState(() {
+        images = [];
+        imageUrls = [];
+      });
     }
   }
 

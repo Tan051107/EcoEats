@@ -1,19 +1,19 @@
 import * as functions from 'firebase-functions'
-import admin, { firestore } from '../utils/firebase-admin.cjs'
+import admin from '../utils/firebase-admin.cjs'
 import Joi from 'joi'
 
-export const markAsRead = functions.https.onCall(async(data,context)=>{
-    if(!context.auth){
+export const markAsRead = functions.https.onCall(async(request)=>{
+    if(!request.auth){
         throw new functions.https.HttpsError('unauthenticated' , "Please login to proceed.")
     }
 
-    const userId = context.auth.uid;
+    const userId = request.auth.uid
 
     const schema = Joi.object({
         notification_id:Joi.string().required()
     })
 
-    const {errors , value} = schema.validate(data)
+    const {errors , value} = schema.validate(request.data)
 
     if(errors){
         throw new functions.https.HttpsError('invalid-argument' , errors.details.map(detail=>({field:detail.path.join(".") , message:detail.message})))

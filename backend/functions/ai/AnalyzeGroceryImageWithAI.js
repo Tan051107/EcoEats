@@ -77,7 +77,7 @@
                 },
                 confidence: { type: SchemaType.NUMBER }
             },
-            required: ["per" , "name","nutrition", "category", "confidence" , "is_packaged","expiry_date"]
+            required: ["per" , "name","nutrition", "category", "is_packaged","expiry_date"]
         };
 
         const prompt = `

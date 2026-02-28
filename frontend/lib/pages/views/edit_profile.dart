@@ -1,7 +1,7 @@
 // lib/pages/views/edit_profile.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:frontend/services/user_service.dart';
 
 class EditProfilePage extends StatefulWidget {
   final String userName;
@@ -13,7 +13,6 @@ class EditProfilePage extends StatefulWidget {
   final String dietType;
   final List<String> allergies;
   final String activityLevel;
-  final List<String> healthGoals;
 
   const EditProfilePage({
     super.key,
@@ -26,7 +25,6 @@ class EditProfilePage extends StatefulWidget {
     required this.dietType,
     required this.allergies,
     required this.activityLevel,
-    required this.healthGoals,
   });
 
   @override
@@ -35,7 +33,6 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   late TextEditingController _nameController;
   late TextEditingController _ageController;
@@ -60,7 +57,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _heightController = TextEditingController(text: widget.height.toString());
     _weightController = TextEditingController(text: widget.weight.toString());
     _allergiesController = TextEditingController(text: widget.allergies.join(', '));
-    _healthGoalsController = TextEditingController(text: widget.healthGoals.join(', '));
 
     _selectedGender = widget.gender;
     _selectedDietGoal = widget.dietGoal;
@@ -113,25 +109,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
           .map((e) => e.trim())
           .where((e) => e.isNotEmpty)
           .toList();
-
-      List<String> healthGoals = _healthGoalsController.text
-          .split(',')
-          .map((e) => e.trim())
-          .where((e) => e.isNotEmpty)
-          .toList();
-
-      await _firestore.collection('users').doc(user.uid).set({
+     
+      Map<String,dynamic>userUpdatedDetails = {
         'name': name,
         'age': age,
         'gender': _selectedGender,
         'height': height,
         'weight': weight,
-        'dietGoal': _selectedDietGoal,
-        'dietType': _selectedDietType,
+        'goal': _selectedDietGoal,
+        'diet_type': _selectedDietType,
         'allergies': allergies,
-        'activityLevel': _selectedActivityLevel,
-        'healthGoals': healthGoals,
-      }, SetOptions(merge: true));
+        'activity_level': _selectedActivityLevel,
+      };
+
+      await UserService.updateUserDetails(userUpdatedDetails);
 
       if (mounted) {
         Navigator.pop(context, true);
@@ -149,14 +140,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
+        foregroundColor: Colors.black,
         actions: [
           TextButton(
             onPressed: _isLoading ? null : _saveProfile,
             child: const Text(
               'Save',
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: TextStyle(color: Colors.black, fontSize: 16),
             ),
           ),
         ],
@@ -190,15 +180,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                   // Gender Dropdown
                   DropdownButtonFormField<String>(
-                    value: _selectedGender.isEmpty ? null : _selectedGender,
+                    initialValue: _selectedGender.isEmpty ? null : _selectedGender,
                     decoration: const InputDecoration(
                       labelText: 'Gender',
                       border: OutlineInputBorder(),
                     ),
                     items: const [
-                      DropdownMenuItem(value: 'Male', child: Text('Male')),
-                      DropdownMenuItem(value: 'Female', child: Text('Female')),
-                      DropdownMenuItem(value: 'Other', child: Text('Other')),
+                      DropdownMenuItem(value: 'male', child: Text('Male')),
+                      DropdownMenuItem(value: 'female', child: Text('Female')),
+                      DropdownMenuItem(value: 'other', child: Text('Other')),
                     ],
                     onChanged: (value) {
                       setState(() {
@@ -232,16 +222,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                   // Diet Goal Dropdown
                   DropdownButtonFormField<String>(
-                    value: _selectedDietGoal.isEmpty ? null : _selectedDietGoal,
+                    initialValue: _selectedDietGoal.isEmpty ? null : _selectedDietGoal,
                     decoration: const InputDecoration(
                       labelText: 'Diet Goal',
                       border: OutlineInputBorder(),
                     ),
                     items: const [
-                      DropdownMenuItem(value: 'weightLoss', child: Text('Weight Loss')),
-                      DropdownMenuItem(value: 'weightGain', child: Text('Weight Gain')),
-                      DropdownMenuItem(value: 'maintenance', child: Text('Weight Maintenance')),
-                      DropdownMenuItem(value: 'healthy', child: Text('Healthy Diet')),
+                      DropdownMenuItem(value: 'lose_weight', child: Text('Weight Loss')),
+                      DropdownMenuItem(value: 'gain_weight', child: Text('Weight Gain')),
+                      DropdownMenuItem(value: 'maintain_weight', child: Text('Weight Maintenance')),
+                      DropdownMenuItem(value: 'eat_healthier', child: Text('Healthy Diet')),
                     ],
                     onChanged: (value) {
                       setState(() {
@@ -253,16 +243,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                   // Diet Type Dropdown
                   DropdownButtonFormField<String>(
-                    value: _selectedDietType.isEmpty ? null : _selectedDietType,
+                    initialValue: _selectedDietType.isEmpty ? null : _selectedDietType,
                     decoration: const InputDecoration(
                       labelText: 'Diet Type',
                       border: OutlineInputBorder(),
                     ),
                     items: const [
-                      DropdownMenuItem(value: 'balanced', child: Text('Balanced')),
-                      DropdownMenuItem(value: 'vegan', child: Text('Vegan')),
-                      DropdownMenuItem(value: 'vegetarian', child: Text('Vegetarian')),
-                      DropdownMenuItem(value: 'nonVegan', child: Text('Non-Vegan')),
+                      DropdownMenuItem(value: 'Vegan', child: Text('Vegan')),
+                      DropdownMenuItem(value: 'Vegetarian', child: Text('Vegetarian')),
+                      DropdownMenuItem(value: 'Non-vegetarian', child: Text('Non-Vegetarian')),
                     ],
                     onChanged: (value) {
                       setState(() {
@@ -274,7 +263,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                   // Activity Level Dropdown
                   DropdownButtonFormField<String>(
-                    value: _selectedActivityLevel.isEmpty ? null : _selectedActivityLevel,
+                    initialValue: _selectedActivityLevel.isEmpty ? null : _selectedActivityLevel,
                     decoration: const InputDecoration(
                       labelText: 'Activity Level',
                       border: OutlineInputBorder(),
@@ -284,7 +273,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       DropdownMenuItem(value: 'light', child: Text('Lightly active')),
                       DropdownMenuItem(value: 'moderate', child: Text('Moderately active')),
                       DropdownMenuItem(value: 'active', child: Text('Very active')),
-                      DropdownMenuItem(value: 'veryActive', child: Text('Extremely active')),
+                      DropdownMenuItem(value: 'very_active', child: Text('Extremely active')),
                     ],
                     onChanged: (value) {
                       setState(() {
@@ -303,17 +292,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       hintText: 'e.g. Seafood, Peanuts',
                     ),
                   ),
-                  const SizedBox(height: 16),
 
-                  // Health Goals
-                  TextField(
-                    controller: _healthGoalsController,
-                    decoration: const InputDecoration(
-                      labelText: 'Health Goals (comma separated)',
-                      border: OutlineInputBorder(),
-                      hintText: 'e.g. healthyDiet, loseWeight',
-                    ),
-                  ),
                   const SizedBox(height: 24),
 
                   if (_errorMessage.isNotEmpty)

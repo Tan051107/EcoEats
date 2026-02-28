@@ -1,4 +1,4 @@
-import {addDays} from 'date-fns';
+import {addDays, format} from 'date-fns';
 import {getDailySummaryHelper} from './GetDailySummaryHelper.js'
 import {getUserDailyCalorieIntake} from '../utils/GetUserDailyCalorieIntake.js'
 import { getAllUsersData } from '../utils/GetAllUsersData.js';
@@ -44,8 +44,13 @@ export async function generateWeeklySummary(userId , startOfLastWeek){
         const averageDailyProtein = totalWeeklyProtein/7;
         const averageDailyFat = totalWeeklyFat/7
         const averageDailyCarbs = totalWeeklyCarbs/7
+        const formattedStartDate = format(startOfLastWeek, "yyyy-MMM-dd")
+        const endDate = addDays(startOfLastWeek,6)
+        const formattedEndDate = format(endDate, "yyyy-MMM-dd")
 
         const result = {
+            start_date:formattedStartDate,
+            end_date: formattedEndDate,
             each_day_summary:weeklySummary,
             average_daily_calories_kcal:Math.round(averageDailyCalories),
             average_daily_protein_g:Math.round(averageDailyProtein),
@@ -54,13 +59,15 @@ export async function generateWeeklySummary(userId , startOfLastWeek){
             daily_calorie_intake_kcal:Math.round(userDailyCalorieIntake)
         }
 
-        const recommendations = await getWeeklySummaryRecommendations(result,goal,activity_level,weight,height,age,gender,diet_type)
+        if(weeklySummary.length > 0){
+            const recommendations = await getWeeklySummaryRecommendations(result,goal,activity_level,weight,height,age,gender,diet_type)
 
-        if(!recommendations.success){
-            throw functions.https.HttpsError(recommendations.message)
+            if(!recommendations.success){
+                throw functions.https.HttpsError(recommendations.message)
+            }
+
+            result.recommendations = recommendations.data
         }
-
-        result.recommendations = recommendations.data
 
         await addUserWeeklySummary(userId,result,startOfLastWeek)
 

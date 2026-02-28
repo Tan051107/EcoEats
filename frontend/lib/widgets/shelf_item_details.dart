@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class ShelfItemDetails extends StatefulWidget {
-  ShelfItemDetails(
+  const ShelfItemDetails(
     {
       super.key,
       required this.groceryDetails
@@ -39,6 +39,7 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
   late Color bgColor;
   late Color iconColor;
   late String icon;
+  late String per;
 
   @override
   void initState() {
@@ -55,6 +56,8 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
     images = (widget.groceryDetails["image_urls"] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [];
     imageUrl = "";
     quantity = widget.groceryDetails["quantity"] ?? 0;
+    per = widget.groceryDetails["per"] ?? "100g";
+
 
     nutritionValues =[
       {
@@ -140,14 +143,14 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text("Successfully removed a meal.")
+            content: Text("Successfully removed a shelf item.")
           )
         );
       }
       catch(err){
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Failed to remove meal:$err")
+            content: Text("Failed to remove shelf item:$err")
           )
         );
         print(err);      
@@ -157,7 +160,7 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Align(
             alignment: AlignmentGeometry.centerRight,
@@ -198,7 +201,8 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
                   ),
                 ),
                 SizedBox(width:10.0),
-                Column(
+                Expanded(
+                  child:Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -233,6 +237,7 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
                     )
                   ],
                 )
+                )
               ],
             ),   
           )
@@ -245,7 +250,7 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Nutrition Info",
+                  "Nutrition Info (Per $per)",
                   style:TextStyle(
                     fontSize: detailsFontSize,
                     fontWeight: FontWeight.bold
@@ -298,25 +303,25 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
             ShrinkButton(
               onPressed: ()async =>groceryProvider.isEditing ? {} : {await removeGrocery(widget.groceryDetails["item_id"])},
               child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18.0),
-                color:groceryProvider.isLoading ? normalRed.withValues(alpha: 0.5):  normalRed
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  groceryProvider.isEditing ? "Removing Grocery" : "Remove Grocery",
-                  style: TextStyle(
-                    fontSize: subtitleText.fontSize,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18.0),
+                  color:groceryProvider.isEditing ? normalRed.withValues(alpha: 0.5):  normalRed
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    groceryProvider.isEditing ? "Removing Grocery" : "Remove Grocery",
+                    style: TextStyle(
+                      fontSize: subtitleText.fontSize,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
                 ),
-              ),
-            )
-            )
+              )
+            ),
           ],
         )
       ],      

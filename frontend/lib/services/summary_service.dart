@@ -32,4 +32,31 @@ class SummaryService {
         throw Exception('Failed to get daily summary:$err');
       }
     }
+
+    static Future<Map<String,dynamic>> getWeeklySummary()async{
+      final functions =FirebaseFunctions.instanceFor(region: "us-central1");
+      final getWeeklySummary = functions.httpsCallable("getWeeklySummary");
+      try{
+        final response = await getWeeklySummary.call();
+        final Map<String,dynamic> rawData = Map<String,dynamic>.from(response.data as Map);
+        if(rawData["success"] != true){
+            throw Exception (rawData["message"] ?? "No weekly summary found");
+          }
+
+        if (rawData["data"] == null) {
+            throw Exception("No daily summary data returned");
+        }
+
+        final Map<String,dynamic> weeklySummary = Map<String,dynamic>.from(rawData as Map);
+        return weeklySummary;
+      }on FirebaseFunctionsException catch(err){
+        throw Exception('Failed to get daily summary:$err');
+      }
+      catch(err){
+        throw Exception('Failed to get daily summary:$err');
+      }
+      
+
+  
+    }
 }

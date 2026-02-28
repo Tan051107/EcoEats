@@ -5,7 +5,7 @@ import Joi from 'joi';
 
 const schema = Joi.object({
   name:Joi.string().required(),
-  email:Joi.string().required().email(),
+  email:Joi.string().email(),
   gender:Joi.string().valid("male","female").required(),
   age:Joi.number().min(1).required(),
   height:Joi.number().min(1).required(),
@@ -13,7 +13,7 @@ const schema = Joi.object({
   activity_level:Joi.string().valid("sedentary","light","moderate","active","very_active").required(),
   diet_type:Joi.string().valid("Vegetarian","Non-vegetarian","Vegan").required(),
   allergies:Joi.array().items(Joi.string()).required(),
-  goal:Joi.string().valid("lose_weight","gain_weight","maintain_weight","eat_healthier")
+  goal:Joi.string().valid("lose_weight","gain_weight","maintain_weight","eat_healthier").required()
 })
 
 export const updateUserProfile =functions.https.onCall(async(request)=>{
@@ -50,12 +50,18 @@ export const updateUserProfile =functions.https.onCall(async(request)=>{
       updated_at: admin.firestore.FieldValue.serverTimestamp()
     },{merge:true})
 
+    const userUpdatedData = await userDocRef.get();
+
     return {
       success:true,
-      message:"User updated successfully"
+      message:"User updated successfully",
+      user_updated:{
+        user_updated:userUpdatedData.id,
+        ...userUpdatedData
+      }
     }
   } catch (error) {
-    throw functions.https.HttpsError("Failed to update user" , error.message)
+    throw new functions.https.HttpsError( "internal", error.message)
   }
 })
 

@@ -39,11 +39,7 @@ export async function getAllUsersDailyMealPlan(){
        
     }
     catch(err){
-        return{
-            success:false,
-            message:err.message,
-        }
+        throw new Error("Failed to add new meals:",err.message)
     }
 }
 
-const data = getAllUsersDailyMealPlan()

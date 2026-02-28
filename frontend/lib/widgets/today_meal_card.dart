@@ -55,45 +55,51 @@ class _TodayMealCardState extends State<TodayMealCard> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius:BorderRadius.circular(12),
-                    color: lightGreen
-                  ),
-                  child:Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: imageUrl.isNotEmpty
-                          ?Image.network(
-                            imageUrl,
-                            height: 40,
-                            width: 40,
-                          )
-                          :Icon(
-                            Icons.fastfood,
-                            size: 40,
-                          ),
-                  )
-                ),
-                SizedBox(width: 10.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.mealName,
-                      style: TextStyle(
-                        fontSize: subtitleText.fontSize,
-                        fontWeight: FontWeight.bold
-                      ),
+            Expanded(
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius:BorderRadius.circular(12),
+                      color: lightGreen
                     ),
-                    Text(
-                      widget.eatenTime,
-                      style:subtitleText
+                    child:Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: imageUrl.isNotEmpty
+                            ?Image.network(
+                              imageUrl,
+                              height: 40,
+                              width: 40,
+                            )
+                            :Icon(
+                              Icons.fastfood,
+                              size: 40,
+                            ),
                     )
-                  ],
-                ),
-              ],
+                  ),
+                  SizedBox(width: 10.0),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.mealName,
+                          style: TextStyle(
+                            fontSize: subtitleText.fontSize,
+                            fontWeight: FontWeight.bold
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                        Text(
+                          widget.eatenTime,
+                          style:subtitleText
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             Column(
               children: [

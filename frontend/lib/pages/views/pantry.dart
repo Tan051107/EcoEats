@@ -64,7 +64,7 @@ class _PantryState extends State<Pantry> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        childAspectRatio: 200/160,
+                        childAspectRatio: 200/170,
                         maxCrossAxisExtent: 200,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10
@@ -85,7 +85,8 @@ class _PantryState extends State<Pantry> {
                             groceryName: shelfItemRetrieved["name"] ?? "", 
                             category: shelfItemRetrieved["category"] ?? "", 
                             quantity: shelfItemRetrieved["quantity"] ?? 0,
-                            image: images.isNotEmpty ? images[0] : ""
+                            image: images.isNotEmpty ? images[0] : "",
+                            unit: shelfItemRetrieved["unit"] ?? ""
                         )
                         );
                       }

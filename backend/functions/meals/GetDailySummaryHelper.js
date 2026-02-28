@@ -1,5 +1,5 @@
 import { getDailyEatenMealsHelper } from "./GetDailyEatenMealsHelper.js"
-import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 
 export async function getDailySummaryHelper(userId, date){
 
@@ -21,9 +21,9 @@ export async function getDailySummaryHelper(userId, date){
             dailyCarbs += mealNutrition?.carbs_g || 0;
             dailyFat+=mealNutrition?.fat_g || 0
         }
-
         return{
-            date: format(date,'yyyy-MM-dd'),
+            day: formatInTimeZone(date,"Asia/Kuala_Lumpur" , 'EEE'),
+            date: formatInTimeZone(date,"Asia/Kuala_Lumpur",'yyyy-MM-dd'),
             total_calories_kcal:dailyCalories,
             total_protein_g:dailyProtein,
             total_fat_g:dailyFat,

@@ -32,7 +32,7 @@ class GroceryService {
       });     
     }
     on FirebaseFunctionsException catch (err){
-      throw Exception("Failed to get user's shelf items:$err");
+      throw Exception("Failed to get user's shelf items:${err.message}");
     }
     catch(err){
       throw Exception("Failed to get user's shelf items:$err");
@@ -40,7 +40,7 @@ class GroceryService {
   }
 
   static Future<Map<String,dynamic>> addShelfItem(Map<String,dynamic> shelfItem)async{
-    List<String> unwantedKeys = ["created_at" , "is_packaged" , "estimated_shelf_life" , "nutrition" , "updated_at"];
+    List<String> unwantedKeys = ["is_packaged" , "estimated_shelf_life" , "nutrition" , "updated_at" , "created_at"];
 
     Map<String,dynamic> cleanedPayload = Utils.removeUnwantedKeys(shelfItem, unwantedKeys);
     final functions = FirebaseFunctions.instanceFor(region: "us-central1");
@@ -52,7 +52,7 @@ class GroceryService {
       return addedShelfItem;
     }
     on FirebaseFunctionsException catch (err){
-      throw Exception("Failed to get user's shelf items:$err");
+      throw Exception("Failed to get user's shelf items:${err.message}");
     }
     catch(err){
       throw Exception("Failed to get user's shelf items:$err");
@@ -85,7 +85,7 @@ class GroceryService {
       return analyzedGroceryImageResult;
 
     }on FirebaseFunctionsException catch (err){
-      throw Exception("Failed to retrieve grocery image result: $err ");
+      throw Exception("Failed to retrieve grocery image result: ${err.message} ");
     }
     catch(err){
       throw Exception("Failed to retrieve grocery image result: $err ");

@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import {format} from 'date-fns'
+import { formatInTimeZone } from "date-fns-tz";
 import adminModule from '../utils/firebase-admin.cjs';
 const admin = adminModule.default ?? adminModule; 
 import Joi from 'joi';
@@ -14,7 +14,10 @@ const schema = Joi.object({
     comment:Joi.string(),
     meal_id:Joi.string(),
     image_urls:Joi.array().items(Joi.string()).invalid(null),
-    packaging_materials:Joi.array().items(Joi.object())
+    packaging_materials:Joi.array().items(Joi.object()),
+    serving_size:Joi.string(),
+    confidence:Joi.number().min(0).max(100)
+
 })
 
 export const logMeal = functions.https.onCall(async(request)=>{
@@ -61,7 +64,11 @@ export const logMeal = functions.https.onCall(async(request)=>{
     else{
         userMealDocRef =  userMealDocRef.doc()
         const today = new Date();
-        const formattedDate = format(today,"yyyy-MM-dd")
+        const formattedDate = formatInTimeZone(
+                today,
+                "Asia/Kuala_Lumpur",
+                "yyyy-MM-dd"
+        )
         formattedData.date = formattedDate;
         formattedData.created_at = admin.firestore.FieldValue.serverTimestamp()
     }
@@ -74,7 +81,7 @@ export const logMeal = functions.https.onCall(async(request)=>{
             message:`Successfully ${meal_id ? "updated" : "added"} new meal`,
             meal_added:{
                 meal_id:addedData.id,
-                ...formattedData
+                ...formattedData,
             }
         }
     }

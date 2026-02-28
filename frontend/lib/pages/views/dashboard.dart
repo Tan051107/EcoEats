@@ -10,7 +10,6 @@ import 'package:frontend/widgets/quick_access_buttons.dart';
 import 'package:frontend/widgets/recipe_type_card.dart';
 import 'package:frontend/widgets/today_meal_card.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -107,34 +106,38 @@ Widget _HeaderSection(){
   }
 
   return Padding(
-          padding: EdgeInsets.all(10.0),
-          child:Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height:50.0),
-                    Header(title: "Dashboard" , subtitle: getGreetings(), isShowBackButton: false),
-                    Padding(
-                      padding:EdgeInsets.only(top:50.0 , left:16.0),
-                      child:GestureDetector(
-                        onTap: () => viewProfile(),
-                        child: Container(
-                            padding: EdgeInsets.all(10.0),
-                            decoration:BoxDecoration(
-                              color:normalGreen,
-                              shape: BoxShape.circle
-                            ),
-                            child: Icon(
-                              Icons.person,
-                              size: 50.0,
-                              color: Colors.white,
-                            )
-                          ),
-                      )
-                    )],
-                ),
-        );
+    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+    child: Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Header(
+            title: "Dashboard",
+            subtitle: getGreetings(),
+            isShowBackButton: false,
+          ),
+        ),
+        const SizedBox(width: 10),
+        GestureDetector(
+          onTap: () => viewProfile(),
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              color: normalGreen,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.person,
+              size: 50.0,
+              color: Colors.white,
+            ),
+          ),
+        )
+      ],
+    ),
+  );
 }
 
 
@@ -158,6 +161,7 @@ class NutritionOverview extends StatelessWidget {
     final String totalEatenCaloriesString = totalDailyEatenCalories.ceil().toString();
     final String totalDailyIntakeString = totalDailyIntake.ceil().toString();
     final String remainingCaloriesString = remainingCalories.ceil().toString();
+    final double calorieIntakePercentage = totalDailyEatenCalories / totalDailyIntake;
     return Column(
       children: [
         Card(
@@ -213,7 +217,7 @@ class NutritionOverview extends StatelessWidget {
                                     Text(
                                       totalEatenCaloriesString,
                                       style: TextStyle(
-                                        color: totalDailyEatenCalories > totalDailyIntake ? normalRed : Colors.black,
+                                        color: calorieIntakePercentage > 1 ? normalRed : Colors.black,
                                         fontSize: headerText.fontSize,
                                         fontWeight: headerText.fontWeight,
                                       ),
@@ -267,8 +271,8 @@ class NutritionOverview extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12.0),
                     child: LinearProgressIndicator(
-                      value: totalDailyEatenCalories / totalDailyIntake,
-                      color: normalGreen,
+                      value: calorieIntakePercentage,
+                      color:calorieIntakePercentage > 1 ? normalRed : normalGreen,
                     ),
                   ),
                 ),
@@ -316,7 +320,8 @@ class QuickAccessButtonsSection extends StatelessWidget {
   }
 
   void viewDailyMeals(){
-
+    previousPageNotifier.value = selectedPageNotifier.value;
+    selectedPageNotifier.value = 8;
   }
 
   void viewFavourites(){
@@ -427,20 +432,12 @@ class TodayMealSection extends StatelessWidget {
             final meal = dailyMeals[index];
             final List<String> images = (meal["image_urls"] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [];
             final nutrition = Map<String,dynamic>.from(meal["nutrition"] as Map);
-            final createdAtTime = Map<String,dynamic>.from(meal["created_at"] as Map);
             final int calories = nutrition["calories_kcal"];
-            final int nanoseconds = createdAtTime["_nanoseconds"];
-            final int seconds = createdAtTime["_seconds"];
-            DateTime eatenTime = DateTime.fromMicrosecondsSinceEpoch(
-              (seconds * 1000) + (nanoseconds ~/ 1000000),
-              isUtc: true
-            );
-            DateTime malaysiaTime = eatenTime.add(Duration(hours: 8));
-            String formattedTime = DateFormat('hh:mm a').format(malaysiaTime);
+            final String eatenAtTime = meal["eaten_at"];
             return TodayMealCard(
               mealName: meal["name"], 
               calories:calories, 
-              eatenTime: formattedTime,
+              eatenTime: eatenAtTime,
               images: images,
             );
           }

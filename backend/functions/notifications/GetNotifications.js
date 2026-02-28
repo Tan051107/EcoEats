@@ -1,13 +1,13 @@
 import * as functions from 'firebase-functions'
 import admin from '../utils/firebase-admin.cjs'
 
-export const getNotifications = functions.https.onCall(async(_,context)=>{
+export const getNotifications = functions.https.onCall(async(request)=>{
 
-    if(!context.auth){
+    if(!request.auth){
         throw new functions.https.HttpsError('unauthenticated' , "Please login to proceed")
     }
 
-    const userId = context.auth.uid;
+    const userId = request.auth.uid
 
     const database = admin.firestore()
 

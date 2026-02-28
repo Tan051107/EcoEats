@@ -10,7 +10,8 @@ Widget ShelfItemCard(
     required final String groceryName,
     required final String category,
     required final int quantity,
-    final String? image
+    final String? image,
+    required final String unit
   }
 ){
   return FutureBuilder<String>(
@@ -24,6 +25,8 @@ Widget ShelfItemCard(
         quantity: quantity,
         imageUrl: snapshot.data ?? "",
         image: image,
+        unit: unit
+
       );
     },
   );
@@ -48,7 +51,8 @@ Widget _buildCard({
   required final String category,
   required final int quantity,
   required final String imageUrl,
-  final String? image
+  final String? image,
+  required final String unit
 }){
   Color frameColor = gray;
   Color bgColor = Colors.transparent;
@@ -90,7 +94,7 @@ Widget _buildCard({
       borderRadius: BorderRadius.circular(12.0)
     ),
     child:Padding(
-      padding: EdgeInsets.all(12.0),
+      padding: EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -103,7 +107,7 @@ Widget _buildCard({
                   borderRadius: BorderRadius.circular(15.0)
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(6.0),
                   child: Column(
                     children: [
                       Row(
@@ -130,7 +134,7 @@ Widget _buildCard({
                 children: [
                   Icon(
                     Icons.access_time_outlined,
-                    size: 20.0,
+                    size: 18.0,
                     color: frameColor,
                   ),
                   SizedBox(width: 3.0),
@@ -138,44 +142,43 @@ Widget _buildCard({
                     "${estimatedShelfLife}d left",
                     style: TextStyle(
                       color: frameColor,
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12.0
                     ),
                   )
                 ],
               )
             ],
           ),
-          SizedBox(height:8.0),
-          Flexible(
-            child:Text(
-              groceryName,
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.bold
-              ),
+          SizedBox(height:5.0),
+          Text(
+            groceryName,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold
             ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
-          SizedBox(height:3.0),
-          Flexible(
-            child:Text(
-              "${quantity.toString()}g",
-              style: TextStyle(
-                color: gray
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            )
+          SizedBox(height:2.0),
+          Text(
+            "${quantity.toString()} $unit",
+            style: TextStyle(
+              color: gray,
+              fontSize: 14.0
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
-          SizedBox(height:3.0),
-          Flexible(
-            child:Text(
-              category.toString(),
-              style: TextStyle(
-                color: gray
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            )
+          SizedBox(height:2.0),
+          Text(
+            category.toString(),
+            style: TextStyle(
+              color: gray,
+              fontSize: 14
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
         ],
       ),

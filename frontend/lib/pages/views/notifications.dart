@@ -11,55 +11,46 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
+  late Future<List<Map<String, dynamic>>> _notificationsFuture;
 
-  List<Map<String,dynamic>> notifications = [];
-  bool isLoadingNotifications = true;
-
-  Future <void>markAllAsRead()async{
-
+  @override
+  void initState() {
+    super.initState();
+    _notificationsFuture = getNotifications();
   }
 
-  Future<void>getNotifications()async{
+  Future<void> markAllAsRead() async {}
+
+  Future<List<Map<String, dynamic>>> getNotifications() async {
     final functions = FirebaseFunctions.instanceFor(region: "us-central1");
     final getNotifications = functions.httpsCallable("getNotifications");
-    try{
+    try {
       final response = await getNotifications.call({});
       final List<dynamic> responseResult = response.data["data"];
-      final List<Map<String,dynamic>> notificationsData = responseResult.map((notification)=>Map<String,dynamic>.from(notification)).toList();
-      setState(() {
-        notifications = notificationsData;
-        isLoadingNotifications = false;
-      });
-    }
-    on FirebaseFunctionsException catch (e){
+      return responseResult
+          .map((notification) => Map<String, dynamic>.from(notification))
+          .toList();
+    } on FirebaseFunctionsException catch (e) {
       print('Firebase error: ${e.code} - ${e.message}');
-    }
-    catch(err){
+      rethrow;
+    } catch (err) {
       print('Unknown error: $err');
+      rethrow;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoadingNotifications
-            ?Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Loading Notifications"),
-                SizedBox(height: 5.0,),
-                CircularProgressIndicator(),
-              ], 
-            ),
-            )
-            :notifications.isEmpty
-            ?Center(
-            child: Text("No recipes found"),
-            )
-            : Column(
+      body: Column(
         children: [
-          SizedBox(height: 50.0),
-          Header(title: "Notifications" , icon: Icons.notifications, iconColor: Colors.black,isShowBackButton: false,),
+          const SizedBox(height: 50.0),
+          const Header(
+            title: "Notifications",
+            icon: Icons.notifications,
+            iconColor: Colors.black,
+            isShowBackButton: false,
+          ),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
@@ -68,20 +59,20 @@ class _NotificationsState extends State<Notifications> {
                   flex: 7,
                   child: ElevatedButton(
                     style: ElevatedButtonStyle.elevatedButtonStyle,
-                    onPressed: () => markAllAsRead(), 
-                    child: Text(
+                    onPressed: () => markAllAsRead(),
+                    child: const Text(
                       "Mark All As Read",
-                      style:ElevatedButtonStyle.elevatedButtonTextStyle,
-                    )
+                      style: ElevatedButtonStyle.elevatedButtonTextStyle,
+                    ),
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Expanded(
                   flex: 3,
                   child: ElevatedButton(
                     style: ElevatedButtonStyle.elevatedButtonStyle,
-                    onPressed: () => markAllAsRead(), 
-                    child:Row(
+                    onPressed: () => markAllAsRead(),
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
@@ -95,11 +86,64 @@ class _NotificationsState extends State<Notifications> {
                         )
                       ],
                     ),
-                  )
-                )
+                  ),
+                ),
               ],
             ),
-          )
+          ),
+          Expanded(
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: _notificationsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Loading Notifications"),
+                        SizedBox(height: 5.0),
+                        CircularProgressIndicator(),
+                      ],
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text("Error: ${snapshot.error}"),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(
+                    child: Text("No notifications found"),
+                  );
+                }
+
+                final notifications = snapshot.data!;
+                return ListView.builder(
+                  padding: const EdgeInsets.all(10.0),
+                  itemCount: notifications.length,
+                  itemBuilder: (context, index) {
+                    final notification = notifications[index];
+                    return Card(
+                      margin: const EdgeInsets.only(bottom: 10.0),
+                      child: ListTile(
+                        leading: const CircleAvatar(
+                          backgroundColor: Color(0xFF267A3D),
+                          child: Icon(Icons.notifications, color: Colors.white),
+                        ),
+                        title: Text(notification['title'] ?? 'No Title'),
+                        subtitle: Text(notification['message'] ?? 'No Content'),
+                        trailing: Text(
+                          notification['timestamp'] != null
+                              ? notification['timestamp'].toString()
+                              : '',
+                          style: const TextStyle(fontSize: 12.0),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

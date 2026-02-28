@@ -4,8 +4,9 @@ const admin = adminModule.default ?? adminModule;
 import * as functions from 'firebase-functions'
 import { toFirestoreTimestamp } from '../utils/ToFirestoreTimestamp.js';
 import { storePackagedFoodNutrition } from '../ai/StorePackagedFoodNutrition.js';
-import {differenceInDays, format} from 'date-fns'
+import {differenceInDays} from 'date-fns'
 import { HttpsError } from 'firebase-functions/https';
+import {toZonedTime} from "date-fns-tz";
 
 
 const database = admin.firestore();
@@ -24,7 +25,8 @@ const shelfItemSchema =Joi.object({
     unit:Joi.string().required(),
     barcode:Joi.string().allow(""),
     item_id: Joi.string(),
-    packaging_materials:Joi.array().items(Joi.object())
+    packaging_materials:Joi.array().items(Joi.object()),
+    confidence:Joi.number().min(0).max(100)
 })
 
 export const addShelfItem = functions.https.onCall(async(request)=>{
@@ -44,7 +46,7 @@ export const addShelfItem = functions.https.onCall(async(request)=>{
     let {item_id,name,category,barcode,calories_kcal,protein_g,carbs_g,fat_g ,expiry_date,quantity,per, ...itemData} = value
 
     const [expiryYear,expiryMonth,expiryDay] = expiry_date.split("-").map(Number);
-    const today = new Date()
+    const today = toZonedTime(new Date(), 'Asia/Kuala_Lumpur');
     const expiryDate = new Date(expiryYear,expiryMonth-1,expiryDay);
 
     const estimated_shelf_life = differenceInDays(expiryDate,today);
@@ -64,7 +66,7 @@ export const addShelfItem = functions.https.onCall(async(request)=>{
         ...itemData,
         name:name,
         category:category,
-        barcode:barcode,
+        barcode:barcode ?? "",
         quantity:quantity,
         per:per,
         expiry_date:toFirestoreTimestamp(expiry_date),

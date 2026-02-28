@@ -1,6 +1,8 @@
 import admin from '../utils/firebase-admin.cjs'
 import Joi from 'joi'
 import * as functions from 'firebase-functions'
+import {toZonedTime} from "date-fns-tz";
+import {differenceInDays} from 'date-fns'
 
 
 export const getShelfItems = functions.https.onCall(async(request)=>{
@@ -29,16 +31,24 @@ export const getShelfItems = functions.https.onCall(async(request)=>{
 
         const shelfSnapshot = await query.get()
 
-        const shelfItems = shelfSnapshot.docs.map(doc=>{
-            const expiryTimeStamp = doc.data().expiry_date;
-            const expiryDate = expiryTimeStamp.toDate();
-            const formattedExpiryDate = expiryDate.toISOString().split('T')[0];
-            return({
-               item_id:doc.id,
-                ...doc.data(),
-                expiry_date:formattedExpiryDate
-            })
+        const today = toZonedTime(new Date(), 'Asia/Kuala_Lumpur');
+
+        const shelfItems = shelfSnapshot.docs
+        .filter(doc => {
+            const expiryDate = doc.data().expiry_date.toDate();
+            const dateDifference = differenceInDays(expiryDate, today);
+            return dateDifference > 1;
         })
+        .map(doc => {
+            const expiryDate = doc.data().expiry_date.toDate();
+            const formattedExpiryDate = expiryDate.toISOString().split('T')[0];
+
+            return {
+            item_id: doc.id,
+            ...doc.data(),
+            expiry_date: formattedExpiryDate
+            };
+        });
 
         return{
             success:true,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
+import 'package:frontend/pages/views/recipe_detail.dart';
 import 'package:frontend/providers/favourite_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,6 @@ class _RecipeOverviewCardState extends State<RecipeOverviewCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -62,7 +62,18 @@ class _RecipeOverviewCardState extends State<RecipeOverviewCard> {
     }
     return Padding(
       padding: EdgeInsets.all(10.0),
-      child: Card(
+      child: GestureDetector(
+        onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeDetailPage(
+                  recipeId: widget.mealData["recipeId"]
+                ),
+              ),
+            );
+          },
+        child: Card(
               elevation: 8.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0)
@@ -116,6 +127,7 @@ class _RecipeOverviewCardState extends State<RecipeOverviewCard> {
                 ),
               )
           ),
+      )
     );
   }
 }

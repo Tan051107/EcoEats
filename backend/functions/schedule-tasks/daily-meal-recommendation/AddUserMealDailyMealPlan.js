@@ -1,8 +1,9 @@
 import {format , addDays} from "date-fns"
 import admin from '../../utils/firebase-admin.cjs'
+import { formatInTimeZone } from "date-fns-tz";
 
 export function addUserDailyMealPlan(batch , userId , mealPlanData){
-    const today = new Date();
+    const today  = formatInTimeZone(new Date(),"Asia/Kuala_Lumpur",'yyyy-MM-dd')
     const tmr = addDays(today,1);
     const tmrDate = format(tmr , "yyyy-MM-dd")
     const database = admin.firestore();

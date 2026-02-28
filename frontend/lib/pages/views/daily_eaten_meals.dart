@@ -9,19 +9,19 @@ import 'package:frontend/widgets/meal_details.dart';
 import 'package:frontend/widgets/today_meal_card.dart';
 import 'package:provider/provider.dart';
 
-class DailyMeals extends StatefulWidget {
-  const DailyMeals(
+class DailyEatenMeals extends StatefulWidget {
+  const DailyEatenMeals(
     {
       super.key
     }
   );
 
   @override
-  State<DailyMeals> createState() => _DailyMealsState();
+  State<DailyEatenMeals> createState() => _DailyEatenMealsState();
 }
 
 
-class _DailyMealsState extends State<DailyMeals> {
+class _DailyEatenMealsState extends State<DailyEatenMeals> {
   @override
   Widget build(BuildContext context) {
       DailyMealsProvider dailyMealsProvider = context.watch<DailyMealsProvider>();
@@ -63,6 +63,7 @@ class _DailyMealsState extends State<DailyMeals> {
                           final nutrition = Map<String,dynamic>.from(meal["nutrition"] ?? {} );
                           final List<String> images = (meal["image_urls"] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [];
                           final int calories = nutrition["calories_kcal"] ?? 0;
+                          final String eatenAtTime = meal["eaten_at"] ?? "";
                           return GestureDetector(
                             onTap: () async{
                             await showFormDialog(
@@ -73,7 +74,7 @@ class _DailyMealsState extends State<DailyMeals> {
                             child: TodayMealCard(
                               mealName: meal["name"], 
                               calories:calories, 
-                              eatenTime: "8:30 PM",
+                              eatenTime: eatenAtTime,
                               images:images ,
                             )
                           );

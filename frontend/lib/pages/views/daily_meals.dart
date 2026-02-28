@@ -1,7 +1,6 @@
 // Main page displaying daily recommended meals
 
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../../services/api_service.dart';
 import '../../data/models/daily_meals.dart';
 import '../../widgets/meal_card.dart';
@@ -15,21 +14,12 @@ class DailyMealsPage extends StatefulWidget {
 }
 
 class _DailyMealsPageState extends State<DailyMealsPage> {
-  late Future<Meals> _mealsFuture;
-  final _auth = FirebaseAuth.instance;
+  late Future<RecommendedMealsData> _mealsFuture;
 
   @override
   void initState() {
     super.initState();
     _mealsFuture = ApiService.getRecommendedMeals();
-  }
-
-  // Signs out the current user and navigates to login page
-  Future<void> _signOut() async {
-    await _auth.signOut();
-    if (mounted) {
-      Navigator.pushReplacementNamed(context, '/login');
-    }
   }
 
   @override
@@ -38,15 +28,8 @@ class _DailyMealsPageState extends State<DailyMealsPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Daily Meals'),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
+        foregroundColor:Colors.black,
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: _signOut,
-          ),
-        ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -54,7 +37,7 @@ class _DailyMealsPageState extends State<DailyMealsPage> {
             _mealsFuture = ApiService.getRecommendedMeals();
           });
         },
-        child: FutureBuilder<Meals>(
+        child: FutureBuilder<RecommendedMealsData>(
           future: _mealsFuture,
           builder: (context, snapshot) {
             // Show loading indicator
@@ -90,7 +73,8 @@ class _DailyMealsPageState extends State<DailyMealsPage> {
               return const Center(child: Text('No meals available today'));
             }
             
-            final meals = snapshot.data!;
+            final RecommendedMealsData mealsData = snapshot.data!;
+            final meals = mealsData.meals;
             
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20),
@@ -131,7 +115,7 @@ class _DailyMealsPageState extends State<DailyMealsPage> {
                                     ),
                                   ),
                                   Text(
-                                    '${meals.totalCalories} kcal',
+                                    '${mealsData.totalCalories} kcal',
                                     style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
@@ -154,7 +138,7 @@ class _DailyMealsPageState extends State<DailyMealsPage> {
                                     ),
                                   ),
                                   Text(
-                                    '${meals.totalProtein.toStringAsFixed(1)}g',
+                                    '${mealsData.totalProtein.toStringAsFixed(1)}g',
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
@@ -164,13 +148,87 @@ class _DailyMealsPageState extends State<DailyMealsPage> {
                                 ],
                               ),
                             ),
+                            //Fats
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Fat',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${mealsData.totalFat.toStringAsFixed(1)}g',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            //Carbs
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Carbs',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${mealsData.totalCarbs.toStringAsFixed(1)}g',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),                                                      
                           ],
                         ),
                       ],
                     ),
                   ),
-                  
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 24),
+
+                  // Missing Ingredients section
+                  if (mealsData.missingIngredients.isNotEmpty) ...[
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Missing Ingredients',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    ...mealsData.missingIngredients.where((mi) => mi.ingredients.isNotEmpty || mi.rawMissingIngredients.isNotEmpty).map((mi) => Card(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      child: ListTile(
+                        title: Text(mi.recipe.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                        subtitle: Text(
+                          mi.ingredients.isNotEmpty 
+                            ? mi.ingredients.map((ing) => "${ing.quantity} ${ing.name}").join(", ")
+                            : mi.rawMissingIngredients
+                        ),
+                        leading: const Icon(Icons.warning_amber_rounded, color: Colors.orange),
+                      ),
+                    )),
+                    const SizedBox(height: 24),
+                  ],
                   
                   // Breakfast
                   MealCard(

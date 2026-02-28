@@ -223,7 +223,7 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
     
     try{
         const response = await ai.models.generateContent({
-            model: "model:'gemini-2.0-flash",
+            model:'gemini-2.0-flash',
             contents:{
                 role:"user",
                 parts:[
@@ -252,30 +252,49 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
 
         const existingRecipesData = existingRecipes.data
 
-        const mealTypes = ["breakfast" , "lunch" , "dinner"]
+        let mealTypes = ["breakfast" , "lunch" , "dinner"]
 
         mealTypes.forEach(meal=>{
             finalResult?.[meal] && (finalResult[meal].meal_type = meal);
         })
 
-        const generatedRecipes = [finalResult.breakfast , finalResult.lunch , finalResult.dinner]
+        const generatedRecipes = [finalResult.breakfast, finalResult.lunch, finalResult.dinner];
 
-        const newRecipes = generatedRecipes.filter(recipe=>!existingRecipesData.some(existingRecipe=>existingRecipe.name.toLowerCase() === recipe.name.toLowerCase()))
+        // 1. Separate generated recipes into "new" and "existing"
+        const newRecipes = [];
+        const finalResultRecipes = [];
 
-        const finalResultRecipes = generatedRecipes.filter(recipe=>existingRecipesData.some(existingRecipe=>existingRecipe.name.toLowerCase() === recipe.name.toLowerCase()))
-        
-        let newRecipesAdded = [];
+        for (const genRecipe of generatedRecipes) {
+            const existing = existingRecipesData.find(
+                er => er.name.toLowerCase() === genRecipe.name.toLowerCase()
+            );
 
-        if(newRecipes.length >0){
-            newRecipesAdded = await addRecipes(newRecipes)
+            if (existing) {
+                // Use the existing recipe from DB but keep the meal_type from the AI result
+                finalResultRecipes.push({
+                    ...existing,
+                    meal_type: genRecipe.meal_type
+                });
+            } else {
+                newRecipes.push(genRecipe);
+            }
         }
 
-        finalResultRecipes = [...finalResultRecipes , ...newRecipesAdded.data]
-        
-        const finalMealPlan = finalResultRecipes.reduce((acc,curr)=>{
-            acc[curr.meal_type] = curr
+        // 2. Add truly new recipes to the DB
+        if (newRecipes.length > 0) {
+            const added = await addRecipes(newRecipes);
+            if (added.success && added.data) {
+                finalResultRecipes.push(...added.data);
+            }
+        }
+
+        // 3. Build the final meal plan object keyed by meal_type
+        const finalMealPlan = finalResultRecipes.reduce((acc, curr) => {
+            if (curr.meal_type) {
+                acc[curr.meal_type] = curr;
+            }
             return acc;
-        },{})
+        }, {});
 
         const finalReturnResult = {
             totalCalories:finalResult.totalCalories,
@@ -291,6 +310,7 @@ export async function generateMealPlansWithAI(availableGroceries , dailyCalorieI
 
     }
     catch(err){
-        throw new Error("Failed to receive daily meal recommendation from Gemini" , {cause:err})
+        console.error("Failed to receive daily meal recommendation from Gemini:",err.message)
+        throw new Error("Failed to receive daily meal recommendation from Gemini:",err.message)
     }
 }

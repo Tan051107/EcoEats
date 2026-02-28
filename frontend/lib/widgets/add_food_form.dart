@@ -3,6 +3,7 @@ import 'package:frontend/data/constants.dart';
 import 'package:frontend/providers/daily_meals_provider.dart';
 import 'package:frontend/widgets/decimal_text_field.dart';
 import 'package:frontend/widgets/disposal_recommendation.dart';
+import 'package:frontend/widgets/meal_rating_and_comment.dart';
 import 'package:frontend/widgets/shrink_button.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +34,8 @@ class _AddFoodFormState extends State<AddFoodForm> {
   late Map<String,dynamic>  mealNutritions;
   bool enableSubmitButton = false;
   late List<Map<String,dynamic>> packagingMaterials;
+  late String comment;
+  late String rating;
 
 
   Future<void> addMeal()async{
@@ -69,11 +72,12 @@ class _AddFoodFormState extends State<AddFoodForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     mealNutritions = Map<String,dynamic>.from(widget.returnedAnalyzedResult?["nutrition"] ?? {});
     List<dynamic> packagingMaterialsList = widget.returnedAnalyzedResult?["packaging_materials"] ?? [];
     packagingMaterials = packagingMaterialsList.map((packagingMaterial)=>Map<String,dynamic>.from(packagingMaterial)).toList();
+    rating = widget.returnedAnalyzedResult?["healthy_score"] ?? "";
+    comment = widget.returnedAnalyzedResult?["comment"] ?? "";
     foodNameController = TextEditingController(text: widget.returnedAnalyzedResult?["name"] ?? "");
     foodCaloriesController = TextEditingController(text: mealNutritions["calories_kcal"]?.toString() ?? "");
     foodProteinController = TextEditingController(text: mealNutritions["protein_g"]?.toString() ?? "");
@@ -105,7 +109,6 @@ class _AddFoodFormState extends State<AddFoodForm> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     foodNameController.dispose();
     foodCaloriesController.dispose();
@@ -217,7 +220,8 @@ class _AddFoodFormState extends State<AddFoodForm> {
               if(enableSubmitButton){
                 if(_formKey.currentState!.validate() && !dailyMealsProvider.isEditing){
                   await addMeal();
-                  Navigator.pop(context);
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context,true);
                 }
               }
             },
@@ -265,6 +269,24 @@ class _AddFoodFormState extends State<AddFoodForm> {
                       disposalWay: packagingMaterial["recommendedDisposalWay"]
                     );
                 }
+              )
+            ],
+          )
+        ],
+        if(comment.isNotEmpty && rating.isNotEmpty)...[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              Text(
+                "Rating and Comments",
+                style:TextStyle(
+                  fontSize: 18
+                )
+              ),
+              MealRatingAndComment(
+                rating: rating, 
+                recommendation: comment
               )
             ],
           )

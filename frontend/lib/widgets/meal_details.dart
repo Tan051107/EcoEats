@@ -4,12 +4,13 @@ import 'package:frontend/providers/daily_meals_provider.dart';
 import 'package:frontend/widgets/add_food_form.dart';
 import 'package:frontend/widgets/average_nutrition_card.dart';
 import 'package:frontend/widgets/form_dialog.dart';
+import 'package:frontend/widgets/meal_rating_and_comment.dart';
 import 'package:frontend/widgets/shrink_button.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class MealDetails extends StatefulWidget {
-  MealDetails(
+  const MealDetails(
     {
       super.key,
       required this.mealDetails
@@ -32,6 +33,8 @@ class _MealDetailsState extends State<MealDetails> {
   late List<String> images;
   late String imageUrl;
   late List<Map<String,dynamic>> nutritionValues =[];
+  late String rating;
+  late String comment;
 
 
 
@@ -48,6 +51,8 @@ class _MealDetailsState extends State<MealDetails> {
     fats = (nutritions["fat_g"] as num?)?.toDouble() ?? 0.0;
     images = (widget.mealDetails["image_urls"] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [];
     imageUrl = "";
+    rating = widget.mealDetails["healthy_score"] ?? "";
+    comment = widget.mealDetails["comment"] ?? "";
 
     nutritionValues =[
       {
@@ -98,7 +103,7 @@ class _MealDetailsState extends State<MealDetails> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double nameFontSize = screenWidth * 0.06;
+    double nameFontSize = screenWidth * 0.05;
     double detailsFontSize = screenWidth * 0.045;
     final DailyMealsProvider dailyMealsProvider = context.watch<DailyMealsProvider>(); 
 
@@ -165,17 +170,19 @@ class _MealDetailsState extends State<MealDetails> {
                   ),
                 ),
                 SizedBox(width:10.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontSize: nameFontSize,
-                        fontWeight: FontWeight.bold
+                Expanded(
+                  child:Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                          fontSize: nameFontSize,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  )
                 )
               ],
             ),   
@@ -242,25 +249,43 @@ class _MealDetailsState extends State<MealDetails> {
             ShrinkButton(
               onPressed: ()async =>dailyMealsProvider.isEditing ? {} : {await removeMeal(widget.mealDetails["meal_id"])},
               child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18.0),
-                color:dailyMealsProvider.isEditing ? normalRed.withValues(alpha: 0.5):  normalRed
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  dailyMealsProvider.isEditing ? "Removing Meal" : "Remove Meal",
-                  style: TextStyle(
-                    fontSize: subtitleText.fontSize,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18.0),
+                  color:dailyMealsProvider.isEditing ? normalRed.withValues(alpha: 0.5):  normalRed
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    dailyMealsProvider.isEditing ? "Removing Meal" : "Remove Meal",
+                    style: TextStyle(
+                      fontSize: subtitleText.fontSize,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
                 ),
-              ),
-            )
-            )
+              )
+            ),
+            if(comment.isNotEmpty && rating.isNotEmpty)...[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20),
+                  Text(
+                    "Rating and Comments",
+                    style:TextStyle(
+                      fontSize: 18
+                    )
+                  ),
+                  MealRatingAndComment(
+                    rating: rating, 
+                    recommendation: comment
+                  )
+                ],
+              )
+            ]
           ],
         )
       ],      

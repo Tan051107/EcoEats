@@ -25,22 +25,24 @@ class Recipe {
     required this.createdAt,
   });
 
-  // Creates a Recipe instance from JSON data
   factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
-      recipeId: json['recipeId'] ?? '',
-      name: json['name'] ?? '',
+      recipeId: json['recipeId']?.toString() ?? json['recipe_id']?.toString() ?? '',
+      name: json['name']?.toString() ?? '',
       ingredients: (json['ingredients'] as List?)
-              ?.map((item) => Ingredient.fromJson(item))
+              ?.map((item) => Ingredient.fromJson(
+                  Map<String, dynamic>.from(item as Map)))
               .toList() ??
           [],
       steps: List<String>.from(json['steps'] ?? []),
-      nutrition: Nutrition.fromJson(json['nutrition'] ?? {}),
-      dietType: json['diet_type'] ?? '',
-      chefName: json['chef_name'] ?? '',
+      nutrition: Nutrition.fromJson(
+          Map<String, dynamic>.from(json['nutrition'] ?? {})),
+      dietType: json['diet_type']?.toString() ?? '',
+      chefName: json['chef_name']?.toString() ?? '',
       allergens: List<String>.from(json['allergens'] ?? []),
-      mealType: json['meal_type'] ?? '',
-      createdAt: DateTime.parse(json['created_at'] ?? DateTime.now().toIso8601String()),
+      mealType: json['meal_type']?.toString() ?? '',
+      createdAt: DateTime.parse(
+          json['created_at'] is String ? json['created_at'] : DateTime.now().toIso8601String()),
     );
   }
 
@@ -63,8 +65,8 @@ class Ingredient {
   // Creates an Ingredient instance from JSON data
   factory Ingredient.fromJson(Map<String, dynamic> json) {
     return Ingredient(
-      name: json['name'] ?? '',
-      quantity: json['quantity'] ?? '',
+      name: json['name']?.toString() ?? '',
+      quantity: json['quantity']?.toString() ?? '',
     );
   }
 }
@@ -86,10 +88,10 @@ class Nutrition {
   // Creates a Nutrition instance from JSON data
   factory Nutrition.fromJson(Map<String, dynamic> json) {
     return Nutrition(
-      calories: json['calories_kcal'] ?? 0,
-      protein: (json['protein_g'] ?? 0).toDouble(),
-      carbs: (json['carbs_g'] ?? 0).toDouble(),
-      fat: (json['fat_g'] ?? 0).toDouble(),
+      calories: int.tryParse(json['calories_kcal']?.toString() ?? '0') ?? 0,
+      protein: (json['protein_g'] as num?)?.toDouble() ?? 0.0,
+      carbs: (json['carbs_g'] as num?)?.toDouble() ?? 0.0,
+      fat: (json['fat_g'] as num?)?.toDouble() ?? 0.0,
     );
   }
 }

@@ -38,6 +38,7 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
   bool enableSubmitButton = false;
   late Map<String,dynamic>  groceryNutritions;
   late List<Map<String,dynamic>> packagingMaterials;
+  late String per;
 
   Future <void> addGrocery()async{
     Map<String,dynamic> payLoad = {
@@ -50,7 +51,7 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
       "protein_g":double.tryParse(groceryProteinController.text) ?? 0.0,
       "fat_g":double.tryParse(groceryFatController.text) ?? 0.0,
       "carbs_g":double.tryParse(groceryCarbsController.text) ?? 0.0,
-      "per": widget.returnedAnalyzedResult?["per"] ?? "100g",
+      "per": per,
       "unit":groceryUnit.toLowerCase(),
     };
 
@@ -58,7 +59,7 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
       final GroceryProvider groceryProvider = Provider.of(context , listen: false);
       await groceryProvider.addGroceries(payLoad);
       if (!mounted) return;
-      Navigator.pop(context);
+      Navigator.pop(context,true);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Successfully ${widget.returnedAnalyzedResult == null ? "added" : "updated"} groceries")
@@ -91,6 +92,8 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
     groceryUnit = widget.returnedAnalyzedResult?["unit"]?.toString().toLowerCase() ?? "";
     List<dynamic> packagingMaterialsList = widget.returnedAnalyzedResult?["packaging_materials"] ?? [];
     packagingMaterials = packagingMaterialsList.map((packagingMaterial)=>Map<String,dynamic>.from(packagingMaterial)).toList();
+    per = widget.returnedAnalyzedResult?["per"]?.toString() ?? "100 g";
+    
 
     print("Analyzed Result:${widget.returnedAnalyzedResult}");
     print("Category:$groceryCategory");
@@ -205,7 +208,7 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Food Name",
+                "Grocery Name",
                 style: subtitleText,
               ),
               SizedBox(height: 10),
@@ -316,6 +319,11 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
               ],
             ),
             SizedBox(height: 10.0),
+            Text(
+              "Nutritional Value (Per $per)",
+              style: subtitleText,
+            ),
+            SizedBox(height: 10),
             DecimalTextField(
               controller:groceryCaloriesController,
               label: "Calories", unit: "kcal"

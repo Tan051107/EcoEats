@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 
 class WeeklySummaryChart extends StatelessWidget {
-  WeeklySummaryChart({super.key});
+  const WeeklySummaryChart(
+    {
+      super.key,
+      required this.summaryData
+    }
+  );
 
-  final List<double> values = [70, 65, 85, 60, 75, 90, 68];
-
-  final List<String> days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  final List<Map<String,dynamic>> summaryData;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,9 @@ class WeeklySummaryChart extends StatelessWidget {
                 borderData: FlBorderData(show: false),
                 titlesData: FlTitlesData(
                   leftTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: false)
+                    sideTitles: SideTitles(
+                      showTitles: false
+                    )
                   ),
                   rightTitles: AxisTitles(
                     sideTitles: SideTitles(showTitles: false)
@@ -34,20 +39,25 @@ class WeeklySummaryChart extends StatelessWidget {
                     sideTitles: SideTitles(
                       showTitles: true,
                       getTitlesWidget: (value,meta){
-                        return Text(days[value.toInt()]);
+                        int index = value.toInt();
+                        final specificSummaryData = summaryData[index];
+                        return Text(specificSummaryData["day"] ?? '');
                       }
                     )
                   )
                 ),
-                barGroups: List.generate(values.length, (index){
+                barGroups: List.generate(summaryData.length, (index){
+                  final specificSummaryData = summaryData[index];
+                  final double calories = (specificSummaryData["total_calories_kcal"] as num?)?.toDouble() ?? 0.0;
+                  final bool isOverTarget = specificSummaryData["is_over_target"] ?? false;
                   return BarChartGroupData(
                     x: index,
                     barRods:[
                       BarChartRodData(
-                        toY: values[index],
-                        width: 20,
+                        toY: calories,
+                        width: 20.0 * (250 / summaryData.length).clamp(0.5, 1.0),
                         borderRadius: BorderRadius.circular(12.0),
-                        color: (values[index] > 80)
+                        color: isOverTarget
                               ?orange
                               :normalGreen
                       )

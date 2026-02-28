@@ -32,10 +32,10 @@ class GroceryService {
       });     
     }
     on FirebaseFunctionsException catch (err){
-      throw Exception("Failed to get user's shelf items:${err.message}");
+      throw Exception("Failed to remove user's shelf items:${err.message}");
     }
     catch(err){
-      throw Exception("Failed to get user's shelf items:$err");
+      throw Exception("Failed to remove user's shelf items:$err");
     }
   }
 
@@ -52,10 +52,10 @@ class GroceryService {
       return addedShelfItem;
     }
     on FirebaseFunctionsException catch (err){
-      throw Exception("Failed to get user's shelf items:${err.message}");
+      throw Exception("Failed to add user's shelf items:${err.message}");
     }
     catch(err){
-      throw Exception("Failed to get user's shelf items:$err");
+      throw Exception("Failed to add user's shelf items:$err");
     }
   }
 

@@ -44,16 +44,16 @@ class SummaryService {
           }
 
         if (rawData["data"] == null) {
-            throw Exception("No daily summary data returned");
+            throw Exception("No weekly summary data returned");
         }
 
         final Map<String,dynamic> weeklySummary = Map<String,dynamic>.from(rawData as Map);
         return weeklySummary;
       }on FirebaseFunctionsException catch(err){
-        throw Exception('Failed to get daily summary:$err');
+        throw Exception('Failed to get weekly summary:$err');
       }
       catch(err){
-        throw Exception('Failed to get daily summary:$err');
+        throw Exception('Failed to get weekly summary:$err');
       }
       
 

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:frontend/data/notifiers.dart';
 import 'edit_profile.dart';
 import 'package:frontend/pages/auth_wrapper.dart'; 
 import 'package:frontend/services/auth_service.dart';
@@ -509,10 +510,10 @@ class _ProfilePageState extends State<ProfilePage> {
         onPressed: () async {
           await authService.signOut();
           if (mounted) {
+            selectedPageNotifier.value = 0;
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Logged out successfully')),
             );
-            setState(() {});
           }
         },
         icon: const Icon(Icons.logout),

@@ -32,12 +32,11 @@ export const getShelfItems = functions.https.onCall(async(request)=>{
         const shelfSnapshot = await query.get()
 
         const today = toZonedTime(new Date(), 'Asia/Kuala_Lumpur');
-
         const shelfItems = shelfSnapshot.docs
         .filter(doc => {
             const expiryDate = doc.data().expiry_date.toDate();
             const dateDifference = differenceInDays(expiryDate, today);
-            return dateDifference > 1;
+            return dateDifference >= 1;
         })
         .map(doc => {
             const expiryDate = doc.data().expiry_date.toDate();

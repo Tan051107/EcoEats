@@ -23,7 +23,7 @@ export * from './ai/GetEstimatedMealNutrition.js'
 export * from './ai/AnalyzeGrocery.js'
 
 
-export * from './user/AddUserProfile.js'
+export * from './user/addUserProfile.js'
 export * from './user/UpdateUserFcmToken.js'
 
 

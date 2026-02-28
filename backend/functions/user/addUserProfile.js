@@ -43,12 +43,20 @@ export const updateUserProfile =functions.https.onCall(async(request)=>{
     bmr -=161;
   }
 
+  const userData = {
+    ...value,
+    bmr:bmr,
+    updated_at: admin.firestore.FieldValue.serverTimestamp()   
+  }
+
   try {
-    await userDocRef.set({
-      ...value,
-      bmr:bmr,
-      updated_at: admin.firestore.FieldValue.serverTimestamp()
-    },{merge:true})
+    const userSnapshot = await userDocRef.get()
+
+    if(!userSnapshot.exists){
+      userData.created_at = admin.firestore.FieldValue.serverTimestamp()
+    }
+
+    await userDocRef.set(userData,{merge:true})
 
     const userUpdatedData = await userDocRef.get();
 
@@ -57,7 +65,7 @@ export const updateUserProfile =functions.https.onCall(async(request)=>{
       message:"User updated successfully",
       user_updated:{
         user_updated:userUpdatedData.id,
-        ...userUpdatedData
+        ...userUpdatedData.data()
       }
     }
   } catch (error) {

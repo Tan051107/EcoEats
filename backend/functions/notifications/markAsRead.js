@@ -13,19 +13,19 @@ export const markAsRead = functions.https.onCall(async(request)=>{
         notification_id:Joi.string().required()
     })
 
-    const {errors , value} = schema.validate(request.data)
+    const {error , value} = schema.validate(request.data)
 
-    if(errors){
-        throw new functions.https.HttpsError('invalid-argument' , errors.details.map(detail=>({field:detail.path.join(".") , message:detail.message})))
+    if(error){
+        throw new functions.https.HttpsError('invalid-argument' , error.details.map(detail=>({field:detail.path.join(".") , message:detail.message})))
     }
 
     const database = admin.firestore()
 
-    const {notificationId} = value
+    const {notification_id} = value
 
     try{
         const userRef = database.collection('users').doc(userId)
-        const userNotificationRef = userRef.collection('notifications').doc(notificationId)
+        const userNotificationRef = userRef.collection('notifications').doc(notification_id)
         const userNotificationSnapshot = await userNotificationRef.get()
 
         if(!userNotificationSnapshot.exists){

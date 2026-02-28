@@ -48,10 +48,10 @@ class MealService{
       });
     }
     on FirebaseFunctionsException catch (err){
-      throw Exception("Failed to add user's daily meals:${err.message}");
+      throw Exception("Failed to remove user's daily meals:${err.message}");
     }
     catch(err){
-      throw Exception("Failed to add user's daily meals:$err");
+      throw Exception("Failed to remove user's daily meals:$err");
     }
   }
 

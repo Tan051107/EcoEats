@@ -99,17 +99,28 @@ class MealCard extends StatelessWidget {
               ],
               
               // Calories and protein info
-              Row(
+              Wrap(
+                spacing: 8, // space between items horizontally
+                runSpacing: 8, // space between rows
                 children: [
                   _buildInfoChip(
                     Icons.local_fire_department,
                     '${meal.nutrition.calories} kcal',
                     Colors.orange,
                   ),
-                  const SizedBox(width: 8),
                   _buildInfoChip(
                     Icons.fitness_center,
                     '${meal.nutrition.protein}g protein',
+                    Colors.blue,
+                  ),
+                  _buildInfoChip(
+                    Icons.fitness_center,
+                    '${meal.nutrition.fat}g fat',
+                    Colors.blue,
+                  ),
+                  _buildInfoChip(
+                    Icons.fitness_center,
+                    '${meal.nutrition.carbs}g carbs',
                     Colors.blue,
                   ),
                 ],

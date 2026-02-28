@@ -36,9 +36,13 @@ class _AddFoodFormState extends State<AddFoodForm> {
   late List<Map<String,dynamic>> packagingMaterials;
   late String comment;
   late String rating;
+  String? errorMessage;
 
 
   Future<void> addMeal()async{
+    setState(() {
+      errorMessage = null;
+    });
     Map<String,dynamic> payLoad = {
       ...?widget.returnedAnalyzedResult,
       "name":foodNameController.text.trim(),
@@ -62,11 +66,13 @@ class _AddFoodFormState extends State<AddFoodForm> {
       );  
     }
     catch(err){
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(err.toString())
-        )
-      );
+      String msg = err.toString();
+      if (msg.startsWith('Exception: ')) {
+        msg = msg.replaceFirst('Exception: ', '');
+      }
+      setState(() {
+        errorMessage = msg;
+      });
     }
   }
 
@@ -215,6 +221,23 @@ class _AddFoodFormState extends State<AddFoodForm> {
               ],
             ),
             SizedBox(height: 20.0,),
+            if (errorMessage != null) ...[
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: Colors.red.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.red.withValues(alpha: 0.5)),
+                ),
+                child: Text(
+                  errorMessage!,
+                  style: TextStyle(color: Colors.red, fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: 10.0),
+            ],
             ShrinkButton(
             onPressed: ()async {
               if(enableSubmitButton){

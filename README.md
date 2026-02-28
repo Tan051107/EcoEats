@@ -368,5 +368,4 @@ Key libraries used in this project:
 - `fl_chart`: Data visualization for summaries.
 
 ---
-Developed as part of the EcoEats ecosystem.
 

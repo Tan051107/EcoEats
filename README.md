@@ -54,7 +54,7 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 
 The system leverages a fully serverless architecture, eliminating manual infrastructure management while ensuring automatic scalability.
 
-
+<br>
 
 ## 2.2 System Architecture
 ### Workflow Logic
@@ -122,7 +122,8 @@ This creates a sustainability-first recommendation model.
 ## 3.4 AI & Machine Learning Integration
 EcoEats incorporates Google AI technologies to enhance automation, intelligence, and scalability.
 
-### Google ML Kit – Barcode Scanning
+### Google ML Kit 
+– Barcode Scanning
 
 The grocery input system integrates Google ML Kit for real-time barcode scanning.  
 This allows:
@@ -288,7 +289,7 @@ The project effectively aligns technological implementation with measurable sust
 
 <br>
 
-## Teammembers:
-TAN YI YANG
-TAN YI WEN
-FOO TUN FENG
+### Teammembers:
+TAN YI YANG <br>
+TAN YI WEN <br>
+FOO TUN FENG <br>

@@ -3,9 +3,6 @@
 <br>
 <br>
 
-
----
-
 ### Project Alignment
 | Sustainable Development Goals |
 |--------------------------------|
@@ -17,6 +14,7 @@
 
 ---
 
+<br>
 # 1. Project Overview
 EcoEats is a cloud-based intelligent food management system designed to reduce household food waste while promoting mindful consumption habits.
 
@@ -31,6 +29,7 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 
 ---
 
+<br>
 # 2. Technical Implementation Overview
 
 ## 2.1 Technology Stack

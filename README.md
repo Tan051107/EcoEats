@@ -15,7 +15,6 @@
 ---
 
 # 1. Project Overview
-
 EcoEats is a cloud-based intelligent food management system designed to reduce household food waste while promoting mindful consumption habits.
 
 The platform enables users to:
@@ -30,7 +29,6 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 ---
 
 # 2. Technical Implementation Overview
-
 ## 2.1 Technology Stack
 
 ### Frontend
@@ -55,7 +53,6 @@ The system leverages a fully serverless architecture, eliminating manual infrast
 ---
 
 ## 2.2 System Architecture
-
 ### Workflow Logic
 
 1. Users input groceries (manual or barcode scan).
@@ -77,9 +74,7 @@ The system leverages a fully serverless architecture, eliminating manual infrast
 ---
 
 # 3. Implementation Details
-
 ## 3.1 Grocery Input System
-
 **Input Methods:**
 
 - Manual entry  
@@ -91,7 +86,6 @@ Result: Reduced input friction and improved efficiency.
 ---
 
 ## 3.2 Expiry Priority Visualization
-
 To enhance clarity, EcoEats applies a structured priority logic:
 
 | Status | Expiry Window | Purpose |
@@ -105,7 +99,6 @@ This visual classification simplifies urgency recognition and improves decision-
 ---
 
 ## 3.3 Expiry-Based Recommendation Engine
-
 Unlike conventional recipe platforms, EcoEats applies a multi-factor ranking model:
 
 ### Ranking Criteria
@@ -121,7 +114,6 @@ This creates a sustainability-first recommendation model.
 ---
 
 ## 3.4 AI & Machine Learning Integration
-
 EcoEats incorporates Google AI technologies to enhance automation, intelligence, and scalability.
 
 ### Google ML Kit – Barcode Scanning
@@ -171,7 +163,6 @@ These AI integrations transform EcoEats from a simple tracking tool into an inte
 ---
 
 # 4. Innovation Highlights
-
 ## Sustainability-Driven Logic
 Recommendations are structured to reduce waste before satisfying preference-based ranking.
 
@@ -197,9 +188,7 @@ Structured testing resulted in measurable performance improvements.
 ---
 
 # 5. User Testing & Iteration
-
 ## 5.1 Testing Overview
-
 | Participant Type | Count |
 |------------------|-------|
 | University Students | 5 |
@@ -217,7 +206,6 @@ Testing Duration: **7 days**
 ---
 
 ## 5.2 Feedback → Improvement Mapping
-
 | Feedback | Improvement | Result |
 |-----------|-------------|--------|
 | Manual entry too slow | Barcode scanning + auto-fill | 40% faster input |
@@ -229,9 +217,7 @@ This iterative refinement demonstrates structured, data-driven improvement.
 ---
 
 # 6. Scalability & Future Expansion
-
 ## 6.1 Scalability
-
 Built on Firebase serverless infrastructure:
 
 - Automatic scaling  
@@ -248,7 +234,6 @@ Ready for:
 ---
 
 ## 6.2 Planned Future Enhancements
-
 - AI-based grocery image recognition  
 - Retailer digital receipt integration  
 - Community food-sharing network  
@@ -260,7 +245,6 @@ These features aim to extend EcoEats into a comprehensive sustainability intelli
 ---
 
 # 7. Challenges Faced
-
 ## Usability vs Data Precision
 Balancing detailed tracking with a simplified interface required iterative UI refinement.
 
@@ -275,7 +259,6 @@ These challenges strengthened architectural robustness.
 ---
 
 # 8. Conclusion
-
 EcoEats demonstrates how cloud-native Google technologies and intelligent algorithm design can deliver a practical solution to household food waste.
 
 By integrating:
@@ -285,4 +268,10 @@ By integrating:
 - Scalable serverless infrastructure  
 
 The project effectively aligns technological implementation with measurable sustainability impact.
+
 ---
+
+Teammembers:
+TAN YI YANG
+TAN YI WEN
+FOO TUN FENG

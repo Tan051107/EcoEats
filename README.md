@@ -64,7 +64,6 @@ The system leverages a fully serverless architecture, eliminating manual infrast
 3. Cloud Functions automatically trigger:
    - Expiry monitoring
    - Notification scheduling
-   - Recipe ranking updates
 4. Frontend synchronizes in real time.
 5. Users receive prioritized suggestions.
 
@@ -84,8 +83,9 @@ The system leverages a fully serverless architecture, eliminating manual infrast
 **Input Methods:**
 
 - Manual entry  
-- Barcode scanning  
-- Auto-filled item database  
+- Item scanning  
+- Auto-filled item database
+- Item image upload  
 
 Result: Reduced input friction and improved efficiency.
 

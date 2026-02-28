@@ -218,7 +218,7 @@ Testing Duration: **7 days**
 ## 5.2 Feedback → Improvement Mapping
 | Feedback | Improvement | Result |
 |-----------|-------------|--------|
-| Manual entry too slow | Barcode scanning + auto-fill | 40% faster input |
+| Manual entry too slow | Image scanning + auto-fill | 40% faster input |
 | Expiry urgency unclear | Priority visualization system | Faster recognition |
 | Recipes not prioritizing expiry | Algorithm refinement | Higher satisfaction |
 
@@ -289,7 +289,7 @@ The project effectively aligns technological implementation with measurable sust
 <br>
 
 ### Teammembers:
-TAN YI YANG <br>
+TAN YIK YANG <br>
 TAN YI WEN <br>
 FOO TUN FENG <br>
 

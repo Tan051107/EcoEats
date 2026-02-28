@@ -1,6 +1,6 @@
 # EcoEats  
 ## Intelligent Food Inventory & Sustainability Management System  
-
+<br>
 ---
 
 ### Project Alignment

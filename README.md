@@ -29,6 +29,7 @@ By integrating inventory lifecycle tracking with an expiry-driven ranking algori
 ---
 
 # 2. Technical Implementation Overview
+
 ## 2.1 Technology Stack
 
 ### Frontend

@@ -292,3 +292,81 @@ The project effectively aligns technological implementation with measurable sust
 TAN YI YANG <br>
 TAN YI WEN <br>
 FOO TUN FENG <br>
+
+<br>
+
+# Set up Procedures
+## Prerequisites
+
+Before you begin, ensure you have the following installed on your local machine:
+
+- **Flutter SDK**: version `3.11.0` or higher. [Install Flutter](https://docs.flutter.dev/get-started/install).
+- **Dart SDK**: Automatically included with Flutter.
+- **Android Studio / VS Code**: With Flutter and Dart plugins installed.
+- **Java Development Kit (JDK)**: Version 17 is recommended for Android builds.
+
+## Getting Started
+
+Follow these steps to get the project up and running on your local machine.
+
+### 1. Clone the Repository
+
+Open your terminal and run the following command to clone the repository:
+
+```bash
+git clone <repository-url>
+cd EcoEats/frontend
+```
+
+### 2. Install Dependencies
+
+Run the following command to fetch all the necessary packages defined in `pubspec.yaml`:
+
+```bash
+flutter pub get
+```
+
+### 3. Run the Application
+
+Connect a physical device or start an emulator, then run:
+
+```bash
+flutter run
+```
+
+## Project Structure
+
+- `lib/data/`: Data models and constants.
+- `lib/pages/`: Main screens and UI views.
+- `lib/providers/`: State management using the Provider pattern.
+- `lib/services/`: API calls and Firebase integrations.
+- `lib/widgets/`: Reusable UI components.
+- `assets/`: Icons and images used in the app.
+
+## Build Instructions
+
+### Android
+To build an APK:
+```bash
+flutter build apk --release
+```
+
+### iOS
+To build for iOS (macOS required):
+```bash
+flutter build ios --release
+```
+
+## Dependencies
+
+Key libraries used in this project:
+- `firebase_core`, `firebase_auth`, `cloud_firestore`: Firebase integration.
+- `cloud_functions`: Communication with backend AI logic.
+- `provider`: State management.
+- `flutter_svg`: Rendering vector graphics.
+- `google_mlkit_barcode_scanning`: Scanning grocery barcodes.
+- `fl_chart`: Data visualization for summaries.
+
+---
+Developed as part of the EcoEats ecosystem.
+

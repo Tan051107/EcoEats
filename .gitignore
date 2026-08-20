@@ -22,6 +22,9 @@ frontend/pubspec.lock
 frontend/android/.gradle/
 frontend/android/app/build/
 frontend/android/app/google-services.json
+frontend/ios/Runner/GoogleService-Info.plist
+frontend/lib/firebase_options.dart
+frontend/firebase.json
 frontend/android/local.properties
 frontend/android/key.properties
 frontend/android/*.jks
@@ -56,3 +59,10 @@ backend/functions/build/Release
 backend/functions/.eslintcache
 backend/functions/.npm
 backend/functions/.dataconnect
+
+# Per-project Firebase and Google Cloud credentials/configuration
+backend/.firebaserc
+backend/functions/.env
+backend/functions/**/serviceAccountKey*.json
+backend/functions/**/*ServiceAccountKey*.json
+backend/functions/**/visionClientServiceAccountKey.json

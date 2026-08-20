@@ -56,6 +56,32 @@ The system leverages a fully serverless architecture, eliminating manual infrast
 
 <br>
 
+## Setup your own Firebase project
+
+EcoEats is configured per developer or deployment. No service-account key or
+project-specific Firebase configuration should be committed.
+
+1. Create a Firebase project, enable Authentication, Firestore, Storage,
+   Cloud Functions and Cloud Messaging, then link it to a Google Cloud project
+   with Vertex AI enabled.
+2. Copy `backend/.firebaserc.example` to `backend/.firebaserc` and replace
+   `your-firebase-project-id`. Copy `backend/functions/.env.example` to
+   `backend/functions/.env` and fill in the same project ID and bucket.
+3. For local backend access, create a service-account key outside the
+   repository and set its absolute path in `GOOGLE_APPLICATION_CREDENTIALS`.
+   Deployed Cloud Functions use their assigned Google credentials automatically.
+4. From `frontend`, run `flutterfire configure` and select the new Firebase
+   project. It generates `lib/firebase_options.dart`, platform configuration
+   files and `firebase.json`; all are intentionally ignored by Git.
+5. Deploy from `backend` only after selecting your own project:
+   `firebase use --add`, then `firebase deploy`.
+
+The Firebase client configuration generated for Flutter identifies a Firebase
+project; it is not a server secret. Restrict its API keys in Google Cloud and
+keep service-account JSON keys private.
+
+<br>
+
 ## 2.2 System Architecture
 ### Workflow Logic
 

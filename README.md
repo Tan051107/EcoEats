@@ -61,9 +61,25 @@ The system leverages a fully serverless architecture, eliminating manual infrast
 EcoEats is configured per developer or deployment. No service-account key or
 project-specific Firebase configuration should be committed.
 
+### Prerequisites
+
+- Flutter 3.11 or later, Node.js 22, and the Firebase CLI.
+- A billing-enabled Firebase project. Cloud Functions scheduling and Vertex AI
+  require billing to be enabled.
+- A linked Google Cloud project with the Vertex AI API enabled. Grant the
+  Cloud Functions runtime service account permission to use Vertex AI.
+- Firestore created in `asia-southeast1`, which matches
+  `backend/firebase.json`. Choose that location before first deployment, or
+  deliberately update the Firebase configuration for another location.
+
+### Configuration and deployment
+
 1. Create a Firebase project, enable Authentication, Firestore, Storage,
    Cloud Functions and Cloud Messaging, then link it to a Google Cloud project
    with Vertex AI enabled.
+   Enable the Email/Password and Google sign-in providers in Firebase
+   Authentication. Complete the Google OAuth setup for every platform you plan
+   to support.
 2. Copy `backend/.firebaserc.example` to `backend/.firebaserc` and replace
    `your-firebase-project-id`. Copy `backend/functions/.env.example` to
    `backend/functions/.env` and fill in the same project ID and bucket.
@@ -73,7 +89,13 @@ project-specific Firebase configuration should be committed.
 4. From `frontend`, run `flutterfire configure` and select the new Firebase
    project. It generates `lib/firebase_options.dart`, platform configuration
    files and `firebase.json`; all are intentionally ignored by Git.
-5. Deploy from `backend` only after selecting your own project:
+   If you deploy Cloud Functions outside `us-central1`, pass the same region
+   when building or running the app, for example:
+   `--dart-define=ECOEATS_FUNCTIONS_REGION=asia-southeast1`.
+5. Install project dependencies: run `flutter pub get` from `frontend` and
+   `npm ci` from `backend/functions`.
+6. Deploy from `backend` only after selecting your own project. The deployment
+   applies the included Firestore indexes and Firestore/Storage security rules:
    `firebase use --add`, then `firebase deploy`.
 
 The Firebase client configuration generated for Flutter identifies a Firebase

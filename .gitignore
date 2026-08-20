@@ -8,6 +8,7 @@ backend/functions/ai/test-image
 
 # IDE files from opening the root folder
 .idea/
+.history/
 
 # General ignores for the Flutter project in the 'frontend' directory
 frontend/.DS_Store

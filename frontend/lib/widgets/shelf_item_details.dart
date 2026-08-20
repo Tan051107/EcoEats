@@ -44,7 +44,6 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
   @override
   void initState() {
     super.initState();
-    print(widget.groceryDetails);
     name = widget.groceryDetails["name"] ?? "";
     category = widget.groceryDetails["category"] ?? "";
     estimatedShelfLife = widget.groceryDetails["estimated_shelf_life"] ?? 0;
@@ -123,7 +122,6 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
           imageUrl = downloadUrl;
         });
       } catch (e) {
-        print("Error loading image: $e");
       }
     }
   }
@@ -153,7 +151,6 @@ class _ShelfItemDetailsState extends State<ShelfItemDetails> {
             content: Text("Failed to remove shelf item:$err")
           )
         );
-        print(err);      
       }
     }
 

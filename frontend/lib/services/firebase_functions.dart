@@ -25,7 +25,6 @@ class FirebaseFunctionsService {
       
       return RecommendedMealsResponse.fromJson(result.data);
     } catch (e) {
-      print('Error getting recommended meals: $e');
       rethrow;
     }
   }
@@ -42,7 +41,6 @@ class FirebaseFunctionsService {
       
       return RecipesResponse.fromJson(result.data);
     } catch (e) {
-      print('Error getting recipe: $e');
       rethrow;
     }
   }
@@ -69,7 +67,6 @@ class FirebaseFunctionsService {
       
       return RecipesResponse.fromJson(result.data);
     } catch (e) {
-      print('Error getting recipes: $e');
       rethrow;
     }
   }

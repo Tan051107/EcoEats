@@ -240,7 +240,6 @@ class _TakePictureState extends State<TakePicture> {
 
   Future<void> scanBarcodeInImage(XFile image)async{
     final inputImage = InputImage.fromFilePath(image.path);
-    print("Scanning barcode");
     final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
 
     if(barcodes.isNotEmpty){
@@ -270,10 +269,7 @@ class _TakePictureState extends State<TakePicture> {
 
       uploadTask.snapshotEvents.listen((TaskSnapshot snapshot){
         final progress = snapshot.bytesTransferred/snapshot.totalBytes;
-        print('users/$userId/${isTakingFoodPictureNotifier.value? "food" : "groceries"}/$imageName');
-        print('Upload is ${(progress * 100).toStringAsFixed(2)}% done');
       },onError: (e){
-        print("Upload Failed:$e");
       });
 
       final TaskSnapshot snapshot = await uploadTask;
@@ -333,7 +329,6 @@ class _TakePictureState extends State<TakePicture> {
         debugPrint("Analyzing Gorcery images");
         analyzedImageResult = await GroceryService.sendGroceryImagesForAnalysis(barCodeValueFound, imageUrls);
       }
-      print(analyzedImageResult);
       showAddForm(anaylzedResult: analyzedImageResult);
     }
     catch(err){

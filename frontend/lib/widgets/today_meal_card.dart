@@ -40,7 +40,6 @@ class _TodayMealCardState extends State<TodayMealCard> {
           imageUrl = downloadUrl;
         });
       } catch (e) {
-        print("Error loading image: $e");
       }
     }
   }

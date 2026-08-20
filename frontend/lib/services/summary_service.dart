@@ -1,12 +1,12 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:frontend/config/app_config.dart';
 
 class SummaryService {
     static Future<Map<String,dynamic>>getDailySummary()async{
-      final functions  = FirebaseFunctions.instanceFor(region: "us-central1");
+      final functions  = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
       final getDailySummary = functions.httpsCallable("getDailySummary");
       try{
         final response = await getDailySummary.call({});
-        print("Daily Summary Response: ${response.data}");
 
         if(response.data == null){
           throw Exception ("Empty response received");
@@ -34,7 +34,7 @@ class SummaryService {
     }
 
     static Future<Map<String,dynamic>> getWeeklySummary()async{
-      final functions =FirebaseFunctions.instanceFor(region: "us-central1");
+      final functions =FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
       final getWeeklySummary = functions.httpsCallable("getWeeklySummary");
       try{
         final response = await getWeeklySummary.call();

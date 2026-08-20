@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:frontend/config/app_config.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({super.key});
@@ -22,7 +23,7 @@ class _NotificationsState extends State<Notifications> {
   Future<void> markAllAsRead() async {}
 
   Future<List<Map<String, dynamic>>> getNotifications() async {
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final getNotifications = functions.httpsCallable("getNotifications");
     try {
       final response = await getNotifications.call({});
@@ -31,10 +32,8 @@ class _NotificationsState extends State<Notifications> {
           .map((notification) => Map<String, dynamic>.from(notification))
           .toList();
     } on FirebaseFunctionsException catch (e) {
-      print('Firebase error: ${e.code} - ${e.message}');
       rethrow;
     } catch (err) {
-      print('Unknown error: $err');
       rethrow;
     }
   }

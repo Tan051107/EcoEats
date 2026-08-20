@@ -73,7 +73,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (userDoc.exists) {
         Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
-        print("User Details:$data");
         
         setState(() {
           _userName = data['name'] ?? 'No Name';

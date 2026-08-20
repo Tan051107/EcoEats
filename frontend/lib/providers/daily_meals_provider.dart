@@ -22,7 +22,6 @@ class DailyMealsProvider extends ChangeNotifier{
     try{
       _dailyMeals =  await MealService.fetchDailyMeals();
       _dailySummary = await SummaryService.getDailySummary();
-      print("Provider Daily Summary: $_dailySummary");
       notifyListeners();
     }
     catch(err){

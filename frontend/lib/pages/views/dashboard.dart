@@ -28,7 +28,6 @@ class _DashboardState extends State<Dashboard> {
     WidgetsBinding.instance.addPostFrameCallback((_)async{
       final DailyMealsProvider dailyMealsProvider = Provider.of<DailyMealsProvider>(context,listen:false);
       await dailyMealsProvider.fetchDailyMeals();
-      print("Daily Meals: ${dailyMealsProvider.dailyMeals}");
     });
   }
 
@@ -154,7 +153,6 @@ class NutritionOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Daily Summary Overview:$dailySummaryOverview");
     final double totalDailyEatenCalories = (dailySummaryOverview["total_calories_kcal"] as num?)?.toDouble() ?? 0.0 ;
     final double totalDailyIntake = (dailySummaryOverview["daily_calorie_intake"] as num?)?.toDouble() ?? 0.0;
     final double remainingCalories = (dailySummaryOverview["remaining_calories"] as num?)?.toDouble() ?? 0.0;

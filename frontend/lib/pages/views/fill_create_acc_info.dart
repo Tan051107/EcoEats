@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 import 'package:frontend/data/notifiers.dart';
+import 'package:frontend/config/app_config.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:frontend/services/fcm_service.dart';
 import 'package:frontend/widgets/header.dart';
@@ -244,18 +245,15 @@ class _FillCreateAccInfoState extends State<FillCreateAccInfo> {
       "goal":gaolMap[goalSelected]
     };
 
-    print(userInfo);
 
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final updateUserProfile = functions.httpsCallable("updateUserProfile");
     try{
       await updateUserProfile.call(userInfo);
     }
     on FirebaseFunctionsException catch(err){
-      print("Failed to create new user info doc $err");
     }
     catch(err){
-      print("Failed to create new user info doc $err");
     }
   }
 

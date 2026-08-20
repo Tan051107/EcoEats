@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:frontend/config/app_config.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/recipe_overview_card.dart';
 
@@ -26,7 +27,7 @@ class _CookbookListState extends State<CookbookList> {
   bool isLoading = true;
 
   Future<void>getRecipes()async{
-    final functions = FirebaseFunctions.instanceFor(region: 'us-central1');
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final getRecipes = functions.httpsCallable('getRecipes');
     try{
       final response = await getRecipes.call({
@@ -38,14 +39,10 @@ class _CookbookListState extends State<CookbookList> {
         recipes = recipeData;
         isLoading = false;
       });
-      print(recipeData);
-      print("Total Recipes: ${recipeData.length}");
     }
     on FirebaseFunctionsException catch (e){
-      print('Firebase error: ${e.code} - ${e.message}');
     }
     catch(err){
-      print('Unknown error: $err');
     }
   }
 

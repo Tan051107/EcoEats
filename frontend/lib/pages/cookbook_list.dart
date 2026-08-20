@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:frontend/config/app_config.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:frontend/widgets/recipe_overview_card.dart';
 
@@ -17,7 +16,7 @@ class _CookbookListState extends State<CookbookList> {
   bool isLoading = true;
 
   Future<void>getRecipes()async{
-    final functions = FirebaseFunctions.instanceFor(region: 'us-central1');
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final getRecipes = functions.httpsCallable('getRecipes');
     try{
       final response = await getRecipes.call({
@@ -28,14 +27,10 @@ class _CookbookListState extends State<CookbookList> {
         recipes = recipeData;
         isLoading = false;
       });
-      print(recipeData);
-      print("Total Recipes: ${recipeData.length}");
     }
     on FirebaseFunctionsException catch (e){
-      print('Firebase error: ${e.code} - ${e.message}');
     }
     catch(err){
-      print('Unknown error: $err');
     }
   }
 
@@ -49,7 +44,7 @@ class _CookbookListState extends State<CookbookList> {
     return Scaffold(
       body:Column(
         children: [
-          Header(subtitle: "${recipes.length} recipes",title: "Vegan",icon: Icons.eco, iconColor: Colors.green,),
+          Header(subtitle: "${recipes.length} recipes",title: "Vegan",icon: Icons.eco, iconColor: Colors.green,isShowBackButton: true,),
           Expanded(
             child:isLoading
                   ?Center(
@@ -73,11 +68,7 @@ class _CookbookListState extends State<CookbookList> {
                     itemBuilder: (context,index){
                       final meal = recipes[index];
                       return RecipeOverviewCard(
-                        mealName: meal['name'] ?? "Meal name", 
-                        mealType: meal["meal_type"] ?? "Meal Type", 
-                        mealCalories: meal["nutrition"]["calories_kcal"] ?? "Meal Calories", 
-                        mealDesc: meal["description"] ?? "Meal Description",
-                        isFavourite: meal["is_favourite"] ?? false,
+                        mealData: meal,
                       );
                     }
                   )

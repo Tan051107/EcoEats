@@ -71,7 +71,6 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
       ); 
     }
     catch(err){
-      print(err);
       String msg = err.toString();
       if (msg.startsWith('Exception: ')) {
         msg = msg.replaceFirst('Exception: ', '');
@@ -101,8 +100,6 @@ class _AddGroceryFormState extends State<AddGroceryForm> {
     per = widget.returnedAnalyzedResult?["per"]?.toString() ?? "100 g";
     
 
-    print("Analyzed Result:${widget.returnedAnalyzedResult}");
-    print("Category:$groceryCategory");
     updateSubmitButtonState();
 
     groceryNameController.addListener(updateSubmitButtonState);

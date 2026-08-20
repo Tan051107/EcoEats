@@ -23,7 +23,6 @@ class _WeeklySummaryState extends State<WeeklySummary> {
     super.initState();
     weeklySummary = SummaryService.getWeeklySummary();
     weeklySummary.then((data) {
-    print("Weekly Summary: $data");
   });
   }
 
@@ -64,7 +63,6 @@ class _WeeklySummaryState extends State<WeeklySummary> {
                   }
 
                   final weeklySummaryData =Map<String, dynamic>.from((snapshot.data as Map<String, dynamic>)["data"] as Map);
-                  print("Snapshot data:$weeklySummaryData");
                   final double averageCalories = (weeklySummaryData["average_daily_calories_kcal"] as num?)?.toDouble() ?? 0.0;
                   final double averageFats = (weeklySummaryData["average_daily_fat_g"] as num?)?.toDouble() ?? 0.0;
                   final double averageCarbs = (weeklySummaryData["average_daily_carbs_g"] as num?)?.toDouble() ?? 0.0;
@@ -81,7 +79,6 @@ class _WeeklySummaryState extends State<WeeklySummary> {
                             if (data.containsKey(key)) key: data[key],
                         };
                       }).toList() ?? [];
-                  print("Daily Summary:$dailySummary");
                   final String startDate = weeklySummaryData["start_date"] ?? "";
                   final String endDate = weeklySummaryData["end_date"] ?? "";
                   late String subtitle;

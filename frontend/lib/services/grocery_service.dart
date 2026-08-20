@@ -1,10 +1,11 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:frontend/config/app_config.dart';
 import 'package:frontend/utils.dart';
 
 class GroceryService {
 
   static Future<List<Map<String,dynamic>>> getShelfItems(String category)async{
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final getShelfItems = functions.httpsCallable("getShelfItems");
     try{
       final response = await getShelfItems.call({
@@ -24,7 +25,7 @@ class GroceryService {
   } 
 
   static Future<void> removeShelfItem(String itemId)async{
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final removeShelfItem = functions.httpsCallable("removeShelfItem");
     try{
       await removeShelfItem.call({
@@ -43,7 +44,7 @@ class GroceryService {
     List<String> unwantedKeys = ["is_packaged" , "estimated_shelf_life" , "nutrition" , "updated_at" , "created_at"];
 
     Map<String,dynamic> cleanedPayload = Utils.removeUnwantedKeys(shelfItem, unwantedKeys);
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final addShelfItem = functions.httpsCallable("addShelfItem");
     try{
       final response = await addShelfItem.call(cleanedPayload);
@@ -60,7 +61,7 @@ class GroceryService {
   }
 
   static Future <Map<String,dynamic>> sendGroceryImagesForAnalysis(String barcode , List<String> images)async{
-    final functions = FirebaseFunctions.instanceFor(region: 'us-central1');
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final analyzeGroceryImage = functions.httpsCallable("analyzeGroceryImage");
     try{
       final response = await analyzeGroceryImage.call({

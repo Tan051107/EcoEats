@@ -1,9 +1,10 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:frontend/config/app_config.dart';
 import 'package:frontend/utils.dart';
 
 class MealService{
   static Future<List<Map<String,dynamic>>> fetchDailyMeals()async{
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final getDailyEatenMeals = functions.httpsCallable("getDailyEatenMeals");
     try{
       final response = await getDailyEatenMeals.call({});
@@ -20,7 +21,7 @@ class MealService{
   }
 
   static Future<Map<String,dynamic>>addDailyMeals(Map<String,dynamic> mealData)async{
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final logMeal = functions.httpsCallable("logMeal");
     List<String> unwantedKeys = ["nutrition" , "updated_at" , "date", "created_at", "eaten_at"];
     Map<String,dynamic>cleanedPayload = Utils.removeUnwantedKeys(mealData, unwantedKeys);
@@ -40,7 +41,7 @@ class MealService{
   }
 
   static Future<void> removeMeal(String mealId)async{
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final removeMeal = functions.httpsCallable("removeMeal");
     try{
       await removeMeal.call({
@@ -56,7 +57,7 @@ class MealService{
   }
 
   static Future<Map<String,dynamic>>sendFoodImagesForAnalysis(List<String>images)async{
-    final functions = FirebaseFunctions.instanceFor(region:"us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final getEstimatedMealNutrition = functions.httpsCallable("getEstimatedMealNutrition");
     try{
       final response = await getEstimatedMealNutrition.call(

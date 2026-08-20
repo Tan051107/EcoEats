@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/data/constants.dart';
 import 'package:frontend/widgets/header.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:frontend/config/app_config.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({super.key});
@@ -20,7 +21,7 @@ class _NotificationsState extends State<Notifications> {
   }
 
   Future<void>getNotifications()async{
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final getNotifications = functions.httpsCallable("getNotifications");
     try{
       final response = await getNotifications.call({});
@@ -32,10 +33,8 @@ class _NotificationsState extends State<Notifications> {
       });
     }
     on FirebaseFunctionsException catch (e){
-      print('Firebase error: ${e.code} - ${e.message}');
     }
     catch(err){
-      print('Unknown error: $err');
     }
   }
   @override
@@ -57,7 +56,7 @@ class _NotificationsState extends State<Notifications> {
             )
             : Column(
                 children: [
-              Header(title: "Notifications" , icon: Icons.notifications, iconColor: Colors.black,),
+              Header(title: "Notifications" , icon: Icons.notifications, iconColor: Colors.black,isShowBackButton: true,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(

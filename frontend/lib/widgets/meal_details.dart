@@ -42,7 +42,6 @@ class _MealDetailsState extends State<MealDetails> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.mealDetails);
     name = widget.mealDetails["name"] ?? "";
     nutritions = Map<String,dynamic>.from(widget.mealDetails["nutrition"] ?? {});
     calories = (nutritions["calories_kcal"]as num?)?.toDouble() ?? 0.0;
@@ -93,9 +92,7 @@ class _MealDetailsState extends State<MealDetails> {
         setState(() {
           imageUrl = downloadUrl;
         });
-        print(downloadUrl);
       } catch (e) {
-        print("Error loading image: $e");
       }
     }
   }
@@ -123,7 +120,6 @@ class _MealDetailsState extends State<MealDetails> {
             content: Text("Failed to remove meal:$err")
           )
         );
-        print(err);      
       }
     }
 

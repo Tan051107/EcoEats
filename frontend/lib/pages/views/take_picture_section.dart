@@ -61,7 +61,6 @@ class _TakePictureSectionState extends State<TakePictureSection> {
       });
     }
     catch(err){
-      print("Error capturing photo: $err");
     }
   }
 

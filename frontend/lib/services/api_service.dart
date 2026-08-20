@@ -1,5 +1,6 @@
 // lib/services/api_service.dart
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:frontend/config/app_config.dart';
 import '../data/models/recipe_model.dart';
 import '../data/models/daily_meals.dart';
 
@@ -22,7 +23,7 @@ class ApiService {
 
   static Future<RecommendedMealsData> getRecommendedMeals() async {
     try {
-      final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+      final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
       final getDailyRecommendedMeals = functions.httpsCallable("getDailyRecommendedMeals");
       final response = await getDailyRecommendedMeals.call({});
       
@@ -37,14 +38,13 @@ class ApiService {
     } on FirebaseFunctionsException catch (err) {
       throw Exception(err.message);
     } catch (e) {
-      print('Error in getRecommendedMeals: $e');
       rethrow;
     }
   }
 
   static Future<Recipe> getRecipe(String recipeId) async {
     try {
-      final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+      final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
       final getRecipes = functions.httpsCallable("getRecipes");
       final response = await getRecipes.call({
         "recipe_id": recipeId
@@ -60,7 +60,6 @@ class ApiService {
     } on FirebaseFunctionsException catch (err) {
       throw Exception(err.message);
     } catch (e) {
-      print('Error in getRecipe: $e');
       rethrow;
     }
   }

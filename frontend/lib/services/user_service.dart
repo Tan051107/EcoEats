@@ -1,9 +1,10 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:frontend/config/app_config.dart';
 
 class UserService {
 
   static Future<Map<String, dynamic>>  updateUserDetails(Map<String,dynamic> userData)async{
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final updateUserProfile =functions.httpsCallable("updateUserProfile");
     try{
       final response = await updateUserProfile.call(userData);

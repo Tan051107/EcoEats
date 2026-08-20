@@ -1,8 +1,9 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:frontend/config/app_config.dart';
 
 class FavouriteService {
   static Future<List<Map<String,dynamic>>> fetchFavourites()async{
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final getFavourites = functions.httpsCallable("getUsersFavourite");
     try{
       final response = await getFavourites.call({});
@@ -19,7 +20,7 @@ class FavouriteService {
   }
 
   static Future<void> addToFavourite(String recipeId)async{
-    final functions = FirebaseFunctions.instanceFor(region: "us-central1");
+    final functions = FirebaseFunctions.instanceFor(region: AppConfig.functionsRegion);
     final addToFavourite = functions.httpsCallable("addUsersFavourite");
     if(recipeId.isEmpty){
       throw Exception("Recipe id is empty");

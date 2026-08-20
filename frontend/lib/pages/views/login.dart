@@ -163,7 +163,6 @@ class LogInWithGoogleButton extends StatelessWidget {
         Navigator.of(context).pop();
       }
       catch(err){
-        print(err);
       }
     }
     
@@ -323,8 +322,6 @@ class _SignInFormState extends State<SignInForm> {
           ShrinkButton(
             onPressed: () async{
               try{
-                print(emailController.text);
-                print(passwordController.text);
                 if(widget.isLogin){
                   await widget.authService.signIn(
                     email: emailController.text, 
@@ -340,7 +337,6 @@ class _SignInFormState extends State<SignInForm> {
                 Navigator.of(context).pop();
               }
               catch(err){
-                print(err);
               }
             }, 
             child: Container(

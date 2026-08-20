@@ -336,7 +336,7 @@ The project effectively aligns technological implementation with measurable sust
 
 <br>
 
-### Teammembers:
+### Team members:
 TAN YIK YANG <br>
 TAN YI WEN <br>
 FOO TUN FENG <br>
